@@ -14,4 +14,12 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\" />
+    <Folder Include="CQRS\Command\" />
+    <Folder Include="CQRS\Notification\" />
+    <Folder Include="CQRS\Query\" />
+    <Folder Include="Factories\Identity\" />
+  </ItemGroup>
+
 </Project>
