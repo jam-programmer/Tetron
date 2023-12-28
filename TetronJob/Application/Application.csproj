@@ -11,8 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="Reports\" />
+    <PackageReference Include="Mapster" Version="7.4.0" />
   </ItemGroup>
 
 </Project>

@@ -13,9 +13,9 @@ using Infrastructure.Common;
 
 namespace Infrastructure.Configuration
 {
-    public static class ConfigurationInfrastructure
+    public static class ConfigureServices
     {
-        public static IServiceCollection InfrastructureServices
+        public static IServiceCollection InfrastructureConfiguration
         (this IServiceCollection services,
             IConfiguration configuration)
         {

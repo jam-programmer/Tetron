@@ -1,4 +1,7 @@
+using Application;
+using Framework;
 using Infrastructure.Configuration;
+using TetronJob.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,8 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 
-builder.Services.InfrastructureServices(builder.Configuration);
-
+builder.Services.InfrastructureConfiguration(builder.Configuration);
+builder.Services.ApplicationConfiguration(builder.Configuration);
+builder.Services.FrameworkConfiguration(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -20,7 +24,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 app.UseRouting();
 
 app.UseAuthorization();
