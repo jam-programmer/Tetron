@@ -1,7 +1,10 @@
 ﻿using Application.Models;
 using Framework.ViewModels.Role;
+using Framework.ViewModels.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Threading;
 
 namespace TetronJob.Areas.Admin.Controllers
 {
@@ -15,9 +18,9 @@ namespace TetronJob.Areas.Admin.Controllers
             _mediator = mediator;
         }
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery] PaginatedWithSize options)
+        public async Task<IActionResult> Index([FromQuery] PaginatedSearchWithSize options)
         {
-            RequestRoles request = new RequestRoles()
+            RequestUsers request = new RequestUsers()
             {
                 Paginated = options
             };
@@ -27,6 +30,35 @@ namespace TetronJob.Areas.Admin.Controllers
             return View(paginatedRoles);
 
         }
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            await Roles();
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(InsertUserViewModel model,CancellationToken cancellation)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _mediator.Send(model, cancellation);
+                if (result.IsSuccess == true)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewBag.Alert = result.Message!;
+                return View(model);
+            }
+            await Roles(model.RoleId);
+            return View(model);
+        }
 
+
+
+        public async Task Roles(Guid? id = null)
+        {
+            var result = await _mediator.Send(new RequestSelectedRoles());
+            ViewBag.Roles = new SelectList(result, "Id", "PersianName", id);
+        }
     }
 }

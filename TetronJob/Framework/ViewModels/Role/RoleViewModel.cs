@@ -16,6 +16,10 @@ namespace Framework.ViewModels.Role
 
     }
 
+    public class RequestSelectedRoles:IRequest<IEnumerable<RoleViewModel>>
+    {
+       
+    }
     public class RequestRoles : IRequest<PaginatedList<RoleViewModel>>
     {
         public PaginatedWithSize? Paginated { set; get; }

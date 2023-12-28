@@ -17,7 +17,19 @@ namespace Framework.Factories.Identity.Role
             _roleReport = roleReport;
             _roleService = roleService;
         }
+        public async Task<IEnumerable<RoleViewModel>>
+            GetRolesAsync(CancellationToken cancellationToken = default)
+        {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                //todo
+            }
 
+            var roles = await _roleReport.GetRolesAsync(cancellationToken);
+            IEnumerable<RoleViewModel> rolesList = new List<RoleViewModel>();
+            rolesList = roles.Adapt<IEnumerable<RoleViewModel>>();
+            return rolesList;
+        }
         public async Task<Response> CreateRoleAsync(InsertRoleViewModel model, CancellationToken cancellation)
         {
             Response response = new();

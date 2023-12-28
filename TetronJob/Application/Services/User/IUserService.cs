@@ -11,7 +11,6 @@ namespace Application.Services.User
         Task<Response> RemoveCurrentPasswordAsync(UserEntity user, CancellationToken cancellation);
         Task<Response> AddNewPasswordAsync(UserEntity user, string password, CancellationToken cancellation);
         Task<Response> RemoveRoleAsync(UserEntity user, List<string> roles, CancellationToken cancellation);
-        Task<Response> RemoveUserAsync(UserEntity user, CancellationToken cancellation);
         Task<Response> AddUserRoleAsync(UserEntity user, string role, CancellationToken cancellation);
 
 

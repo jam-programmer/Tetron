@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Reports.Role;
+using Application.Reports.User;
 using Application.Services.Role;
+using Application.Services.User;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,6 +20,11 @@ namespace Application
 
             services.AddScoped<IRoleReport,RoleReport>()
                 .AddScoped<IRoleService,RoleService>();
+
+            services.AddScoped<IUserReport, UserReport>()
+                .AddScoped<IUserService, UserService>();
+
+
             return services;
         }
     }

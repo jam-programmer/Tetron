@@ -80,7 +80,7 @@ namespace TetronJob.Areas.Admin.Controllers
 
             return View(model);
         }
-        [HttpGet]
+   
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id,
             CancellationToken cancellationToken)

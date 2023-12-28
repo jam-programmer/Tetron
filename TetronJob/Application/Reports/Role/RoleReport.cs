@@ -45,5 +45,10 @@ namespace Application.Reports.Role
             return await query.PaginatedListAsync<RoleEntity, TDestination>(pagination.Page, pagination.PageSize,
                 config: null, cancellationToken);
         }
+
+        public async Task<IEnumerable<RoleEntity>> GetRolesAsync(CancellationToken cancellationToken = default)
+        {
+            return await _roleManager.Roles.ToListAsync(cancellationToken: cancellationToken);
+        }
     }
 }

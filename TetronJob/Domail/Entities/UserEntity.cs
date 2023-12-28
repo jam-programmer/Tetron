@@ -6,7 +6,7 @@ namespace Domain.Entities
     {
         public string? Avatar { set; get; }
         public string? Birthday { set; get; }
-
+        //public string? FullName { set; get; }
 
 
 

@@ -3,6 +3,7 @@ using FluentValidation.AspNetCore;
 using Framework.Common;
 using Framework.Common.Behaviors;
 using Framework.Factories.Identity.Role;
+using Framework.Factories.Identity.User;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Framework
 {
+    [Obsolete]
     public static class ConfigureServices
     {
         public static IServiceCollection FrameworkConfiguration
@@ -38,6 +40,7 @@ namespace Framework
 
 
             services.AddScoped<IRoleFactory, RoleFactory>();
+            services.AddScoped<IUserFactory, UserFactory>();
             return services;
         }
     }
