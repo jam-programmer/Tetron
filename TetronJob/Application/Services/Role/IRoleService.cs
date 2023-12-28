@@ -11,6 +11,7 @@ namespace Application.Services.Role
     public interface IRoleService
     {
         Task<Response> CreateRoleAsync(RoleEntity role,CancellationToken cancellation);
-        Task<RoleEntity> GetRoleByIdAsync(Guid  roleId,CancellationToken cancellation);
+        Task<Response> UpdateRoleAsync(RoleEntity role, CancellationToken cancellation);
+        Task<Response> DeleteRoleAsync(RoleEntity role, CancellationToken cancellation);
     }
 }

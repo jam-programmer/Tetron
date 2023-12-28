@@ -14,7 +14,21 @@ namespace Application.Reports.Role
         {
             _roleManager = roleManager;
         }
+        public async Task<RoleEntity?> GetRoleByIdAsync(Guid roleId, CancellationToken cancellation)
+        {
+            if (cancellation.IsCancellationRequested)
+            {
+                //todo
+            }
 
+            var role = await _roleManager.FindByIdAsync(roleId.ToString());
+            if (role == null)
+            {
+                //todo
+            }
+
+            return role;
+        }
         public async Task<PaginatedList<TDestination>> GetAllPaginatedAsync<TDestination>(PaginatedWithSize pagination,
             CancellationToken cancellationToken = default)
         {

@@ -51,5 +51,33 @@ namespace TetronJob.Areas.Admin.Controllers
            
             return View(model);
         }
+
+        [HttpGet]
+        [Route("/Admin/Role/Edit")]
+        public async Task<IActionResult> Edit(Guid id,CancellationToken cancellation)
+        {
+            var result = await _mediator.Send(new RequestGetRoleById()
+            {
+                RoleId = id
+            });
+            return View(result);
+        }
+        [HttpPost]
+        [Route("/Admin/Role/Edit")]
+        public async Task<IActionResult> Edit(UpdateRoleViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _mediator.Send(model);
+                if (result.IsSuccess == true)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewBag.Alert = result.Message!;
+                return View(model);
+            }
+
+            return View(model);
+        }
     }
 }

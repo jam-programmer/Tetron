@@ -1,0 +1,54 @@
+﻿@model Framework.ViewModels.Role.UpdateRoleViewModel
+@{
+    ViewData["Title"] = "ویرایش نقش";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 breadcrumb-wrapper mb-4">
+        <span class="text-muted fw-light">
+            نقش ها /
+        </span> ویرایش نقش
+    </h4>
+
+    <div class="row">
+        <div class="col-md-12">
+            @if (ViewBag.Alert != null)
+            {
+                <div class="alert alert-warning alert-dismissible d-flex align-items-center" role="alert">
+                    <i class="bx bx-xs bx-wallet me-2"></i>
+                    @ViewBag.Alert
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            <div class="card mb-4">
+                <h5 class="card-header heading-color">ویرایش نقش </h5>
+                <form asp-area="Admin" asp-controller="Role" asp-action="Edit">
+                    <div class="card-body">
+                        <div>
+                            <label class="form-label">نام</label>
+                            <input asp-for="PersianName" type="text" class="form-control" placeholder="نام نقش" />
+                        </div>
+                        <div>
+                            <label class="form-label">نام سیستمی</label>
+                            <input asp-for="Name" type="text" class="form-control" placeholder="نام سیستمی نقش" />
+                            <span class="text-danger" asp-validation-for="Name"></span>
+                            <div id="defaultFormControlHelp" class="form-text">
+                                نام سیستمی باید انگلیسی باشد
+                            </div>
+                        </div>
+                        <input type="hidden" asp-for="Id"/>
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-sm btn-primary">ثبت</button>
+                            <a asp-area="Admin" asp-controller="Role" asp-action="Index" class="btn btn-sm btn-warning text-white">بازگشت</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+

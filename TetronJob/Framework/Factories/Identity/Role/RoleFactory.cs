@@ -34,10 +34,52 @@ namespace Framework.Factories.Identity.Role
                 //Todo Log
             }
 
-            var role = await _roleService.GetRoleByIdAsync(id, cancellation);
-            UpdateRoleViewModel roleViewModel = new();
-            roleViewModel = role.Adapt<UpdateRoleViewModel>();
+            var role = await _roleReport.GetRoleByIdAsync(id, cancellation);
+            UpdateRoleViewModel roleViewModel = role.Adapt<UpdateRoleViewModel>();
             return roleViewModel;
+        }
+
+        public async Task<Response> UpdateRoleAsync(UpdateRoleViewModel model, CancellationToken cancellation)
+        {
+            if (cancellation.IsCancellationRequested)
+            {
+                //todo
+            }
+
+            if (model == null)
+            {
+
+            }
+
+            var role = await _roleReport.GetRoleByIdAsync(model!.Id, cancellation);
+            if(role == null) { }
+
+            role!.PersianName=model.PersianName;
+            role.Name = model.Name;
+            var response = await _roleService.UpdateRoleAsync(role, cancellation);
+            return response;
+        }
+
+        public async Task<Response> DeleteRoleAsync(DeleteRoleViewModel model, CancellationToken cancellation)
+        {
+            if (cancellation.IsCancellationRequested)
+            {
+                //todo
+            }
+
+            if (model == null)
+            {
+                //todo
+            }
+
+            var role = await _roleReport.GetRoleByIdAsync(model!.Id, cancellation);
+            if (role == null)
+            {
+                //todo
+            }
+
+            var response = await _roleService.DeleteRoleAsync(role!, cancellation);
+            return response;
         }
 
         public async Task<PaginatedList<TViewModel>> GetPagedSearchWithSizeAsync<TViewModel>

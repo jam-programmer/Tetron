@@ -10,17 +10,17 @@ using MediatR;
 
 namespace Framework.CQRS.Command.Admin.Role
 {
-    public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleViewModel, Response>
+    public class DeleteRoleCommandHandler : IRequestHandler<DeleteRoleViewModel, Response>
     {
         private readonly IRoleFactory _roleFactory;
 
-        public UpdateRoleCommandHandler(IRoleFactory roleFactory)
+        public DeleteRoleCommandHandler(IRoleFactory roleFactory)
         {
             _roleFactory = roleFactory;
         }
-        public async Task<Response> Handle(UpdateRoleViewModel request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(DeleteRoleViewModel request, CancellationToken cancellationToken)
         {
-            return await _roleFactory.UpdateRoleAsync(request, cancellationToken);
+            return await _roleFactory.DeleteRoleAsync(request, cancellationToken);
         }
     }
 }

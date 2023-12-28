@@ -17,6 +17,7 @@ namespace Framework.Factories.Identity.Role
 
         Task<Response> CreateRoleAsync(InsertRoleViewModel model, CancellationToken cancellation);
         Task<UpdateRoleViewModel?> GetRoleByIdAsync(Guid id,CancellationToken cancellation);
-
+        Task<Response> UpdateRoleAsync(UpdateRoleViewModel model, CancellationToken cancellation);
+        Task<Response> DeleteRoleAsync(DeleteRoleViewModel model, CancellationToken cancellation);
     }
 }

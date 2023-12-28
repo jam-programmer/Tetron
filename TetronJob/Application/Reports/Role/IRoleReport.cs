@@ -1,4 +1,5 @@
 ﻿using Application.Models;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace Application.Reports.Role
 {
     public interface IRoleReport
     {
+        Task<RoleEntity?> GetRoleByIdAsync(Guid roleId, CancellationToken cancellation);
         Task<PaginatedList<TDestination>> GetAllPaginatedAsync<TDestination>(PaginatedWithSize pagination,
             CancellationToken cancellationToken = default);
     }

@@ -20,4 +20,9 @@ namespace Framework.ViewModels.Role
     {
         public PaginatedWithSize? Paginated { set; get; }
     }
+
+    public class DeleteRoleViewModel : IRequest<Response>
+    {
+        public Guid Id { set; get; }
+    }
 }
