@@ -2,6 +2,7 @@
 using Framework.ViewModels.Role;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace TetronJob.Areas.Admin.Controllers
@@ -64,11 +65,11 @@ namespace TetronJob.Areas.Admin.Controllers
         }
         [HttpPost]
         [Route("/Admin/Role/Edit")]
-        public async Task<IActionResult> Edit(UpdateRoleViewModel model)
+        public async Task<IActionResult> Edit(UpdateRoleViewModel model, CancellationToken cancellationToken)
         {
             if (ModelState.IsValid)
             {
-                var result = await _mediator.Send(model);
+                var result = await _mediator.Send(model, cancellationToken);
                 if (result.IsSuccess == true)
                 {
                     return RedirectToAction(nameof(Index));
@@ -79,5 +80,19 @@ namespace TetronJob.Areas.Admin.Controllers
 
             return View(model);
         }
+        [HttpGet]
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id,
+            CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(new DeleteRoleViewModel() { Id = id },cancellationToken);
+
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return BadRequest();
+        }
+
+     
     }
 }

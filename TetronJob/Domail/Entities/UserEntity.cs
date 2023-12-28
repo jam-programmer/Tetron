@@ -4,7 +4,7 @@ namespace Domain.Entities
 {
     public class UserEntity : IdentityUser<Guid>
     {
-        public  string? Avatar { set; get; }
+        public string? Avatar { set; get; }
         public string? Birthday { set; get; }
 
 

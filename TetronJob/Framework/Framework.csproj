@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Folder Include="CQRS\Notification\" />
+    <Folder Include="CQRS\Query\Admin\User\" />
   </ItemGroup>
 
 </Project>
