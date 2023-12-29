@@ -41,9 +41,10 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>نام نقش</th>
-                                <th>نام سیستمی</th>
+                                <th>تصویر</th>
+                                <th>نام و نام خانوادگی</th>
 
+                                <th>شماره موبایل</th>
                                 <th>عملیات</th>
                             </tr>
                         </thead>
@@ -66,7 +67,7 @@
                                         }
                                     </td>
 
-                                    <td>@item.UserName</td>
+                                    <td>@item.FullName</td>
 
                                     <td>@item.PhoneNumber</td>
 
@@ -76,7 +77,7 @@
                                                 <i class="bx bx-dots-vertical-rounded"></i>
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" asp-controller="Role" asp-action="Edit"
+                                                <a class="dropdown-item" asp-controller="User" asp-action="Edit"
                                                    asp-route-id="@item.Id"><i class="bx bx-edit-alt me-1"></i> ویرایش</a>
                                                 <a class="dropdown-item" onclick="Delete('@item.Id','Role')"><i class="bx bx-trash me-1"></i> حذف</a>
                                             </div>

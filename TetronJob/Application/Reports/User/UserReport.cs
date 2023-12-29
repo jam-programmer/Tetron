@@ -19,9 +19,25 @@ namespace Application.Reports.User
         {
             _userManager = userManager;
         }
-        public Task<UserEntity?> GetUserByIdAsync(Guid userId, CancellationToken cancellation)
+        public async Task<UserEntity?> GetUserByIdAsync(Guid userId, CancellationToken cancellation)
         {
-            throw new NotImplementedException();
+            if (cancellation.IsCancellationRequested)
+            {
+                //todo
+            }
+
+            if (userId == null)
+            {
+                //todo
+            }
+
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+            {
+                //todo
+            }
+
+            return user;
         }
 
         public async Task<PaginatedList<TDestination>> GetAllPaginatedAsync<TDestination>(PaginatedSearchWithSize pagination,
@@ -41,5 +57,30 @@ namespace Application.Reports.User
                 pagination.PageSize,
                 config: null, cancellationToken);
         }
+
+
+
+
+
+        public async Task<string?> GetUserRoleByUserIdAsync(UserEntity? user, CancellationToken cancellation)
+        {
+            if (cancellation.IsCancellationRequested)
+            {
+                //todo
+            }
+
+            if (user == null)
+            {
+                //todo
+            }
+
+            var roles = await _userManager.GetRolesAsync(user!);
+            var role = roles.FirstOrDefault();
+            return role;
+        }
+
+
+
+
     }
 }

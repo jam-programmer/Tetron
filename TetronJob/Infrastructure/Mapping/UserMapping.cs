@@ -14,6 +14,7 @@ namespace Infrastructure.Mapping
         public void Configure(EntityTypeBuilder<UserEntity> builder)
         {
             builder.HasKey(k => k.Id);
+            builder.Property(p => p.FullName).IsRequired().HasMaxLength(500);
             builder.HasMany(m => m.UserCategories)
                 .WithOne(o => o.User)
                 .HasForeignKey(f => f.UserId)

@@ -4,26 +4,38 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 @section Scripts
-{
+    {
     <script src="~/assets/vendor/libs/jdate/jdate.js"></script>
     <script src="~/assets/vendor/libs/flatpickr/flatpickr-jdate.js"></script>
     <script src="~/assets/vendor/libs/flatpickr/l10n/fa-jdate.js"></script>
 
     <script src="~/assets/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
     <script src="~/assets/vendor/libs/pickr/pickr.js"></script>
-    
-    
+
+
 
     <script src="~/assets/js/forms-pickers.js"></script>
+    <script>
+        function nationalCodeValidate(input) {
+            if (!input)
+                return;
+            var nationalCodeInputValue = input.value;
+            if (nationalCodeInputValue.length !== 10) {
+                document.getElementById("usernameAlert").innerHTML = "ساختار کد ملی صحیح نمی باشد.";
+            } else {
+                document.getElementById("usernameAlert").innerHTML = "";
+            }
+        }
+    </script>
 }
 
 @section Style
-{
+    {
     <link rel="stylesheet" href="~/assets/vendor/libs/flatpickr/flatpickr.css">
     <link rel="stylesheet" href="~/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css">
     <link rel="stylesheet" href="~/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css">
     <link rel="stylesheet" href="~/assets/vendor/libs/jquery-timepicker/jquery-timepicker.css">
-}                                
+}
 <div class="container-xxl flex-grow-1 container-p-y">
     <h4 class="py-3 breadcrumb-wrapper mb-4">
         <span class="text-muted fw-light">
@@ -45,34 +57,48 @@
                 <h5 class="card-header heading-color">افزودن کاربر جدید</h5>
                 <form asp-area="Admin" asp-controller="User" asp-action="Create" enctype="multipart/form-data">
                     <div class="card-body">
-                        
-                        
+
+
                         <div class="col-md-3 col-12 mb-4">
 
                             <div class="avatar avatar-xl">
                                 <img id="imagePath_1" src="~/assets/img/avatars/1.png" alt="آواتار" class="rounded-circle">
                             </div>
                             <label class="form-label mt-4"> انتخاب تصویر </label>
-                            <input asp-for="AvatarFile" type="file" onchange="ChangeImage(this,1)"  
+                            <input asp-for="AvatarFile" type="file" onchange="ChangeImage(this,1)"
                                    id="image_1"
                                    class="form-control" />
 
 
                         </div>
-                        
-                        
-                        
-                        
-                        
-                        
+
+
+
+
+
+
 
                         <div class="row">
                             <div class="col-md-6 col-12 mb-4">
                                 <label class="form-label">نام و نام خانوادگی</label>
-                                <input asp-for="UserName" type="text" class="form-control" placeholder="نام و نام خانوادگی" />
-                                <span class="text-danger" asp-validation-for="UserName"></span>
+                                <input asp-for="FullName" type="text" class="form-control" placeholder="نام و نام خانوادگی" />
+                                <span class="text-danger" asp-validation-for="FullName"></span>
 
                             </div>
+
+                            <div class="col-md-6 col-12 mb-4">
+                                <label class="form-label">کد ملی</label>
+                                <input asp-for="UserName"
+                                       maxlength="10" onblur="nationalCodeValidate(this)"
+                                       type="text" class="form-control" placeholder="کد ملی" />
+                                <span class="text-danger" id="usernameAlert" asp-validation-for="UserName"></span>
+
+                            </div>
+
+
+
+
+
                             <div class="col-md-6 col-12 mb-4">
                                 <label class="form-label">ایمیل</label>
                                 <input asp-for="Email" type="text" class="form-control" placeholder="ایمیل" />
@@ -81,7 +107,9 @@
                             </div>
                             <div class="col-md-6 col-12 mb-4">
                                 <label class="form-label">شماره موبایل</label>
-                                <input class="form-control text-start" type="tel" asp-for="PhoneNumber" id="html5-tel-input" dir="ltr" />
+                                <input class="form-control text-start" type="tel" asp-for="PhoneNumber" 
+                                       placeholder="شماره موبایل"
+                                       id="html5-tel-input" dir="ltr" />
                                 <span class="text-danger" asp-validation-for="Email"></span>
 
                             </div>
@@ -98,9 +126,9 @@
                                 <label for="exampleFormControlSelect1" class="form-label">انتخاب نقش کاربری</label>
                                 <select asp-for="RoleId" asp-items="@ViewBag.Roles" class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
                                     <option selected="selected" disabled="disabled">یک نقش انتخاب کنید</option>
-                                    
-                                </select>
 
+                                </select>
+                                <span class="text-danger" asp-validation-for="RoleId"></span>
                             </div>
 
 
@@ -109,14 +137,30 @@
                                 <input asp-for="Birthday" type="date" class="form-control flatpickr-input" placeholder="YYYY/MM/DD" id="flatpickr-date">
                             </div>
 
-                        </div>
 
 
-                        <div class="mt-3">
-                            <button type="submit" class="btn btn-sm btn-primary">ثبت</button>
-                            <a asp-area="Admin" asp-controller="User" asp-action="Index" class="btn btn-sm btn-warning text-white">بازگشت</a>
+                            <div class="col-md-6 col-12 mb-4">
+                                <span class="switch-label mt-2">فعالسازی حساب</span><br/>
+                                <label class="me-3 switch switch-success">
+                                    <input type="checkbox" class="switch-input" asp-for="Active" checked="">
+                                    <span class="switch-toggle-slider">
+                                        <span class="switch-on">
+                                            <i class="bx bx-check"></i>
+                                        </span>
+                                        <span class="switch-off">
+                                            <i class="bx bx-x"></i>
+                                        </span>
+                                    </span>
+                                  
+                                </label>
+                            </div>
+
+
+                            <div class="mt-3">
+                                <button type="submit" class="btn btn-sm btn-primary">ثبت</button>
+                                <a asp-area="Admin" asp-controller="User" asp-action="Index" class="btn btn-sm btn-warning text-white">بازگشت</a>
+                            </div>
                         </div>
-                    </div>
                 </form>
             </div>
         </div>

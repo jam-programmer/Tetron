@@ -53,7 +53,17 @@ namespace TetronJob.Areas.Admin.Controllers
             return View(model);
         }
 
-
+        [HttpGet]
+        //[Route("/Admin/User/Edit/{id}")]
+        public async Task<IActionResult> Edit([FromRoute]  Guid id)
+        {
+            var result = await _mediator.Send(new RequestGetUserById()
+            {
+                Id = id
+            });
+            await Roles(result.RoleId);
+            return View(result);
+        }
 
         public async Task Roles(Guid? id = null)
         {

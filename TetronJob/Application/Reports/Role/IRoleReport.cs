@@ -11,9 +11,10 @@ namespace Application.Reports.Role
     public interface IRoleReport
     {
         Task<RoleEntity?> GetRoleByIdAsync(Guid roleId, CancellationToken cancellation);
+        Task<RoleEntity?> GetRoleByNameAsync(string name, CancellationToken cancellation);
         Task<PaginatedList<TDestination>> GetAllPaginatedAsync<TDestination>(PaginatedWithSize pagination,
             CancellationToken cancellationToken = default);
-
+     
        Task<IEnumerable<RoleEntity>> GetRolesAsync(CancellationToken cancellationToken = default);
     }
 }

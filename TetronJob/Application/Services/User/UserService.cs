@@ -31,13 +31,13 @@ namespace Application.Services.User
             {
                 return Response.Succeded();
             }
-
+            string message=String.Empty;
             foreach (var error in result.Errors)
             {
-                //Todo Log
+                message += error.Description + "\r\n";
             }
 
-            return Response.Fail("امکان ثبت نقش کاربری وجود ندارد.");
+            return Response.Fail(message);
         }
 
         public async Task<Response> UpdateUserAsync(UserEntity user, CancellationToken cancellation)

@@ -9,7 +9,7 @@ using Framework.ViewModels.Role;
 
 namespace Framework.Validation.RoleValidation
 {
-    public class InsertRoleValidator:BaseValidator<InsertRoleViewModel>
+    public class InsertRoleValidator : BaseValidator<InsertRoleViewModel>
     {
         public InsertRoleValidator()
         {

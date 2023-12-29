@@ -16,7 +16,8 @@ namespace Framework.Factories.Identity.User
             CancellationToken cancellationToken = default);
 
         Task<Response> InsertUserAsync(InsertUserViewModel model,CancellationToken cancellationToken = default);
-     
+     Task<Response> UpdateUserAsync(UpdateUserViewModel model, CancellationToken cancellationToken = default);
+        Task<UpdateUserViewModel>GetUserByIdAsync(RequestGetUserById request,CancellationToken cancellationToken = default);
 
     }
 }

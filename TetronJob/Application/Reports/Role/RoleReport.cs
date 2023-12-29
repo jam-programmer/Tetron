@@ -50,5 +50,21 @@ namespace Application.Reports.Role
         {
             return await _roleManager.Roles.ToListAsync(cancellationToken: cancellationToken);
         }
+
+        public async Task<RoleEntity?> GetRoleByNameAsync(string name, CancellationToken cancellation)
+        {
+            if (cancellation.IsCancellationRequested)
+            {
+                //todo
+            }
+
+            var role = await _roleManager.FindByNameAsync(name.ToString());
+            if (role == null)
+            {
+                //todo
+            }
+
+            return role;
+        }
     }
 }
