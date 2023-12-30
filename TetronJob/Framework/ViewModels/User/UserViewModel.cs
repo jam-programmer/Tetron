@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace Framework.ViewModels.User
 {
+    public class DeleteUserViewModel : IRequest<Response>
+    {
+        public Guid Id { set; get; }
+    }
     public class UserViewModel
     {
         public  string? PhoneNumber { get; set; }

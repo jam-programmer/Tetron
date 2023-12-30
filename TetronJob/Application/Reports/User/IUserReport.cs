@@ -9,5 +9,6 @@ namespace Application.Reports.User
         Task<PaginatedList<TDestination>> GetAllPaginatedAsync<TDestination>(PaginatedSearchWithSize pagination,
             CancellationToken cancellationToken = default);
         Task<string?> GetUserRoleByUserIdAsync(UserEntity? user, CancellationToken cancellation);
+   
     }
 }

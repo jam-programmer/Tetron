@@ -79,8 +79,6 @@ namespace Application.Reports.User
             return role;
         }
 
-
-
-
+      
     }
 }

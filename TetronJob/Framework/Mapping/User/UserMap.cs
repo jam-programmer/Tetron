@@ -20,10 +20,7 @@ namespace Framework.Mapping.User
                 .Map(v=>v.PhoneNumber,e=>e.PhoneNumber)
                 .Map(v=>v.Email,e=>e.Email)
                 .Map(v=>v.Birthday,e=>e.Birthday)
-                .Map(v=>v.Active,e=>e.EmailConfirmed)
-                .Map(v=>v.Active,e=>e.PhoneNumberConfirmed)
-
-
+                
 
                 .Compile();
 

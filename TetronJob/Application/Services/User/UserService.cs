@@ -190,7 +190,7 @@ namespace Application.Services.User
             //_logger.LogError($"-----(UserService) *** The current password was not deleted ==> {response.Message}");
             return response;
         }
-        public async Task<Response> RemoveRoleAsync(UserEntity user, List<string> roles, CancellationToken cancellation)
+        public async Task<Response> RemoveRolesAsync(UserEntity user, List<string> roles, CancellationToken cancellation)
         {
             Response response = new();
             if (cancellation.IsCancellationRequested)
@@ -198,8 +198,7 @@ namespace Application.Services.User
                 //_logger.LogInformation($"-----(UserService) *** The operation was stopped by the user ***");
                 return response;
             }
-
-
+   
             var resultRemoveRole = await _userManager.RemoveFromRolesAsync(user, roles);
             if (resultRemoveRole.Succeeded)
             {
@@ -213,6 +212,26 @@ namespace Application.Services.User
             return response;
         }
 
-       
+        public async Task<Response> RemoveRoleAsync(UserEntity user, string role, CancellationToken cancellation)
+        {
+            Response response = new();
+            if (cancellation.IsCancellationRequested)
+            {
+                //_logger.LogInformation($"-----(UserService) *** The operation was stopped by the user ***");
+                return response;
+            }
+
+            var resultRemoveRole = await _userManager.RemoveFromRoleAsync(user, role);
+            if (resultRemoveRole.Succeeded)
+            {
+                return Response.Succeded();
+            }
+            foreach (var item in resultRemoveRole.Errors)
+            {
+                response.Message += item.Description + "\r\n";
+            }
+            //_logger.LogError($"-----(UserService) *** User roles were not deleted ==> {response.Message}");
+            return response;
+        }
     }
 }

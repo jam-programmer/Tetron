@@ -54,7 +54,7 @@ namespace TetronJob.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        //[Route("/Admin/User/Edit/{id}")]
+        
         public async Task<IActionResult> Edit([FromRoute]  Guid id)
         {
             var result = await _mediator.Send(new RequestGetUserById()
@@ -64,6 +64,38 @@ namespace TetronJob.Areas.Admin.Controllers
             await Roles(result.RoleId);
             return View(result);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(UpdateUserViewModel model, CancellationToken cancellation)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _mediator.Send(model, cancellation);
+                if (result.IsSuccess == true)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewBag.Alert = result.Message!;
+                return View(model);
+            }
+            await Roles(model.RoleId);
+            return View(model);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id,
+            CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(new DeleteUserViewModel() { Id = id }, cancellationToken);
+
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return BadRequest();
+        }
+
+
 
         public async Task Roles(Guid? id = null)
         {

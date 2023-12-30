@@ -51,6 +51,10 @@ namespace Framework.Factories.Identity.User
                 //todo
             }
             model.Adapt(user, UserMap.ConfigUpdate());
+           
+                user!.EmailConfirmed = model.Active;
+            user.PhoneNumberConfirmed = model.Active;
+           
             if (!string.IsNullOrEmpty(model.Password))
             {
                 var resultRemovePassword = await _userService
@@ -67,14 +71,36 @@ namespace Framework.Factories.Identity.User
                 }
             }
 
-            List<string> roles = new List<string>();
-            roles.Add(model.RoleId.ToString()!);
-            var resultRemoveRole = await _userService.RemoveRoleAsync(user!, roles, cancellationToken);
+            var userRole = await _userReport.GetUserRoleByUserIdAsync(user, cancellationToken);
+            if (userRole == null || string.IsNullOrEmpty(userRole))
+            {
+
+            }
+     
+            var resultRemoveRole = await _userService.RemoveRoleAsync(user!, userRole!, cancellationToken);
             if (resultRemoveRole.IsSuccess == false)
             {
                 //todo
             }
-            var resultSetNewRole=
+
+            var roleSelected = await _roleReport.GetRoleByIdAsync(model.RoleId, cancellationToken);
+            if(roleSelected== null) { }
+
+            var resultSetNewRole = await _userService.AddUserRoleAsync(user!, roleSelected!.Name!, cancellationToken);
+            if (resultSetNewRole.IsSuccess == false)
+            {
+                //todo
+            }
+
+            if (model.AvatarFile != null)
+            {
+                user.Avatar = FileProcessing.FileUpload(model.AvatarFile, model.AvatarPath, "UsersImage");
+            }
+
+
+            var resultUpdate = await _userService.UpdateUserAsync(user!, cancellationToken);
+            return resultUpdate;
+
         }
 
         public async Task<UpdateUserViewModel> GetUserByIdAsync
@@ -168,6 +194,43 @@ namespace Framework.Factories.Identity.User
             return response;
         }
 
-        
+        public async Task<Response> DeleteUserAsync(DeleteUserViewModel model, CancellationToken cancellationToken = default)
+        {
+            if (cancellationToken.IsCancellationRequested)
+            {
+
+            }
+
+            if (model == null)
+            {
+                //todo
+            }
+
+            var user = await _userReport.GetUserByIdAsync(model!.Id, cancellationToken);
+            if (user == null)
+            {
+
+            }
+
+            var removePassword = await _userService.RemoveCurrentPasswordAsync(user!, cancellationToken);
+            if (removePassword.IsSuccess == false)
+            {
+
+            }
+            var userRole = await _userReport.GetUserRoleByUserIdAsync(user!, cancellationToken);
+            if (string.IsNullOrEmpty(userRole))
+            {
+
+            }
+
+            var removeRole = await _userService.RemoveRoleAsync(user!, userRole!, cancellationToken);
+            if (removeRole.IsSuccess == false)
+            {
+
+            }
+            FileProcessing.RemoveFile(user!.Avatar!, "UsersImage");
+            var removeUser = await _userService.DeleteUserAsync(user!, cancellationToken);
+            return removeUser;
+        }
     }
 }

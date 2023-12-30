@@ -10,17 +10,17 @@ using MediatR;
 
 namespace Framework.CQRS.Command.Admin.User
 {
-    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserViewModel, Response>
+    public class DeleteUserCommandHandler:IRequestHandler<DeleteUserViewModel,Response>
     {
         private readonly IUserFactory _userFactory;
 
-        public UpdateUserCommandHandler(IUserFactory userFactory)
+        public DeleteUserCommandHandler(IUserFactory userFactory)
         {
             _userFactory = userFactory;
         }
-        public async Task<Response> Handle(UpdateUserViewModel request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(DeleteUserViewModel request, CancellationToken cancellationToken)
         {
-            return await _userFactory.UpdateUserAsync(request, cancellationToken);
+            return await _userFactory.DeleteUserAsync(request, cancellationToken);
         }
     }
 }

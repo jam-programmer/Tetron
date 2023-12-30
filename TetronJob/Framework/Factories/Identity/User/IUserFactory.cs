@@ -15,9 +15,9 @@ namespace Framework.Factories.Identity.User
         (PaginatedSearchWithSize pagination,
             CancellationToken cancellationToken = default);
 
-        Task<Response> InsertUserAsync(InsertUserViewModel model,CancellationToken cancellationToken = default);
-     Task<Response> UpdateUserAsync(UpdateUserViewModel model, CancellationToken cancellationToken = default);
-        Task<UpdateUserViewModel>GetUserByIdAsync(RequestGetUserById request,CancellationToken cancellationToken = default);
-
+        Task<Response> InsertUserAsync(InsertUserViewModel model, CancellationToken cancellationToken = default);
+        Task<Response> UpdateUserAsync(UpdateUserViewModel model, CancellationToken cancellationToken = default);
+        Task<UpdateUserViewModel> GetUserByIdAsync(RequestGetUserById request, CancellationToken cancellationToken = default);
+        Task<Response> DeleteUserAsync(DeleteUserViewModel model, CancellationToken cancellationToken = default);
     }
 }

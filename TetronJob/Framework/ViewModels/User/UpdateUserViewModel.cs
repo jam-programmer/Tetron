@@ -12,7 +12,7 @@ namespace Framework.ViewModels.User
     public class UpdateUserViewModel:IRequest<Response>
     {
         public Guid Id { set; get; }
-        public Guid? RoleId { set; get; }
+        public Guid RoleId { set; get; }
         public string? FullName { set; get; }
         public IFormFile? AvatarFile { set; get; }
         public string? AvatarPath { set; get; }
@@ -21,7 +21,7 @@ namespace Framework.ViewModels.User
         public string? Email { set; get; }
         public string? Password { set; get; }
         public string? PhoneNumber { set; get; }
-        public bool Active { set; get; } = false;
+        public bool Active { set; get; } 
     }
 
     public class RequestGetUserById:IRequest<UpdateUserViewModel>
