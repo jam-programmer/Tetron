@@ -25,10 +25,7 @@ namespace Infrastructure.Mapping
                 .HasForeignKey(f => f.ProvinceId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasOne(o => o.Country)
-                .WithMany(m => m.UserAddress)
-                .HasForeignKey(f => f.CountryId)
-                .OnDelete(DeleteBehavior.NoAction);
+          
         }
     }
 }

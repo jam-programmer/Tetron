@@ -14,8 +14,7 @@ namespace Domain.Entities
 
 
         #region ForeginKey
-        public Guid CountryId { set; get; }
-        public CountryEntity? Country { set; get; } 
+
         public ICollection<CityEntity>? Cities { set; get; }
         public ICollection<UserAddressEntity>? UserAddress { set; get; }
 

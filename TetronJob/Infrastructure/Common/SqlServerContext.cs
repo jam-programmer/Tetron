@@ -21,7 +21,7 @@ namespace Infrastructure.Common
         #region Entities
         public virtual DbSet<CategoryEntity> Category { get; set; } 
         public virtual DbSet<CityEntity> City { get; set; }
-        public virtual DbSet<CountryEntity> Country { get; set; }   
+
         public virtual DbSet<ProvinceEntity> Province { get; set; }
         public virtual DbSet<UserAddressEntity> UserAddress { get; set; }   
   

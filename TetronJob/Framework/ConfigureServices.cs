@@ -4,6 +4,7 @@ using Framework.Common;
 using Framework.Common.Behaviors;
 using Framework.Factories.Identity.Role;
 using Framework.Factories.Identity.User;
+using Framework.Factories.Provinces;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,6 +42,7 @@ namespace Framework
 
             services.AddScoped<IRoleFactory, RoleFactory>();
             services.AddScoped<IUserFactory, UserFactory>();
+            services.AddScoped<IProvincesFactory, ProvincesFactory>();
             return services;
         }
     }

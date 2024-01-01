@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateDataBase : Migration
+    public partial class CreateDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,6 +33,7 @@ namespace Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Birthday = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FullName = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     AddressId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -72,7 +73,7 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Country",
+                name: "Province",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -83,7 +84,7 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Country", x => x.Id);
+                    table.PrimaryKey("PK_Province", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -218,28 +219,6 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Province",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CountryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UpdateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Province", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Province_Country_CountryId",
-                        column: x => x.CountryId,
-                        principalTable: "Country",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "City",
                 columns: table => new
                 {
@@ -266,7 +245,6 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CountryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProvinceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -284,11 +262,6 @@ namespace Infrastructure.Migrations
                         name: "FK_UserAddress_City_CityId",
                         column: x => x.CityId,
                         principalTable: "City",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_UserAddress_Country_CountryId",
-                        column: x => x.CountryId,
-                        principalTable: "Country",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_UserAddress_Province_ProvinceId",
@@ -352,19 +325,9 @@ namespace Infrastructure.Migrations
                 column: "ProvinceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Province_CountryId",
-                table: "Province",
-                column: "CountryId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_UserAddress_CityId",
                 table: "UserAddress",
                 column: "CityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserAddress_CountryId",
-                table: "UserAddress",
-                column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserAddress_ProvinceId",
@@ -416,9 +379,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Province");
-
-            migrationBuilder.DropTable(
-                name: "Country");
         }
     }
 }

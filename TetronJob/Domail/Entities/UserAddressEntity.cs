@@ -8,9 +8,7 @@ namespace Domain.Entities
 {
     public class UserAddressEntity:BaseEntity
     {
-        public Guid CountryId { set; get; }
-        public CountryEntity? Country { get; set; }
-
+       
         public Guid ProvinceId { set; get; }
         public ProvinceEntity? Province { get; set; }
 

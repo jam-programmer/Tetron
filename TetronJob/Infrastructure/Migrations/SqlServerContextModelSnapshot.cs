@@ -107,39 +107,12 @@ namespace Infrastructure.Migrations
                     b.ToTable("City");
                 });
 
-            modelBuilder.Entity("Domain.Entities.CountryEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdateTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Country");
-                });
-
             modelBuilder.Entity("Domain.Entities.ProvinceEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CountryId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime2");
 
@@ -154,8 +127,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
 
                     b.ToTable("Province");
                 });
@@ -200,9 +171,6 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("CityId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CountryId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime2");
 
@@ -215,8 +183,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
-
-                    b.HasIndex("CountryId");
 
                     b.HasIndex("ProvinceId");
 
@@ -439,28 +405,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("Province");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ProvinceEntity", b =>
-                {
-                    b.HasOne("Domain.Entities.CountryEntity", "Country")
-                        .WithMany("Provinces")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Country");
-                });
-
             modelBuilder.Entity("Domain.Entities.UserAddressEntity", b =>
                 {
                     b.HasOne("Domain.Entities.CityEntity", "City")
                         .WithMany("UserAddress")
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.CountryEntity", "Country")
-                        .WithMany("UserAddress")
-                        .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -477,8 +426,6 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("City");
-
-                    b.Navigation("Country");
 
                     b.Navigation("Province");
 
@@ -543,13 +490,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.CityEntity", b =>
                 {
-                    b.Navigation("UserAddress");
-                });
-
-            modelBuilder.Entity("Domain.Entities.CountryEntity", b =>
-                {
-                    b.Navigation("Provinces");
-
                     b.Navigation("UserAddress");
                 });
 
