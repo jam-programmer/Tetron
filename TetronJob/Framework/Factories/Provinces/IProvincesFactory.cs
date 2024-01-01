@@ -3,10 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Models;
+using Framework.ViewModels.Province;
 
 namespace Framework.Factories.Provinces
 {
     public interface IProvincesFactory
     {
+        Task<PaginatedList<TViewModel>> GetPagedSearchWithSizeAsync<TViewModel>
+        (PaginatedSearchWithSize pagination,
+            CancellationToken cancellationToken = default);
+
+        Task<Response>InsertProvinceAsync(InsertProvinceViewModel  viewModel,CancellationToken cancellation);
+        Task<Response>UpdateProvinceAsync(UpdateProvinceViewModel  viewModel,CancellationToken cancellation);
+        Task<Response>DeleteProvinceAsync(DeleteProvinceViewModel  viewModel,CancellationToken cancellation);
+        Task<UpdateProvinceViewModel> GetProvinceByIdAsync(RequestGetProvinceById  request,CancellationToken cancellation);
     }
 }
