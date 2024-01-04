@@ -1,0 +1,95 @@
+﻿@model Application.Models.PaginatedList<Framework.ViewModels.Province.ProvinceViewModel>
+@{
+    ViewData["Title"] = "استان ها";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 breadcrumb-wrapper mb-4">
+        <span class="text-muted fw-light">موقعیت مکانی/</span> استان ها
+    </h4>
+
+    <!-- DataTable with Buttons -->
+    <div class="card">
+        <div class="card-datatable p-2">
+            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                <div class="card-header flex-column flex-md-row">
+
+                    <div class="row ">
+
+                        <div class="col-6 justify-content-center justify-content-md-end">
+                            <a asp-area="Admin" asp-controller="Province" asp-action="Create" class="btn btn-secondary create-new btn-primary ms-2" tabindex="0" aria-controls="DataTables_Table_0" type="button">
+                                <span><i class="bx bx-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">افزودن رکورد جدید</span></span>
+                            </a>
+
+
+                        </div>
+                        <div class="col-6  justify-content-md-end">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="جستجو..." aria-label="Recipient's username with two button addons">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="bx bx-search me-sm-1"></i>
+                                </button>
+                                <a class="btn btn-warning text-white">  <i class="bx bx-trash me-sm-1"></i></a>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                              
+                                <th>نام استان</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+
+
+                            @foreach (var item in Model.items)
+                            {
+                                <tr id="item_@item.Id">
+
+                                    
+
+                                    <td>@item.Name</td>
+
+                                   
+
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" asp-controller="Province" asp-action="Edit"
+                                                   asp-route-id="@item.Id"><i class="bx bx-edit-alt me-1"></i> ویرایش</a>
+                                                <a class="dropdown-item" onclick="Delete('@item.Id','Province')"><i class="bx bx-trash me-1"></i> حذف</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-footer">
+                    <div class="col-lg-6">
+                        <nav class="pagination"
+                             data-page-index="@Model.pageIndex"
+                             data-total-pages="@Model.totalPages"
+                             data-path="/Admin/Province/Index"></nav>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+

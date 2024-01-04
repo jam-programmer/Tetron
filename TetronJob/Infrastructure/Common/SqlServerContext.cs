@@ -18,22 +18,24 @@ namespace Infrastructure.Common
 
         }
 
-        #region Entities
-        public virtual DbSet<CategoryEntity> Category { get; set; } 
-        public virtual DbSet<CityEntity> City { get; set; }
-
-        public virtual DbSet<ProvinceEntity> Province { get; set; }
-        public virtual DbSet<UserAddressEntity> UserAddress { get; set; }   
-  
-
-
-        #endregion
-
+       
+      
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
         }
+       
+        #region Entities
+        public virtual DbSet<CategoryEntity> Category { get; set; }
+        public virtual DbSet<CityEntity> City { get; set; }
+
+        public virtual DbSet<ProvinceEntity> Province { get; set; }
+        public virtual DbSet<UserAddressEntity> UserAddress { get; set; }
+
+
+
+        #endregion
     }
 }

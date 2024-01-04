@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using Application.Models;
 using Application.Reports.Province;
 using Application.Services.Province;
 using Domain.Entities;
+
 using Framework.ViewModels.Province;
 using Mapster;
 
-namespace Framework.Factories.Provinces
+namespace Framework.Factories.Province
 {
     public class ProvincesFactory:IProvincesFactory
     {
@@ -49,7 +46,8 @@ namespace Framework.Factories.Provinces
             }
 
             var province = await _report.GetByIdAsync(viewModel.Id, cancellation);
-            province=viewModel.Adapt<ProvinceEntity>();
+            province.Name=viewModel.Name;
+            
             var result = await _service.UpdateAsync(province, cancellation);
             return result;
         }

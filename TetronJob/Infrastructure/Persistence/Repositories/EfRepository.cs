@@ -2,6 +2,7 @@
 using Domain.Interfaces;
 using Infrastructure.Common;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
 
 namespace Infrastructure.Persistence.Repositories
 {
@@ -22,7 +23,8 @@ namespace Infrastructure.Persistence.Repositories
 
         public async Task<TEntity> GetByIdAsync(Guid id)
         {
-            return (await _context.Set<TEntity>().FindAsync(id))!;
+            return (await _context.Set<TEntity>().AsNoTracking()
+                .SingleOrDefaultAsync(s=>s.Id==id))!;
         }
 
         public Task<IQueryable<TEntity>> GetByQueryAsync()
@@ -43,6 +45,7 @@ namespace Infrastructure.Persistence.Repositories
         public async Task InsertAsync(TEntity entity)
         {
             await _context.Set<TEntity>().AddAsync(entity);
+            await SaveChangeAsync();
         }
 
         public async Task SaveChangeAsync()
@@ -50,12 +53,13 @@ namespace Infrastructure.Persistence.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public Task UpdateAsync(TEntity entity)
+
+        public async Task UpdateAsync(TEntity entity)
         {
-            _context.Set<TEntity>().Update(entity);
-            return Task.CompletedTask;
+            _context.Update(entity);
+            await SaveChangeAsync();
         }
 
-
+      
     }
 }

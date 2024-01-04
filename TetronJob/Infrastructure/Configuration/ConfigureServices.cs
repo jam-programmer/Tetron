@@ -8,8 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Entities;
+using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Common;
+using Infrastructure.Persistence.Repositories;
 
 namespace Infrastructure.Configuration
 {
@@ -29,7 +31,7 @@ namespace Infrastructure.Configuration
                 option.UseSqlServer(configuration.GetConnectionString("TetronJob"));
             });
             //services.AddScoped<ISqlServer>(provider => provider.GetRequiredService<DataBaseContext>());
-            //services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IEfRepository<>), typeof(EfRepository<>));
             //services.AddScoped(typeof(IDapper<>), typeof(DapperRepository<>));
             //ConnectionOptions.ConnectionString = configuration.GetConnectionString("DonyshDataBase");
             return services;

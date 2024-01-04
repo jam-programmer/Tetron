@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Application.Models;
 using Framework.ViewModels.Province;
 
-namespace Framework.Factories.Provinces
+namespace Framework.Factories.Province
 {
     public interface IProvincesFactory
     {
