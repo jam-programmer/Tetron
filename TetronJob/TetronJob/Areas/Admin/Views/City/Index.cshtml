@@ -1,13 +1,13 @@
-﻿@model Application.Models.PaginatedList<Framework.ViewModels.Province.ProvinceViewModel>
+﻿@model Application.Models.PaginatedList<Framework.ViewModels.City.CityViewModel>
 @{
-    ViewData["Title"] = "استان ها";
+    ViewData["Title"] = "شهرها";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
 
 <div class="container-xxl flex-grow-1 container-p-y">
     <h4 class="py-3 breadcrumb-wrapper mb-4">
-        <span class="text-muted fw-light">موقعیت مکانی/</span> استان ها
+        <span class="text-muted fw-light">موقعیت مکانی/</span> شهر ها
     </h4>
 
     <!-- DataTable with Buttons -->
@@ -19,7 +19,7 @@
                     <div class="row ">
 
                         <div class="col-6 justify-content-center justify-content-md-end">
-                            <a asp-area="Admin" asp-controller="Province" asp-action="Create" class="btn btn-secondary create-new btn-primary ms-2" tabindex="0" aria-controls="DataTables_Table_0" type="button">
+                            <a asp-area="Admin" asp-controller="City" asp-action="Create" asp-route-id="@ViewBag.Province" class="btn btn-secondary create-new btn-primary ms-2" tabindex="0" aria-controls="DataTables_Table_0" type="button">
                                 <span><i class="bx bx-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">افزودن رکورد جدید</span></span>
                             </a>
 
@@ -43,9 +43,9 @@
                     <table class="table">
                         <thead>
                             <tr>
-                              
+
+                                <th>نام شهر</th>
                                 <th>نام استان</th>
-                                <th>شهر ها </th>
                                 <th>عملیات</th>
                             </tr>
                         </thead>
@@ -56,14 +56,12 @@
                             {
                                 <tr id="item_@item.Id">
 
-                                    
+
 
                                     <td>@item.Name</td>
-                                    <td>
-                                        <a asp-controller="City" asp-action="Index" asp-route-id="@item.Id" class="btn btn-sm btn-success text-white">شهرهای استان</a>
-                                    </td>
+                                    <td>@item.ProvinceName</td>
 
-                                   
+
 
                                     <td>
                                         <div class="dropdown">
@@ -71,12 +69,9 @@
                                                 <i class="bx bx-dots-vertical-rounded"></i>
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" asp-controller="Province" asp-action="Edit"
+                                                <a class="dropdown-item" asp-controller="City" asp-action="Edit"
                                                    asp-route-id="@item.Id"><i class="bx bx-edit-alt me-1"></i> ویرایش</a>
-                                                
-                                                
-
-                                                <a class="dropdown-item" onclick="Delete('@item.Id','Province')"><i class="bx bx-trash me-1"></i> حذف</a>
+                                                <a class="dropdown-item" onclick="Delete('@item.Id','City')"><i class="bx bx-trash me-1"></i> حذف</a>
                                             </div>
                                         </div>
                                     </td>
@@ -91,7 +86,7 @@
                         <nav class="pagination"
                              data-page-index="@Model.pageIndex"
                              data-total-pages="@Model.totalPages"
-                             data-path="/Admin/Province/Index"></nav>
+                             data-path="/Admin/City/Index"></nav>
                     </div>
                 </div>
 
