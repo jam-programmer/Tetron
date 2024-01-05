@@ -6,7 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.Reports.Role;
 using Application.Reports.User;
+using Application.Reports.UserAddress;
 using Application.Services.User;
+using Application.Services.UserAddress;
 using Domain.Entities;
 using Framework.Common.Application.Core;
 using Framework.Mapping.User;
@@ -21,6 +23,18 @@ namespace Framework.Factories.Identity.User
         private readonly IRoleReport _roleReport;
         private readonly IUserService _userService;
         private readonly IUserReport _userReport;
+        private readonly IUserAddressReport _userAddressReport;
+        private readonly IUserAddressService _userAddressService;
+
+        public UserFactory(IRoleReport roleReport, IUserService userService, IUserReport userReport, IUserAddressReport userAddressReport, IUserAddressService userAddressService)
+        {
+            _roleReport = roleReport;
+            _userService = userService;
+            _userReport = userReport;
+            _userAddressReport = userAddressReport;
+            _userAddressService = userAddressService;
+        }
+
 
         public UserFactory(IRoleReport roleReport, IUserService userService, IUserReport userReport)
         {
@@ -34,6 +48,44 @@ namespace Framework.Factories.Identity.User
         {
             return await _userReport.GetAllPaginatedAsync<TViewModel>
                 (pagination, cancellationToken);
+
+        }
+
+        public async Task<SetUserAddressViewModel> SetUserAddressAsync(SetUserAddressViewModel viewModel,
+            CancellationToken cancellation)
+        {
+            if (cancellation.IsCancellationRequested)
+            {
+                //
+            }
+
+          
+            var checkAddress = await _userAddressReport.ExistUserAddressAsync(viewModel.UserId);
+
+            if (checkAddress == true && viewModel.Get)
+            {
+                var address = await _userAddressReport.
+                    GetUserAddressByIdAsync(viewModel.UserId);
+                viewModel = address.Adapt<SetUserAddressViewModel>();
+                return viewModel;
+            }
+
+
+            if (checkAddress && viewModel.Get==false)
+            {
+                var getAddress = await _userAddressReport.GetUserAddressByIdAsync(viewModel.UserId);
+                getAddress = viewModel.Adapt<UserAddressEntity>();
+                await _userAddressService.UpdateAsync(getAddress);
+              
+            }
+            else
+            {
+                UserAddressEntity address = new();
+                address = viewModel.Adapt<UserAddressEntity>();
+                await _userAddressService.InsertAsync(address);
+            }
+
+            return viewModel;
 
         }
 

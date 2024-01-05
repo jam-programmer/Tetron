@@ -97,6 +97,19 @@ namespace TetronJob.Areas.Admin.Controllers
 
 
 
+        public async Task<IActionResult> SetAddress(Guid id)
+        {
+            var result = await _mediator.Send(new SetUserAddressViewModel()
+            {
+                UserId = id,
+                Get = true
+            });
+            return View(result);
+        }
+
+
+
+
         public async Task Roles(Guid? id = null)
         {
             var result = await _mediator.Send(new RequestSelectedRoles());

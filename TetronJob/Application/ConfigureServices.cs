@@ -7,10 +7,12 @@ using Application.Reports.City;
 using Application.Reports.Province;
 using Application.Reports.Role;
 using Application.Reports.User;
+using Application.Reports.UserAddress;
 using Application.Services.City;
 using Application.Services.Province;
 using Application.Services.Role;
 using Application.Services.User;
+using Application.Services.UserAddress;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -34,6 +36,8 @@ namespace Application
             services.AddScoped<ICityReport, CityReport>();
             services.AddScoped<ICityService, CityService>();
 
+            services.AddScoped<IUserAddressReport, UserAddressReport>();
+            services.AddScoped<IUserAddressService, UserAddressService>();
             return services;
         }
     }

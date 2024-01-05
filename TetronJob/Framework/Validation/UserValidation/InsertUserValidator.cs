@@ -15,4 +15,13 @@ namespace Framework.Validation.UserValidation
             RuleFor(f => f.PhoneNumber).NotEmpty().NotNull();
         }
     }
+
+    public class SetUserAddressValidator : BaseValidator<SetUserAddressViewModel>
+    {
+        public SetUserAddressValidator()
+        {
+            RuleFor(f => f.CityId).NotNull();
+            RuleFor(f => f.ProvinceId).NotNull();
+        }
+    }
 }
