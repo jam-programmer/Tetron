@@ -2,6 +2,7 @@
 using FluentValidation.AspNetCore;
 using Framework.Common;
 using Framework.Common.Behaviors;
+using Framework.Factories.Category;
 using Framework.Factories.City;
 using Framework.Factories.Identity.Role;
 using Framework.Factories.Identity.User;
@@ -41,6 +42,7 @@ namespace Framework
 
 
 
+            services.AddScoped<ICategoryFactory, CategoryFactory>();
             services.AddScoped<IRoleFactory, RoleFactory>();
             services.AddScoped<IUserFactory, UserFactory>();
             services.AddScoped<IProvincesFactory, ProvincesFactory>();

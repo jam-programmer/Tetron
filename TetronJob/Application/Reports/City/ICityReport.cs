@@ -10,6 +10,7 @@ namespace Application.Reports.City
 {
     public interface ICityReport
     {
+        Task<List<CityEntity>> GetCities(Guid ParentId);
         Task<PaginatedList<TDestination>> GetAllPaginatedAsync<TDestination>(PaginatedSearchWithSize pagination,Guid provinceId,
             CancellationToken cancellationToken = default);
         Task<CityEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);

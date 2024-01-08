@@ -79,8 +79,12 @@
                                                 <i class="bx bx-dots-vertical-rounded"></i>
                                             </button>
                                             <div class="dropdown-menu">
+                                                <a class="dropdown-item" asp-controller="User" asp-action="SetAddress"
+                                                   asp-route-id="@item.Id"><i class="fa-solid fa-location-dot"></i> نشانی</a>
+                                                
                                                 <a class="dropdown-item" asp-controller="User" asp-action="Edit"
                                                    asp-route-id="@item.Id"><i class="bx bx-edit-alt me-1"></i> ویرایش</a>
+
                                                 <a class="dropdown-item" onclick="Delete('@item.Id','User')"><i class="bx bx-trash me-1"></i> حذف</a>
                                             </div>
                                         </div>

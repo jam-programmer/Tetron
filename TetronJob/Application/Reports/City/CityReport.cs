@@ -19,6 +19,13 @@ namespace Application.Reports.City
         {
             _repository = repository;
         }
+
+        public async Task<List<CityEntity>> GetCities(Guid parentId)
+        {
+            var query = await _repository.GetByQueryAsync();
+            return await query.Where(w => w.ProvinceId == parentId).ToListAsync();
+        }
+
         public async Task<PaginatedList<TDestination>> GetAllPaginatedAsync<TDestination>(PaginatedSearchWithSize pagination, Guid provinceId,
             CancellationToken cancellationToken = default)
         {

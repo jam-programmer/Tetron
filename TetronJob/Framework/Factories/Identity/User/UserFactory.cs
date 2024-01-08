@@ -69,12 +69,22 @@ namespace Framework.Factories.Identity.User
                 viewModel = address.Adapt<SetUserAddressViewModel>();
                 return viewModel;
             }
+            
+            if (checkAddress == false && viewModel.Get)
+            {
+               
+                return new SetUserAddressViewModel()
+                {
+                    UserId = viewModel.UserId
+                };
+            }
 
 
             if (checkAddress && viewModel.Get==false)
             {
                 var getAddress = await _userAddressReport.GetUserAddressByIdAsync(viewModel.UserId);
-                getAddress = viewModel.Adapt<UserAddressEntity>();
+                getAddress!.CityId = viewModel.CityId;
+                getAddress.ProvinceId = viewModel.ProvinceId;
                 await _userAddressService.UpdateAsync(getAddress);
               
             }

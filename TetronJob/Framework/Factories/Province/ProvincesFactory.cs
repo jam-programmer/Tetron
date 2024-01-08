@@ -20,6 +20,13 @@ namespace Framework.Factories.Province
             _service = service;
         }
 
+        public async Task<List<ProvinceViewModel>> GetProvincesAsync()
+        {
+            var items= await _report.GetProvinces();
+            List<ProvinceViewModel> provinces= items.Adapt<List<ProvinceViewModel>>();
+            return provinces;
+        }
+
         public async Task<PaginatedList<TViewModel>> GetPagedSearchWithSizeAsync<TViewModel>(PaginatedSearchWithSize pagination,
             CancellationToken cancellationToken = default)
         {

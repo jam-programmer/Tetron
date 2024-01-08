@@ -1,14 +1,20 @@
-﻿using Application.Extensions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Application.Extensions;
 using Application.Models;
 using Domain.Entities;
 using Domain.Interfaces;
-namespace Application.Reports.Province
-{
-    public class ProvinceReport : IProvinceReport
-    {
-        private readonly IEfRepository<ProvinceEntity> _repository;
 
-        public ProvinceReport(IEfRepository<ProvinceEntity> repository)
+namespace Application.Reports.Category
+{
+    public class CategoryReport:ICategoryReport
+    {
+        private readonly IEfRepository<CategoryEntity> _repository;
+
+        public CategoryReport(IEfRepository<CategoryEntity> repository)
         {
             _repository = repository;
         }
@@ -25,27 +31,21 @@ namespace Application.Reports.Province
                     .AsQueryable();
             }
 
-            return await query.PaginatedListAsync<ProvinceEntity, TDestination>(pagination.Page, pagination.PageSize,
+            return await query.PaginatedListAsync<CategoryEntity, TDestination>(pagination.Page, pagination.PageSize,
                 config: null, cancellationToken);
-
         }
 
-        public async Task<ProvinceEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task<CategoryEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             if (cancellationToken.IsCancellationRequested)
             {
 
             }
 
-            
 
-            var province = await _repository.GetByIdAsync(id);
-            return province;
-        }
 
-        public async Task<IEnumerable<ProvinceEntity>> GetProvinces()
-        {
-            return await _repository.GetListAsync();
+            var category = await _repository.GetByIdAsync(id);
+            return category;
         }
     }
 }

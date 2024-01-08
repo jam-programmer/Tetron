@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
+using Framework.ViewModels.Province;
 
 namespace Framework.ViewModels.City
 {
@@ -23,5 +24,9 @@ namespace Framework.ViewModels.City
     {
         public Guid Id { get; set; }
         public PaginatedSearchWithSize? Paginated { set; get; }
+    }
+    public class RequestGetCities : IRequest<List<CityViewModel>>
+    {
+        public Guid Id { get; set; }
     }
 }

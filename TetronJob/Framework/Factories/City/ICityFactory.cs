@@ -10,6 +10,7 @@ namespace Framework.Factories.City
 {
     public interface ICityFactory
     {
+        Task<List<CityViewModel>> GetCitiesAsync(Guid id);
         Task<PaginatedList<TViewModel>> GetPagedSearchWithSizeAsync<TViewModel>
         (PaginatedSearchWithSize pagination,Guid id,
             CancellationToken cancellationToken = default);

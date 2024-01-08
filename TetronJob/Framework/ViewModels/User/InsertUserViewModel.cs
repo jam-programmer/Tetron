@@ -25,10 +25,10 @@ namespace Framework.ViewModels.User
 
     public class SetUserAddressViewModel : IRequest<SetUserAddressViewModel>
     {
-        public Guid? ProvinceId { set; get; }
+        public Guid ProvinceId { set; get; }
         public bool Get { set; get; }=true;
 
-        public Guid? CityId { set; get; }
+        public Guid CityId { set; get; }
 
         public Guid UserId { set; get; }
     }

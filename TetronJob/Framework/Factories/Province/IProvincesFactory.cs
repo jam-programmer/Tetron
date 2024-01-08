@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Models;
+using Framework.ViewModels.City;
 using Framework.ViewModels.Province;
 
 namespace Framework.Factories.Province
 {
     public interface IProvincesFactory
     {
+        Task<List<ProvinceViewModel>> GetProvincesAsync();
         Task<PaginatedList<TViewModel>> GetPagedSearchWithSizeAsync<TViewModel>
         (PaginatedSearchWithSize pagination,
             CancellationToken cancellationToken = default);

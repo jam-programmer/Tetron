@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Reports.Category;
 using Application.Reports.City;
 using Application.Reports.Province;
 using Application.Reports.Role;
 using Application.Reports.User;
 using Application.Reports.UserAddress;
+using Application.Services.Category;
 using Application.Services.City;
 using Application.Services.Province;
 using Application.Services.Role;
@@ -38,6 +40,10 @@ namespace Application
 
             services.AddScoped<IUserAddressReport, UserAddressReport>();
             services.AddScoped<IUserAddressService, UserAddressService>();
+
+
+            services.AddScoped<ICategoryReport, CategoryReport>();
+            services.AddScoped<ICategoryService, CategoryService>();
             return services;
         }
     }

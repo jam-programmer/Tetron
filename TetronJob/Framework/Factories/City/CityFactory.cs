@@ -24,7 +24,14 @@ namespace Framework.Factories.City
         }
 
 
-          public async Task<PaginatedList<TViewModel>> 
+        public async Task<List<CityViewModel>> GetCitiesAsync(Guid id)
+        {
+            var items = await _report.GetCities(id);
+            List<CityViewModel> cities = items.Adapt<List<CityViewModel>>();
+            return cities;
+        }
+
+        public async Task<PaginatedList<TViewModel>> 
               GetPagedSearchWithSizeAsync<TViewModel>(PaginatedSearchWithSize pagination, Guid id,
             CancellationToken cancellationToken = default)
         {

@@ -5,6 +5,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading;
+using Framework.ViewModels.City;
+using Framework.ViewModels.Province;
 
 namespace TetronJob.Areas.Admin.Controllers
 {
@@ -96,17 +98,61 @@ namespace TetronJob.Areas.Admin.Controllers
         }
 
 
-
+        [HttpGet]
         public async Task<IActionResult> SetAddress(Guid id)
         {
             var result = await _mediator.Send(new SetUserAddressViewModel()
             {
                 UserId = id,
-                Get = true
+                Get = true,
+                CityId = Guid.Empty,
+                ProvinceId = Guid.Empty
             });
+            await Provinces(result.ProvinceId);
+            await SelectCities(result.ProvinceId);
+
             return View(result);
         }
-
+        [HttpPost]
+        public async Task<IActionResult> SetAddress(SetUserAddressViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _mediator.Send(new SetUserAddressViewModel()
+                {
+                    UserId = model.UserId,
+                    Get = false,
+                    CityId = model.CityId,
+                    ProvinceId = model.ProvinceId
+                });
+                return RedirectToAction(nameof(Index));
+            }
+           
+            await Provinces(model.ProvinceId); await SelectCities(model.ProvinceId);
+            return View(model);
+        }
+        public async Task Provinces(Guid? id=null)
+        {
+            var result = await _mediator.Send(new RequestGetProvinces());
+            ViewBag.Provinces = new SelectList(result,"Id","Name",id);
+        }
+        [HttpGet]
+        public async Task<JsonResult> Cities(Guid id)
+        {
+            var result = await _mediator.Send(new RequestGetCities()
+            {
+                Id = id
+            });
+            return Json(result);
+        }
+        public async Task SelectCities(Guid id )
+        {
+            var result = await _mediator.Send(new RequestGetCities()
+            {
+                Id = id
+            });
+            ViewBag.SelectCities = new SelectList(result, "Id", "Name", id);
+        }
 
 
 

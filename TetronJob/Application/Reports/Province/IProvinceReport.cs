@@ -8,5 +8,6 @@ namespace Application.Reports.Province
         Task<PaginatedList<TDestination>> GetAllPaginatedAsync<TDestination>(PaginatedSearchWithSize pagination,
             CancellationToken cancellationToken = default);
         Task<ProvinceEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<IEnumerable<ProvinceEntity>> GetProvinces();
     }
 }

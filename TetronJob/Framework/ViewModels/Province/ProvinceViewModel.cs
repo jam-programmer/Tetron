@@ -24,4 +24,9 @@ namespace Framework.ViewModels.Province
         public Guid Id { get; set; }
 
     }
+
+    public class RequestGetProvinces:IRequest<List<ProvinceViewModel>>
+    {
+
+    }
 }

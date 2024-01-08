@@ -16,12 +16,5 @@ namespace Framework.Validation.UserValidation
         }
     }
 
-    public class SetUserAddressValidator : BaseValidator<SetUserAddressViewModel>
-    {
-        public SetUserAddressValidator()
-        {
-            RuleFor(f => f.CityId).NotNull();
-            RuleFor(f => f.ProvinceId).NotNull();
-        }
-    }
+   
 }
