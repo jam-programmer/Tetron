@@ -1,18 +1,14 @@
 ﻿using Application.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Application.Reports.CategoryUser;
 using Application.Reports.Role;
 using Application.Reports.User;
 using Application.Reports.UserAddress;
+using Application.Services.CategoryUser;
 using Application.Services.User;
 using Application.Services.UserAddress;
 using Domain.Entities;
 using Framework.Common.Application.Core;
 using Framework.Mapping.User;
-using Framework.ViewModels.Role;
 using Framework.ViewModels.User;
 using Mapster;
 
@@ -26,23 +22,84 @@ namespace Framework.Factories.Identity.User
         private readonly IUserAddressReport _userAddressReport;
         private readonly IUserAddressService _userAddressService;
 
-        public UserFactory(IRoleReport roleReport, IUserService userService, IUserReport userReport, IUserAddressReport userAddressReport, IUserAddressService userAddressService)
+        private readonly ICategoryUserReport _categoryUserReport;
+        private readonly ICategoryUserService _categoryUserService;
+
+        public UserFactory(IRoleReport roleReport, IUserService userService, IUserReport userReport, IUserAddressReport userAddressReport, IUserAddressService userAddressService, ICategoryUserReport categoryUserReport, ICategoryUserService categoryUserService)
         {
             _roleReport = roleReport;
             _userService = userService;
             _userReport = userReport;
             _userAddressReport = userAddressReport;
             _userAddressService = userAddressService;
+            _categoryUserReport = categoryUserReport;
+            _categoryUserService = categoryUserService;
         }
 
-
-        public UserFactory(IRoleReport roleReport, IUserService userService, IUserReport userReport)
+        public async Task<UserCategoryViewModel> SetCategories(UserCategoryViewModel model, CancellationToken cancellation = default)
         {
-            _roleReport = roleReport;
-            _userService = userService;
-            _userReport = userReport;
+            UserCategoryViewModel viewModel = new();
+            var check = await _categoryUserReport.CheckExistCategoryAsync(model.UserId, cancellation);
+            if (check)
+            {
+                var categories = await _categoryUserReport.GetCategoriesByUserIdAsync(model.UserId, cancellation);
+                if (model.Get == false)
+                {
+
+                    var delete = await _categoryUserService.DeleteAsync(categories, cancellation);
+                    if (delete.IsSuccess == false)
+                    {
+                        //todo
+                    }
+
+                    List<CategoryUserEntity> newCategories = new();
+                    foreach (var id in model.CategoryIds!)
+                    {
+                        newCategories.Add(new CategoryUserEntity()
+                        {
+                            CategoryId = id,
+                            UserId = model.UserId
+                        });
+                    }
+
+                    var insert = await _categoryUserService.InsertAsync(newCategories, cancellation);
+                    if (insert.IsSuccess == false)
+                    {
+                        //todo
+                    }
+                }
+                else
+                {
+                    foreach (var item in categories)
+                    {
+                        viewModel.CategoryIds!.Add(item.CategoryId);
+                    }
+                }
+
+            }
+            else
+            {
+                List<CategoryUserEntity> newCategories = new();
+                foreach (var id in model.CategoryIds!)
+                {
+                    newCategories.Add(new CategoryUserEntity()
+                    {
+                        CategoryId = id,
+                        UserId = model.UserId
+                    });
+                }
+
+                var insert = await _categoryUserService.InsertAsync(newCategories, cancellation);
+                if (insert.IsSuccess == false)
+                {
+                    //todo
+                }
+            }
+
+            return viewModel;
         }
-        public async Task<PaginatedList<TViewModel>> 
+
+        public async Task<PaginatedList<TViewModel>>
             GetPagedSearchWithSizeAsync<TViewModel>(PaginatedSearchWithSize pagination,
             CancellationToken cancellationToken = default)
         {
@@ -59,7 +116,7 @@ namespace Framework.Factories.Identity.User
                 //
             }
 
-          
+
             var checkAddress = await _userAddressReport.ExistUserAddressAsync(viewModel.UserId);
 
             if (checkAddress == true && viewModel.Get)
@@ -69,10 +126,10 @@ namespace Framework.Factories.Identity.User
                 viewModel = address.Adapt<SetUserAddressViewModel>();
                 return viewModel;
             }
-            
+
             if (checkAddress == false && viewModel.Get)
             {
-               
+
                 return new SetUserAddressViewModel()
                 {
                     UserId = viewModel.UserId
@@ -80,13 +137,13 @@ namespace Framework.Factories.Identity.User
             }
 
 
-            if (checkAddress && viewModel.Get==false)
+            if (checkAddress && viewModel.Get == false)
             {
                 var getAddress = await _userAddressReport.GetUserAddressByIdAsync(viewModel.UserId);
                 getAddress!.CityId = viewModel.CityId;
                 getAddress.ProvinceId = viewModel.ProvinceId;
                 await _userAddressService.UpdateAsync(getAddress);
-              
+
             }
             else
             {
@@ -113,10 +170,10 @@ namespace Framework.Factories.Identity.User
                 //todo
             }
             model.Adapt(user, UserMap.ConfigUpdate());
-           
-                user!.EmailConfirmed = model.Active;
+
+            user!.EmailConfirmed = model.Active;
             user.PhoneNumberConfirmed = model.Active;
-           
+
             if (!string.IsNullOrEmpty(model.Password))
             {
                 var resultRemovePassword = await _userService
@@ -138,7 +195,7 @@ namespace Framework.Factories.Identity.User
             {
 
             }
-     
+
             var resultRemoveRole = await _userService.RemoveRoleAsync(user!, userRole!, cancellationToken);
             if (resultRemoveRole.IsSuccess == false)
             {
@@ -146,7 +203,7 @@ namespace Framework.Factories.Identity.User
             }
 
             var roleSelected = await _roleReport.GetRoleByIdAsync(model.RoleId, cancellationToken);
-            if(roleSelected== null) { }
+            if (roleSelected == null) { }
 
             var resultSetNewRole = await _userService.AddUserRoleAsync(user!, roleSelected!.Name!, cancellationToken);
             if (resultSetNewRole.IsSuccess == false)
@@ -184,7 +241,7 @@ namespace Framework.Factories.Identity.User
                 //todo
             }
 
-            UpdateUserViewModel userViewModel  = user.Adapt<UpdateUserViewModel>();
+            UpdateUserViewModel userViewModel = user.Adapt<UpdateUserViewModel>();
             userViewModel.AvatarPath = user!.Avatar;
             if (user!.EmailConfirmed == true && user.PhoneNumberConfirmed == true)
             {
@@ -198,7 +255,7 @@ namespace Framework.Factories.Identity.User
             }
 
             var userRole = await _roleReport.GetRoleByNameAsync(role!, cancellationToken);
-            if (userRole!=null)
+            if (userRole != null)
             {
                 userViewModel.RoleId = userRole.Id;
             }
@@ -229,7 +286,7 @@ namespace Framework.Factories.Identity.User
             }
             user.Avatar = FileProcessing.FileUpload(model!.AvatarFile, null, "UsersImage");
             var result = await _userService.CreateUserAsync(user, cancellationToken);
-            if (result.IsSuccess==false)
+            if (result.IsSuccess == false)
             {
                 return result;
             }

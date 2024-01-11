@@ -25,4 +25,10 @@ namespace Framework.ViewModels.User
         public PaginatedSearchWithSize? Paginated { set; get; }
     }
 
+    public class UserCategoryViewModel:IRequest<UserCategoryViewModel>
+    {
+        public bool Get { set; get; } = true;
+        public Guid UserId { set; get; }
+        public List<Guid>? CategoryIds { set; get; }=new List<Guid>();
+    }
 }

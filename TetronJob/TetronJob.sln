@@ -5,13 +5,13 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TetronJob", "TetronJob\TetronJob.csproj", "{6E705F0E-85F3-47D4-81B5-ABD00613BA2C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domail\Domain.csproj", "{A8B67FF5-B8FB-496B-BE20-DC76ECCC638E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{2184EA8E-62AC-4AB9-B36F-04B1ED8C548D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{00239080-B4F2-40BC-A24D-A9BD785A230C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework", "Framework\Framework.csproj", "{D20E5FB5-104B-45EC-8BFD-AE7E30A0DC61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework", "Framework\Framework.csproj", "{D20E5FB5-104B-45EC-8BFD-AE7E30A0DC61}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{394E903A-007D-4054-BD5D-A365ABFBA53D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		{6E705F0E-85F3-47D4-81B5-ABD00613BA2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E705F0E-85F3-47D4-81B5-ABD00613BA2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E705F0E-85F3-47D4-81B5-ABD00613BA2C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A8B67FF5-B8FB-496B-BE20-DC76ECCC638E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A8B67FF5-B8FB-496B-BE20-DC76ECCC638E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A8B67FF5-B8FB-496B-BE20-DC76ECCC638E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A8B67FF5-B8FB-496B-BE20-DC76ECCC638E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2184EA8E-62AC-4AB9-B36F-04B1ED8C548D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2184EA8E-62AC-4AB9-B36F-04B1ED8C548D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2184EA8E-62AC-4AB9-B36F-04B1ED8C548D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{D20E5FB5-104B-45EC-8BFD-AE7E30A0DC61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D20E5FB5-104B-45EC-8BFD-AE7E30A0DC61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D20E5FB5-104B-45EC-8BFD-AE7E30A0DC61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{394E903A-007D-4054-BD5D-A365ABFBA53D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{394E903A-007D-4054-BD5D-A365ABFBA53D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{394E903A-007D-4054-BD5D-A365ABFBA53D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{394E903A-007D-4054-BD5D-A365ABFBA53D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading;
+using Framework.ViewModels.Category;
 using Framework.ViewModels.City;
 using Framework.ViewModels.Province;
 
@@ -39,7 +40,7 @@ namespace TetronJob.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(InsertUserViewModel model,CancellationToken cancellation)
+        public async Task<IActionResult> Create(InsertUserViewModel model, CancellationToken cancellation)
         {
             if (ModelState.IsValid)
             {
@@ -56,8 +57,8 @@ namespace TetronJob.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        
-        public async Task<IActionResult> Edit([FromRoute]  Guid id)
+
+        public async Task<IActionResult> Edit([FromRoute] Guid id)
         {
             var result = await _mediator.Send(new RequestGetUserById()
             {
@@ -127,14 +128,14 @@ namespace TetronJob.Areas.Admin.Controllers
                 });
                 return RedirectToAction(nameof(Index));
             }
-           
+
             await Provinces(model.ProvinceId); await SelectCities(model.ProvinceId);
             return View(model);
         }
-        public async Task Provinces(Guid? id=null)
+        public async Task Provinces(Guid? id = null)
         {
             var result = await _mediator.Send(new RequestGetProvinces());
-            ViewBag.Provinces = new SelectList(result,"Id","Name",id);
+            ViewBag.Provinces = new SelectList(result, "Id", "Name", id);
         }
         [HttpGet]
         public async Task<JsonResult> Cities(Guid id)
@@ -145,7 +146,7 @@ namespace TetronJob.Areas.Admin.Controllers
             });
             return Json(result);
         }
-        public async Task SelectCities(Guid id )
+        public async Task SelectCities(Guid id)
         {
             var result = await _mediator.Send(new RequestGetCities()
             {
@@ -155,6 +156,35 @@ namespace TetronJob.Areas.Admin.Controllers
         }
 
 
+        [HttpGet]
+        public async Task<IActionResult> SetCategories(Guid id)
+        {
+            ViewBag.User = id;
+            var result = await _mediator.Send(new UserCategoryViewModel
+            {
+                UserId = id,
+                Get = true
+            });
+            await Categories();
+            return View(result);
+        }
+        [HttpPost]
+        public async Task<IActionResult> SetCategories(UserCategoryViewModel model)
+        {
+            var result = await _mediator.Send(new UserCategoryViewModel
+            {
+                UserId = model.UserId
+                ,CategoryIds = model.CategoryIds,
+                Get = false
+            });
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task Categories()
+        {
+            var result = await _mediator.Send(new RequestGetCategories());
+            ViewBag.Categories = result;
+        }
 
         public async Task Roles(Guid? id = null)
         {

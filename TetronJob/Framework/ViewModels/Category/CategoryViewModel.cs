@@ -10,6 +10,10 @@ namespace Framework.ViewModels.Category
 
     }
 
+    public class RequestGetCategories:IRequest<IEnumerable<CategoryViewModel>>
+    {
+
+    }
     public class RequestCategories : IRequest<PaginatedList<CategoryViewModel>>
     {
         public PaginatedSearchWithSize? Paginated { set; get; }

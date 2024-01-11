@@ -47,5 +47,10 @@ namespace Application.Reports.Category
             var category = await _repository.GetByIdAsync(id);
             return category;
         }
+
+        public async Task<IEnumerable<CategoryEntity>> GetAllCategoriesAsync()
+        {
+            return await _repository.GetListAsync();
+        }
     }
 }

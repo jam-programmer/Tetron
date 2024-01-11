@@ -65,7 +65,51 @@
             </ul>
         </li>
 
-       
+        <li class="menu-header small text-uppercase"><span class="menu-header-text">موقعیت مکانی</span></li>
       
+        <!-- Layouts -->
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <div class="p-1">‌ استان ها</div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a asp-area="Admin" asp-controller="Province" asp-action="Index" class="menu-link">
+                        <div class="p-1">لیست استان ها </div>
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a asp-area="Admin" asp-controller="Province" asp-action="Create" class="menu-link">
+                        <div class="p-1"> افزودن استان جدید </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        
+        <li class="menu-header small text-uppercase"><span class="menu-header-text">آگهی و درخواست</span></li>
+        <!-- Layouts -->
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <div class="p-1">‌ دسته بندی ها</div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="menu-link">
+                        <div class="p-1">لیست دسته بندی ها </div>
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a asp-area="Admin" asp-controller="Category" asp-action="Create" class="menu-link">
+                        <div class="p-1"> افزودن دسته بندی جدید </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
     </ul>
 </aside>

@@ -18,9 +18,9 @@ namespace Framework.CQRS.Command.Admin.Category
         {
             _categoryFactory = categoryFactory;
         }
-        public Task<Response> Handle(DeleteCategoryViewModel request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(DeleteCategoryViewModel request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _categoryFactory.DeleteCategoryAsync(request, cancellationToken);
         }
     }
 }

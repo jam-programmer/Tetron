@@ -1,14 +1,14 @@
-﻿@model Application.Models.PaginatedList<Framework.ViewModels.User.UserViewModel>
+﻿@model Application.Models.PaginatedList<Framework.ViewModels.Category.CategoryViewModel>
 @{
-    ViewData["Title"] = "کاربران";
+    ViewData["Title"] = "دسته بندی ها";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
 
 <div class="container-xxl flex-grow-1 container-p-y">
-<h4 class="py-3 breadcrumb-wrapper mb-4">
-    <span class="text-muted fw-light">احراز هویت/</span> کاربران
-</h4>
+    <h4 class="py-3 breadcrumb-wrapper mb-4">
+        <span class="text-muted fw-light"> آگهی و درخواست/</span> دسته بندی ها
+    </h4>
 
     <!-- DataTable with Buttons -->
     <div class="card">
@@ -19,7 +19,7 @@
                     <div class="row ">
 
                         <div class="col-6 justify-content-center justify-content-md-end">
-                            <a asp-area="Admin" asp-controller="User" asp-action="Create" class="btn btn-secondary create-new btn-primary ms-2" tabindex="0" aria-controls="DataTables_Table_0" type="button">
+                            <a asp-area="Admin" asp-controller="Category" asp-action="Create" class="btn btn-secondary create-new btn-primary ms-2" tabindex="0" aria-controls="DataTables_Table_0" type="button">
                                 <span><i class="bx bx-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">افزودن رکورد جدید</span></span>
                             </a>
 
@@ -43,10 +43,9 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>تصویر</th>
-                                <th>نام و نام خانوادگی</th>
 
-                                <th>شماره موبایل</th>
+                                <th>نام دسته بندی</th>
+                              
                                 <th>عملیات</th>
                             </tr>
                         </thead>
@@ -57,42 +56,25 @@
                             {
                                 <tr id="item_@item.Id">
 
-                                    <td>
 
-                                        @if (item.Avatar == "default.jpg")
-                                        {
-                                            <img src="~/img/default.jpg" class="rounded-circle" width="50" height="50" />
-                                        }
-                                        else
-                                        {
-                                            <img src="~/UsersImage/@item.Avatar" class="rounded-circle" width="50" height="50" />
-                                        }
-                                    </td>
 
-                                    <td>@item.FullName</td>
-
-                                    <td>@item.PhoneNumber</td>
-
+                                    <td>@item.Name</td>
+                                  
+                                    
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                                 <i class="bx bx-dots-vertical-rounded"></i>
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" asp-controller="User" asp-action="SetCategories"
-                                                   asp-route-id="@item.Id"><i class="fa-solid fa-layer-group"></i>دسته بندی کاربر</a>
-
-
-
-
-
-                                                <a class="dropdown-item" asp-controller="User" asp-action="SetAddress"
-                                                   asp-route-id="@item.Id"><i class="fa-solid fa-location-dot"></i> نشانی</a>
-                                                
-                                                <a class="dropdown-item" asp-controller="User" asp-action="Edit"
+                                                <a class="dropdown-item" asp-controller="Category" asp-action="Edit"
                                                    asp-route-id="@item.Id"><i class="bx bx-edit-alt me-1"></i> ویرایش</a>
 
-                                                <a class="dropdown-item" onclick="Delete('@item.Id','User')"><i class="bx bx-trash me-1"></i> حذف</a>
+
+
+                                                <a class="dropdown-item" onclick="Delete('@item.Id', 'Category')">
+                                                    <i class="bx bx-trash me-1"></i> حذف
+                                                </a>
                                             </div>
                                         </div>
                                     </td>
@@ -107,7 +89,7 @@
                         <nav class="pagination"
                              data-page-index="@Model.pageIndex"
                              data-total-pages="@Model.totalPages"
-                             data-path="/Admin/User/Index"></nav>
+                             data-path="/Admin/Category/Index"></nav>
                     </div>
                 </div>
 

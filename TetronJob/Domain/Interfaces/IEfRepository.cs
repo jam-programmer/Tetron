@@ -12,6 +12,12 @@ namespace Domain.Interfaces
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        Task DeleteListAsync(List<TEntity> items);
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         Task<ICollection<TEntity>> GetListAsync();
         /// <summary>
@@ -37,6 +43,12 @@ namespace Domain.Interfaces
         /// <param name="entity"></param>
         /// <returns></returns>
         Task InsertAsync(TEntity entity);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        Task InsertListAsync(List<TEntity> items);
         /// <summary>
         /// 
         /// </summary>

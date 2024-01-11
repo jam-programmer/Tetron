@@ -14,12 +14,12 @@ namespace Framework.ViewModels.Category
         public string? Name { set; get; }
         public string? Color { set; get; }
         public IFormFile? File { set; get; }
-        public Guid? Id { set; get; }
+        public Guid Id { set; get; }
         public string? Path { set; get; }
     }
 
     public class RequestGetCategoryById : IRequest<UpdateCategoryViewModel>
     {
-        public Guid? Id { set; get; }
+        public Guid Id { set; get; }
     }
 }

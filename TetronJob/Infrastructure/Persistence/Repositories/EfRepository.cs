@@ -20,11 +20,16 @@ namespace Infrastructure.Persistence.Repositories
             _context.Set<TEntity>().Remove(entity);
             await SaveChangeAsync();
         }
+        public async Task DeleteListAsync(List<TEntity> items)
+        {
+            _context.Set<TEntity>().RemoveRange(items);
+            await SaveChangeAsync();
+        }
 
         public async Task<TEntity> GetByIdAsync(Guid id)
         {
             return (await _context.Set<TEntity>().AsNoTracking()
-                .SingleOrDefaultAsync(s=>s.Id==id))!;
+                .SingleOrDefaultAsync(s => s.Id == id))!;
         }
 
         public Task<IQueryable<TEntity>> GetByQueryAsync()
@@ -48,6 +53,12 @@ namespace Infrastructure.Persistence.Repositories
             await SaveChangeAsync();
         }
 
+        public async Task InsertListAsync(List<TEntity> items)
+        {
+            await _context.AddRangeAsync(items);
+            await SaveChangeAsync();
+        }
+
         public async Task SaveChangeAsync()
         {
             await _context.SaveChangesAsync();
@@ -60,6 +71,6 @@ namespace Infrastructure.Persistence.Repositories
             await SaveChangeAsync();
         }
 
-      
+
     }
 }

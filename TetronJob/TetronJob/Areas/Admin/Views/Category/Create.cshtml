@@ -1,0 +1,66 @@
+﻿@model Framework.ViewModels.Category.InsertCategoryViewModel
+@{
+    ViewData["Title"] = "افزودن دسته بندی جدید";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@section Scripts
+    {
+    <script src="~/assets/js/forms-file-upload.js"></script>
+}
+
+  
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 breadcrumb-wrapper mb-4">
+        <span class="text-muted fw-light">
+            آگهی و درخواست/
+        </span> افزودن دسته بندی
+    </h4>
+
+    <div class="row">
+        <div class="col-md-12">
+            @if (ViewBag.Alert != null)
+            {
+                <div class="alert alert-warning alert-dismissible d-flex align-items-center" role="alert">
+                    <i class="bx bx-xs bx-wallet me-2"></i>
+                    @ViewBag.Alert
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            <div class="card mb-4">
+                <h5 class="card-header heading-color">افزودن دسته بندی جدید</h5>
+                <form asp-area="Admin" asp-controller="Category" asp-action="Create" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <div>
+                            <label class="form-label">نام</label>
+                            <input asp-for="Name" type="text" class="form-control" placeholder="نام دسته بندی" />
+                            <span class="text-danger" asp-validation-for="Name"></span>
+
+                        </div>
+                        <div>
+                            <div class="classic col col-sm-3 col-lg-2 mt-2">
+                                <label class="form-label">رنگ زمینه</label>
+                                <input asp-for="Color" type="color" class="form-control"  />
+                                <span class="text-danger" asp-validation-for="Color"></span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="classic col col-sm-3 col-lg-2 mt-3">
+                                <img src="~/img/default.jpg" width="150" height="110" id="imagePath_1" />
+                                <label class="form-label">تصویر زمینه</label>
+                                <input  onchange="ChangeImage(this,1)"
+                                        id="image_1" asp-for="File" type="file" class="form-control"/>
+                                <span class="text-danger" asp-validation-for="File"></span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-sm btn-primary">ثبت</button>
+                            <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="btn btn-sm btn-warning text-white">بازگشت</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

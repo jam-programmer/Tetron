@@ -18,9 +18,9 @@ namespace Framework.CQRS.Query.Admin.Category
         {
             _categoryFactory = categoryFactory;
         }
-        public Task<PaginatedList<CategoryViewModel>> Handle(RequestCategories request, CancellationToken cancellationToken)
+        public async Task<PaginatedList<CategoryViewModel>> Handle(RequestCategories request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _categoryFactory.GetPagedSearchWithSizeAsync<CategoryViewModel>(request.Paginated!, cancellationToken);
         }
     }
 }
