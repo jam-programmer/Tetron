@@ -1,0 +1,287 @@
+﻿@{
+    ViewData["Title"] = "SignUp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+    <nav aria-label="breadcrumb">
+        <ol class="lh-1-85 breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">خانه</a>
+            </li>
+
+            <li class="breadcrumb-item active text-pink">  ثبت نام در سایت </li>
+        </ol>
+    </nav>
+    <div class="col-12">
+
+        <div class="bs-stepper wizard-vertical vertical wizard-vertical-icons-example mt-2">
+            <div class="bs-stepper-header">
+                <div class="step active" id="boxStep1">
+                    <button type="button" class="step-trigger" aria-selected="true">
+                        <span class="bs-stepper-circle">
+                            <i class="bx bx-user"></i>
+                        </span>
+
+
+
+
+                        <span class="bs-stepper-label">
+                            <span class="bs-stepper-title">اطلاعات حساب</span>
+                            <span class="bs-stepper-subtitle">ورود اطلاعات حساب کاربری</span>
+                        </span>
+                    </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" id="boxStep2">
+                    <button type="button" class="step-trigger" aria-selected="false">
+                        <span class="bs-stepper-circle">
+                            <i class="bx bx-detail"></i>
+                        </span>
+
+
+                        <span class="bs-stepper-label">
+                            <span class="bs-stepper-title">اطلاعات موقعیتی</span>
+                            <span class="bs-stepper-subtitle">افزودن محل سکونت</span>
+                        </span>
+                    </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" id="boxStep3">
+                    <button type="button" class="step-trigger" aria-selected="false">
+                        <span class="bs-stepper-circle">
+                            <i class="bx bxl-instagram"></i>
+                        </span>
+                        <span class="bs-stepper-label">
+                            <span class="bs-stepper-title">حوزه فعالیت</span>
+                            <span class="bs-stepper-subtitle">حوزه فعالیت خود را انتخاب کنید</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="bs-stepper-content">
+
+                <!-- Account Details -->
+                <div id="BodyStep1" class="content active dstepper-block">
+                    <div class="content-header mb-3">
+                        <h6 class="mb-1">جزئیات حساب</h6>
+                        <small>جزئیات حساب خود را وارد کنید.</small>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label class="form-label" for="username1">نام و نام خانوادگی</label>
+                            <input type="text" id="fullname" class="form-control text-start" placeholder="نام و نام خانوادگی" dir="ltr">
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label class="form-label" for="username1"> کدملی </label>
+                            <input type="text" id="nationalcode" class="form-control text-start" placeholder="کدملی" dir="ltr">
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label class="form-label" for="username1"> شماره موبایل </label>
+                            <input type="tel" id="phonenumber" class="form-control text-start" placeholder="09**********" dir="ltr">
+                        </div>
+
+
+
+                        <div class="col-sm-6">
+                            <label class="form-label" for="email1">ایمیل</label>
+                            <input type="text" id="email1" class="form-control text-start" placeholder="john.doe@email.com" aria-label="john.doe@email.com" dir="ltr">
+                        </div>
+
+
+                        <div class="col-sm-6 form-password-toggle">
+                            <label class="form-label" for="password60">رمز عبور</label>
+                            <div class="input-group input-group-merge">
+                                <input type="password" id="password" class="form-control text-start" placeholder="············" dir="ltr" aria-describedby="password6">
+                                <span class="input-group-text cursor-pointer" id="password6"><i class="bx bx-hide"></i></span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6 col-12 mb-4">
+                            <label for="flatpickr-date" class="form-label">تاریخ تولد</label>
+                            <input type="date" class="form-control flatpickr-input" placeholder="YYYY/MM/DD" id="flatpickr-date">
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+                        <div class="col-12 d-flex justify-content-between">
+                            <a class="btn btn-label-secondary btn-prev" disabled="">
+                                <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                <span class="d-sm-inline-block d-none">قبلی</span>
+                            </a>
+                            <a class="btn btn-primary btn-next" onclick="StepOne()">
+                                <span class="d-sm-inline-block d-none me-sm-1">بعدی</span>
+                                <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Personal Info -->
+                <div id="BodyStep2" class="content">
+                    <div class="content-header mb-3">
+                        <h6 class="mb-1">اطلاعات موقعیتی</h6>
+                        <small>موقعیت مکانی خود را وارد کنید.</small>
+                    </div>
+                    <div class="row g-3">
+
+                        <div class="col-md-6 mb-4" >
+                            <label for="select2Basic" class="form-label">انتخاب استان</label>
+                            <div class="position-relative">
+                                <select onchange="LoadCity()" asp-items="@ViewBag.Provinces"
+                                        class="form-select" id="province">
+                                    <option selected="selected" disabled="disabled">یک استان انتخاب کنید</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-4">
+                            <label  class="form-label">انتخاب شهر</label>
+                            <select class="form-select" 
+                                    id="city" >
+                                <option selected="selected" disabled="disabled">یک شهر انتخاب کنید</option>
+
+                            </select>
+                           
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <div class="col-12 d-flex justify-content-between">
+                            <button class="btn btn-primary btn-prev">
+                                <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                <span class="d-sm-inline-block d-none">قبلی</span>
+                            </button>
+                            <button class="btn btn-primary btn-next">
+                                <span class="d-sm-inline-block d-none me-sm-1">بعدی</span>
+                                <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Social Links -->
+                <div id="BodyStep3" class="content">
+                    <div class="content-header mb-3">
+                        <h6 class="mb-1">حوزه فعالیت</h6>
+                        <small>حوزه فعالیت خود را انتخاب کنید</small>
+                    </div>
+                    <div class="row g-3">
+
+                        <div class="col-sm-6">
+                            <div class="text-light small fw-semibold mb-3">پیش&zwnj;فرض</div>
+                            <label class="switch">
+                                <input type="checkbox" class="switch-input">
+                                <span class="switch-toggle-slider">
+                                    <span class="switch-on"></span>
+                                    <span class="switch-off"></span>
+                                </span>
+                                <span class="switch-label">پیش&zwnj;فرض</span>
+                            </label>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="text-light small fw-semibold mb-3">پیش&zwnj;فرض</div>
+                            <label class="switch">
+                                <input type="checkbox" class="switch-input">
+                                <span class="switch-toggle-slider">
+                                    <span class="switch-on"></span>
+                                    <span class="switch-off"></span>
+                                </span>
+                                <span class="switch-label">پیش&zwnj;فرض</span>
+                            </label>
+                        </div>
+
+
+
+                        <div class="col-12 d-flex justify-content-between">
+                            <button class="btn btn-primary btn-prev">
+                                <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                <span class="d-sm-inline-block d-none">قبلی</span>
+                            </button>
+                            <button class="btn btn-success btn-submit">ثبت</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Script
+    {
+    <script src="~/assets/vendor/libs/jdate/jdate.js"></script>
+    <script src="~/assets/vendor/libs/flatpickr/flatpickr-jdate.js"></script>
+    <script src="~/assets/vendor/libs/flatpickr/l10n/fa-jdate.js"></script>
+    <script src="~/assets/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
+    <script src="~/assets/vendor/libs/pickr/pickr.js"></script>
+    <script src="~/js/register.js"></script>
+
+    <script src="~/assets/js/forms-pickers.js"></script>
+    <script src="~/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="~/assets/vendor/libs/popper/popper.js"></script>
+    <script src="~/assets/vendor/js/bootstrap.js"></script>
+    <script src="~/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="~/assets/vendor/libs/hammer/hammer.js"></script>
+    <script src="~/assets/vendor/libs/i18n/i18n.js"></script>
+    <script src="~/assets/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="~/assets/vendor/js/menu.js"></script>
+    <script src="~/assets/vendor/libs/bs-stepper/bs-stepper.js"></script>
+    <script src="~/assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="~/assets/vendor/libs/bootstrap-select/i18n/defaults-fa_IR.js"></script>
+    <script src="~/assets/vendor/libs/select2/select2.js"></script>
+    <script src="~/assets/vendor/libs/select2/i18n/fa.js"></script>
+    <script src="~/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+    <script src="~/assets/js/main.js"></script>
+    <script src="~/assets/js/form-wizard-icons.js"></script>
+    <script src="~/assets/js/dashboards-analytics.js"></script>
+}
+@section Style
+    {
+    <link rel="stylesheet" href="~/assets/vendor/libs/flatpickr/flatpickr.css">
+    <link rel="stylesheet" href="~/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="~/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css">
+    <link rel="stylesheet" href="~/assets/vendor/libs/jquery-timepicker/jquery-timepicker.css">
+    <link rel="stylesheet" href="~/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="~/assets/vendor/libs/typeahead-js/typeahead.css">
+    <link rel="stylesheet" href="~/assets/vendor/libs/apex-charts/apex-charts.css">
+    <link rel="stylesheet" href="~/assets/vendor/libs/bs-stepper/bs-stepper.css">
+    <link rel="stylesheet" href="~/assets/vendor/libs/bootstrap-select/bootstrap-select.css">
+    <link rel="stylesheet" href="~/assets/vendor/libs/select2/select2.css">
+}

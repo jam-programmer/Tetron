@@ -1,0 +1,91 @@
+﻿@model Application.Models.PaginatedList<Framework.ViewModels.Skill.SkillViewModel>
+@{
+    ViewData["Title"] = "مهارت ها";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 breadcrumb-wrapper mb-4">
+        <span class="text-muted fw-light"> آگهی و درخواست/</span> مهارت ها
+    </h4>
+
+    <!-- DataTable with Buttons -->
+    <div class="card">
+        <div class="card-datatable p-2">
+            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                <div class="card-header flex-column flex-md-row">
+
+                    <div class="row ">
+
+                        <div class="col-6 justify-content-center justify-content-md-end">
+                            <a asp-area="Admin" asp-controller="Skill" asp-action="Create" class="btn btn-secondary create-new btn-primary ms-2" tabindex="0" aria-controls="DataTables_Table_0" type="button">
+                                <span><i class="bx bx-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">افزودن رکورد جدید</span></span>
+                            </a>
+
+
+                        </div>
+                       
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+
+                                <th>نام مهارت</th>
+
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+
+
+                            @foreach (var item in Model.items)
+                            {
+                                <tr id="item_@item.Id">
+
+
+
+                                    <td>@item.SkillName</td>
+
+
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" asp-controller="Skill" asp-action="Edit"
+                                                   asp-route-id="@item.Id"><i class="bx bx-edit-alt me-1"></i> ویرایش</a>
+
+
+
+                                                <a class="dropdown-item" onclick="Delete('@item.Id', 'Skill')">
+                                                    <i class="bx bx-trash me-1"></i> حذف
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-footer">
+                    <div class="col-lg-6">
+                        <nav class="pagination"
+                             data-page-index="@Model.pageIndex"
+                             data-total-pages="@Model.totalPages"
+                             data-path="/Admin/Skill/Index"></nav>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    </div>
+

@@ -69,7 +69,14 @@
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" asp-controller="Role" asp-action="Edit" 
                                                asp-route-id="@item.Id"><i class="bx bx-edit-alt me-1"></i> ویرایش</a>
-                                            <a class="dropdown-item" onclick="Delete('@item.Id','Role')"><i class="bx bx-trash me-1"></i> حذف</a>
+
+
+                                            @if(item.Id.ToString() !="d0952898-8ba2-4168-480b-08dc152232a5")
+                                                
+                                                {
+                                                    <a class="dropdown-item" onclick="Delete('@item.Id','Role')"><i class="bx bx-trash me-1"></i> حذف</a>
+                                                }
+                             
                                         </div>
                                     </div>
                                 </td>

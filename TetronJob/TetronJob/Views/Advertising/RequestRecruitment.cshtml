@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "ثبت آگهی استخدام";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="lh-1-85 breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">خانه</a>
+            </li>
+
+            <li class="breadcrumb-item active text-pink">ثبت آگهی استخدام</li>
+        </ol>
+    </nav>
+    <div class="col-xl-6 col-lg-6 col-md-12 offset-xl-3 offset-lg-3 mb-5">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">ثبت آگهی استخدام</h5>
+                <div class="text-white  p-1 massage-custom">
+                    درخواست شما بعد از تائید کارشناسان منتشر میشود
+
+                </div>
+            </div>
+            <div class="card-body">
+                <form><div class="mb-3">
+                        <label class="form-label" for="basic-default-fullname">عنوان درخواست</label>
+                        <input type="text" class="form-control form-control-sm" id="basic-default-fullname" placeholder="عنوان درخواست">
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-lg-6 col-xl-6 col-12">
+                            <label class="form-label" for="basic-default-fullname">نوع درخواست</label>
+                            <input type="text" class="form-control form-control-sm" id="basic-default-fullname" placeholder="نوع درخواست">
+                        </div>
+                        <div class="mb-3 col-lg-6 col-xl-6 col-12">
+                            <label class="form-label" for="basic-default-company">شماره تماس</label>
+                            <input type="tel" class="form-control form-control-sm" id="basic-default-company" placeholder="09**********">
+                        </div>
+                    </div>
+
+                    <div class="row mt-1">
+                        <div class="mb-3 col-lg-6 col-xl-6 col-12">
+                            <label for="formFile" class="form-label">انتخاب تصویر شاخص</label>
+                            <input class="form-control  form-control-sm" type="file" id="formFileSingle">
+                        </div>
+                        <div class="mb-3 col-lg-6 col-xl-6 col-12">
+                            <label for="formFile" class="form-label"> انتخاب گالری  </label>
+                            <input class="form-control  form-control-sm" type="file" id="formFileMulti" multiple="">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-default-message">توضیحات</label>
+                        <textarea id="basic-default-message" class="form-control form-control-sm"
+                                  rows="4" placeholder="توضیحات را اینجا بنویسید"></textarea>
+                    </div>  <div class="mb-3">
+                        <label class="form-label" for="basic-default-message">نشانی</label>
+                        <textarea id="basic-default-message" class="form-control form-control-sm"
+                                  rows="4" placeholder="نشانی را اینجا بنویسید"></textarea>
+                    </div>
+                    <button type="submit" class="btn bg-primary btn-sm text-white">ارسال</button>
+                    <a class="btn bg-warning btn-sm text-white">بازگشت</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

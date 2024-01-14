@@ -9,12 +9,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Mapping
 {
-    public class PictureMapping:IEntityTypeConfiguration<PictureEntity>
+    public class SkillMapping:IEntityTypeConfiguration<SkillEntity>
     {
-        public void Configure(EntityTypeBuilder<PictureEntity> builder)
+        public void Configure(EntityTypeBuilder<SkillEntity> builder)
         {
             builder.HasKey(k => k.Id);
-            builder.Property(p => p.Path).IsRequired();
+            builder.HasMany(m => m.SkillIntroduction)
+                .WithOne(o => o.Skill)
+                .HasForeignKey(f => f.SkillId);
         }
     }
 }

@@ -6,6 +6,7 @@ using Application.Reports.CategoryUser;
 using Application.Reports.City;
 using Application.Reports.Province;
 using Application.Reports.Role;
+using Application.Reports.Skill;
 using Application.Reports.User;
 using Application.Reports.UserAddress;
 using Application.Services.Category;
@@ -13,6 +14,7 @@ using Application.Services.CategoryUser;
 using Application.Services.City;
 using Application.Services.Province;
 using Application.Services.Role;
+using Application.Services.Skill;
 using Application.Services.User;
 using Application.Services.UserAddress;
 using Microsoft.Extensions.Configuration;
@@ -48,6 +50,12 @@ namespace Application
             
             services.AddScoped<ICategoryUserReport, CategoryUserReport>();
             services.AddScoped<ICategoryUserService, CategoryUserService>();
+
+
+
+ 
+            services.AddScoped<ISkillReport, SkillReport>();
+            services.AddScoped<ISkillService, SkillService>();
 
 
 

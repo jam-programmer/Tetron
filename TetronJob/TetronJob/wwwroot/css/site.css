@@ -1,22 +1,104 @@
-html {
-  font-size: 14px;
+@keyframes color-change {
+
+    0% {
+        background-color: #f70f8f;
+    }
+
+    20% {
+        background-color: #2714f9;
+    }
+
+    40% {
+        background-color: #f70f8f;
+    }
+
+    60% {
+        background-color: #2714f9;
+    }
+
+    80% {
+        background-color: #f70f8f;
+    }
+
+    100% {
+        background-color: #2714f9;
+    }
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+.massage-custom {
+    animation: 10000ms ease-in-out infinite color-change;
+    border-radius: 10px;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+
+
+.footer-tetron {
+    position: fixed;
+    bottom: 0;
+    z-index: 1;
+    width: 100%;
+    box-shadow: 1rem 0rem 10px 11px rgb(147 158 170 / 20%);
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+.card {
+    border-radius: 15px;
+    position: relative;
 }
 
-body {
-  margin-bottom: 60px;
+.card-bg {
+    background-image: url('https://iranthinktanks.com/wp-content/uploads/2020/11/investigating-the-capacities-and-issues-of-the-garment-industry-780x470.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.overlay {
+    border-radius: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 255, 0.5);
+}
+
+
+
+
+
+
+
+.img-box {
+    width: 50px !important;
+    height: 50px !important;
+}
+
+.text-blue {
+    color: #00ffe0 !important;
+}
+
+.text-pink {
+    color: #f70f8f !important;
+}
+
+.card-bg {
+    background-image: url('https://iranthinktanks.com/wp-content/uploads/2020/11/investigating-the-capacities-and-issues-of-the-garment-industry-780x470.jpg');
+    background-color: rgba(0, 0, 255, 0.705);
+}
+
+
+.btn-blue {
+    background-color: #00ffe0 !important;
+}
+
+.btn-pink {
+    background-color: #f70f8f !important;
+}
+
+.img-box {
+    width: 100px !important;
+    height: 100px !important;
+}
+
+.card-tetron:hover {
+    background-image: linear-gradient(#59fcf9, #e6fcf5, #f6c2e8, #fdfdfd, #ffd493);
 }

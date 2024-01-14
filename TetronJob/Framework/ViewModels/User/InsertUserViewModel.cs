@@ -12,15 +12,15 @@ namespace Framework.ViewModels.User
 {
     public class InsertUserViewModel:IRequest<Response>
     {
-        public Guid RoleId { set; get; }
-        public string? FullName { set; get; }
+        public Guid RoleId { set; get; } = Guid.Parse("d0952898-8ba2-4168-480b-08dc152232a5");
         public IFormFile? AvatarFile { set; get; }
+        public string? FullName { set; get; }
         public string? Birthday { set; get; }
         public string? UserName { set; get; }
         public string? Email { set; get; }
         public string? Password { set; get; }
         public string? PhoneNumber { set; get; }
-        public bool Active { set; get; }
+        public bool Active { set; get; } = true;
     }
 
     public class SetUserAddressViewModel : IRequest<SetUserAddressViewModel>
