@@ -10,7 +10,7 @@
     <meta name="description" content="">
 
     <partial name="_Styles"/>
-    @RenderSection("Style",false);
+    @await RenderSectionAsync("Style",false)
   </head>
 
   <body>
@@ -71,6 +71,6 @@
     <!-- / Layout wrapper -->
 
   <partial name="_Scripts"/>
-  @await RenderSectionAsync("Scripts",false);
+  @await RenderSectionAsync("Scripts",false)
   </body>
 </html>

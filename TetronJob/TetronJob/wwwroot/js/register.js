@@ -6,18 +6,20 @@
     var password = document.getElementById("password");
     var birthday = document.getElementById("flatpickr-date");
 
-    if (password.value.length < 6) {
+ 
+    if (fullName.value === "" ||
+        nationalCode.value === "" ||
+        phoneNumber.value === "" ||
+        email.value === "" ||
+        password.value === "" ||
+        birthday.value === "") {
+        CustomAlert("عدم تکمیل اطلاعات", "لطفا  اطلاعات را تکمیل نمائید.", "Error"); return;
+    } if (password.value.length < 6) {
         CustomAlert("رمز عبور", "طول رمز عبور کوتاه است.", "Error");
         return;
     }
-   
-    if (fullName.value === "" || nationalCode.value === ""
-        || phoneNumber.value === "" || email.value === ""
-        || password.value === "" || birthday.value === "") {
-        CustomAlert("عدم تکمیل اطلاعات", "لطفا  اطلاعات را تکمیل نمائید.","Error");
-    }
-    else {
-        var user= {
+
+    var user= {
 
             FullName: fullName.value,
             Birthday: birthday.value,
@@ -64,7 +66,8 @@
                 console.log('error', 'خطا: ' + error);
             });
 
-    }
+    
+
 }
 
 async function StepTwo() {
@@ -150,7 +153,13 @@ async function StepThree() {
         });
         debugger;
         if (response.ok) {
-            CustomAlert("ثبت نام با موفقیت انجام شد", "به خانواده تترون جاب خوش آمدید.", "Success");
+            Swal.fire({
+                icon: "success",
+                title: "ثبت نام با موفقیت انجام شد",
+                text: "به حانواده تترون جاب خوش آمدید",
+                showConfirmButton: false
+
+            });
             setInterval(
                 window.location.href="/"
                 , 2000);
@@ -165,12 +174,32 @@ async function StepThree() {
 
 }
 
+async function SignIn() {
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+    var remember = document.getElementById("remember").checked;
+    if (username === "" || password === "") {
+        CustomAlert("عدم تکمیل اطلاعات", "لطفا کدملی و رمز عبور را وارد کنید.", "Error");
+        return;
+    }
+    var user = { UserName: username, Password: password, Remember: remember }
 
+    await fetch('/Identity/SignIn', {
+            body: JSON.stringify(user), method: 'POST', headers: { 'Content-Type': 'application/json' }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.isSuccess) {
+                // do something on success
+            } else {
+                CustomAlert("ورود ناموفق", data.message, "Error");
+            }
 
-
-
-
-
+        })
+        .catch(error => {
+            console.log('error', 'خطا: ' + error);
+        });
+}
 const status = {
     Warning: "Warning",
     Error: "Error",
@@ -235,5 +264,4 @@ function CustomAlert(title, body, status) {
 
     cardDiv.appendTo('body');
 }
-
 

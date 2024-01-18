@@ -78,7 +78,32 @@ namespace Application.Reports.User
             var role = roles.FirstOrDefault();
             return role;
         }
+        public async Task<Response> ExistUserAsync(string national)
+        {
+            Response response = new();
+            response.IsSuccess = await _userManager.Users.AnyAsync(
+                a => a.UserName == national
 
-      
+            );
+            return response;
+        }
+        public async Task<Response> ActiveUserAsync(string national)
+        {
+            Response response = new();
+            response.IsSuccess = await _userManager.Users.AnyAsync(
+                a => a.UserName == national
+
+                     &&
+                     a.PhoneNumberConfirmed == true && a.EmailConfirmed==true
+            );
+            return response;
+        }
+
+        public async Task<UserEntity?> GetUserByUserName(string username, CancellationToken cancellationToken = default)
+        {
+            return await _userManager.FindByNameAsync(username);
+        }
+
+     
     }
 }

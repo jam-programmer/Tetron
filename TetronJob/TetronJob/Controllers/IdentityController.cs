@@ -1,4 +1,5 @@
-﻿using Framework.ViewModels.Category;
+﻿using Framework.CQRS.Command.Admin.User;
+using Framework.ViewModels.Category;
 using Framework.ViewModels.City;
 using Framework.ViewModels.Province;
 using Framework.ViewModels.User;
@@ -22,6 +23,17 @@ namespace TetronJob.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> SignIn([FromBody] SignInCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Json(result);
+        }
+
+
+
+
 
 
         [HttpGet]

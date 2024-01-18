@@ -8,9 +8,11 @@ using Application.Services.User;
 using Application.Services.UserAddress;
 using Domain.Entities;
 using Framework.Common.Application.Core;
+using Framework.CQRS.Command.Admin.User;
 using Framework.Mapping.User;
 using Framework.ViewModels.User;
 using Mapster;
+using Microsoft.AspNetCore.Identity;
 
 namespace Framework.Factories.Identity.User
 {
@@ -21,11 +23,11 @@ namespace Framework.Factories.Identity.User
         private readonly IUserReport _userReport;
         private readonly IUserAddressReport _userAddressReport;
         private readonly IUserAddressService _userAddressService;
-
         private readonly ICategoryUserReport _categoryUserReport;
         private readonly ICategoryUserService _categoryUserService;
+        private readonly SignInManager<UserEntity> _signInManager;
 
-        public UserFactory(IRoleReport roleReport, IUserService userService, IUserReport userReport, IUserAddressReport userAddressReport, IUserAddressService userAddressService, ICategoryUserReport categoryUserReport, ICategoryUserService categoryUserService)
+        public UserFactory(IRoleReport roleReport, IUserService userService, IUserReport userReport, IUserAddressReport userAddressReport, IUserAddressService userAddressService, ICategoryUserReport categoryUserReport, ICategoryUserService categoryUserService, SignInManager<UserEntity> signInManager)
         {
             _roleReport = roleReport;
             _userService = userService;
@@ -34,7 +36,11 @@ namespace Framework.Factories.Identity.User
             _userAddressService = userAddressService;
             _categoryUserReport = categoryUserReport;
             _categoryUserService = categoryUserService;
+            _signInManager = signInManager;
         }
+
+        #region AdminPaenl
+
 
         public async Task<UserCategoryViewModel> SetCategories(UserCategoryViewModel model, CancellationToken cancellation = default)
         {
@@ -352,5 +358,45 @@ namespace Framework.Factories.Identity.User
             var removeUser = await _userService.DeleteUserAsync(user!, cancellationToken);
             return removeUser;
         }
+
+
+        #endregion
+
+
+        public async Task<Response> SignInAsync(SignInCommand command)
+        {
+            Response response = new();
+            var existUser = await _userReport.ExistUserAsync(command.UserName);
+            if (existUser.IsSuccess == false)
+            {
+                return Response.Fail("حساب کاربری یا رمز عبور اشتباه است.");
+            }
+
+            var activeUser = await _userReport.ActiveUserAsync(command.UserName);
+            if (activeUser.IsSuccess == false)
+            {
+                return Response.Fail("حساب کاربری غیرفعال است.");
+            }
+
+            var user = await _userReport.GetUserByUserName(command.UserName);
+            if (user == null)
+            {
+                return Response.Fail("حساب کاربری شما در دسترس نمی باشد با پشتیبان ارتباط برقرار کنید.");
+            }
+
+            var checkPassword = await _signInManager.CheckPasswordSignInAsync(user, command.Password, true);
+            if (!checkPassword.Succeeded)
+            {
+                return Response.Fail("حساب کاربری یا رمز عبور اشتباه است.");
+            }
+
+            await _signInManager.SignInAsync(user, isPersistent: command.Remember);
+             response.IsSuccess = true;
+            return response;
+
+        }
+
+
+
     }
 }
