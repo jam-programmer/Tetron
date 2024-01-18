@@ -309,6 +309,7 @@ namespace Framework.Factories.Identity.User
             }
 
             Response response = new();
+            response.Data = user.Id.ToString();
             response.IsSuccess = true;
             return response;
         }

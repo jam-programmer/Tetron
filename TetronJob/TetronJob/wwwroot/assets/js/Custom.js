@@ -6,6 +6,7 @@ async function LoadCity() {
     var select = document.getElementById("city");
 
 
+    select.options.length = 0;
 
 
 

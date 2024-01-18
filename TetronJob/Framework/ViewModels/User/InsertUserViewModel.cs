@@ -32,4 +32,14 @@ namespace Framework.ViewModels.User
 
         public Guid UserId { set; get; }
     }
+
+    public class UserAddress
+    {
+        public string? ProvinceId { set; get; }
+      
+
+        public string? CityId { set; get; }
+
+        public string? UserId { set; get; }
+    }
 }

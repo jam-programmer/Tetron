@@ -1,4 +1,5 @@
-﻿using Framework.ViewModels.City;
+﻿using Framework.ViewModels.Category;
+using Framework.ViewModels.City;
 using Framework.ViewModels.Province;
 using Framework.ViewModels.User;
 using MediatR;
@@ -27,6 +28,7 @@ namespace TetronJob.Controllers
         public async Task<IActionResult> SignUp()
         {
             await Provinces();
+            await Categories();
             return View();
         }
 
@@ -37,6 +39,33 @@ namespace TetronJob.Controllers
             var result = await _mediator.Send(model);
             return Json(result);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> SetAddress([FromBody]UserAddress address)
+        {
+            await _mediator.Send(new SetUserAddressViewModel()
+            {
+                CityId = Guid.Parse(address.CityId!) ,UserId = Guid.Parse(address.UserId!),ProvinceId = Guid.Parse(address.ProvinceId!),Get = false
+            });
+
+            return Ok(StatusCode(200));
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> SetCategories([FromBody]UserCategoryViewModel model)
+        {
+            var result = await _mediator.Send(new UserCategoryViewModel
+            {
+                UserId = model.UserId
+                ,
+                CategoryIds = model.CategoryIds,
+                Get = false
+            });
+            return Ok(StatusCode(200));
+        }
+
 
 
 
@@ -54,5 +83,12 @@ namespace TetronJob.Controllers
             });
             return Json(result);
         }
+
+        public async Task Categories()
+        {
+            var result = await _mediator.Send(new RequestGetCategories());
+            ViewBag.Categories = result;
+        }
+
     }
 }

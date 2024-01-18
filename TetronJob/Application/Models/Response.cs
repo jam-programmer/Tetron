@@ -10,6 +10,7 @@ namespace Application.Models
     {
         public  bool IsSuccess { set; get; }=false;
         public string? Message { set; get; }
+        public object? Data { set; get; }
 
         #region Methods
 

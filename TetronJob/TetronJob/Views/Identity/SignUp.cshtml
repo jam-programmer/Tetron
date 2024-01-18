@@ -1,9 +1,10 @@
-﻿@{
+﻿@using Framework.ViewModels.Category
+@{
     ViewData["Title"] = "SignUp";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
+<div class="row mb-3">
 
     <nav aria-label="breadcrumb">
         <ol class="lh-1-85 breadcrumb">
@@ -117,13 +118,10 @@
 
 
                         <div class="col-12 d-flex justify-content-between">
-                            <a class="btn btn-label-secondary btn-prev" disabled="">
-                                <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
-                                <span class="d-sm-inline-block d-none">قبلی</span>
-                            </a>
-                            <a class="btn btn-primary btn-next" onclick="StepOne()">
-                                <span class="d-sm-inline-block d-none me-sm-1">بعدی</span>
-                                <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                          
+                            <a class="btn btn-pink text-white btn-next" onclick="StepOne()">
+                                <span class="d-sm-inline-block d-none me-sm-1">ساخت حساب کاربری</span>
+                              
                             </a>
                         </div>
                     </div>
@@ -156,43 +154,13 @@
                             </select>
                            
                         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                        <input type="hidden" id="UserId"/>
                         <div class="col-12 d-flex justify-content-between">
-                            <button class="btn btn-primary btn-prev">
-                                <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
-                                <span class="d-sm-inline-block d-none">قبلی</span>
-                            </button>
-                            <button class="btn btn-primary btn-next">
-                                <span class="d-sm-inline-block d-none me-sm-1">بعدی</span>
-                                <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
-                            </button>
+                         
+                            <a class="btn btn-pink text-white" onclick="StepTwo()">
+                                <span class="d-sm-inline-block d-none me-sm-1">ثبت موقعیت مکانی</span>
+                               
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -203,38 +171,30 @@
                         <small>حوزه فعالیت خود را انتخاب کنید</small>
                     </div>
                     <div class="row g-3">
+                        @if (((ViewBag.Categories as IEnumerable<CategoryViewModel>)!) != null)
+                        {
+                            @foreach (var item in ((ViewBag.Categories as IEnumerable<CategoryViewModel>)!))
+                            {
 
-                        <div class="col-sm-6">
-                            <div class="text-light small fw-semibold mb-3">پیش&zwnj;فرض</div>
-                            <label class="switch">
-                                <input type="checkbox" class="switch-input">
-                                <span class="switch-toggle-slider">
-                                    <span class="switch-on"></span>
-                                    <span class="switch-off"></span>
-                                </span>
-                                <span class="switch-label">پیش&zwnj;فرض</span>
-                            </label>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="text-light small fw-semibold mb-3">پیش&zwnj;فرض</div>
-                            <label class="switch">
-                                <input type="checkbox" class="switch-input">
-                                <span class="switch-toggle-slider">
-                                    <span class="switch-on"></span>
-                                    <span class="switch-off"></span>
-                                </span>
-                                <span class="switch-label">پیش&zwnj;فرض</span>
-                            </label>
-                        </div>
+                                <div class="col-sm-6">
+                                    <label class="switch">
+                                        <input type="checkbox" class="switch-input" value="@item.Id" name="CategoryIds">
+                                        <span class="switch-toggle-slider">
+                                            <span class="switch-on"></span>
+                                            <span class="switch-off"></span>
+                                        </span>
+                                        <span class="switch-label">@item.Name</span>
+                                    </label>
+                                </div>
 
+                            }
+                        }
+                       
 
 
                         <div class="col-12 d-flex justify-content-between">
-                            <button class="btn btn-primary btn-prev">
-                                <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
-                                <span class="d-sm-inline-block d-none">قبلی</span>
-                            </button>
-                            <button class="btn btn-success btn-submit">ثبت</button>
+                          
+                            <a class="btn btn-pink text-white " onclick="StepThree()">ثبت اطلاعات پایه</a>
                         </div>
                     </div>
                 </div>
