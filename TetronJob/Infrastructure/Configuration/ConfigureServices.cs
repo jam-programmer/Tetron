@@ -1,17 +1,12 @@
-﻿using Microsoft.AspNetCore.Http.Connections;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using Infrastructure.Common;
 using Infrastructure.Persistence.Repositories;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using ConnectionOptions = Infrastructure.Common.ConnectionOptions;
 
 namespace Infrastructure.Configuration
 {
@@ -21,6 +16,7 @@ namespace Infrastructure.Configuration
         (this IServiceCollection services,
             IConfiguration configuration)
         {
+            ConnectionOptions.ConnectionString = configuration.GetConnectionString("TetronJob");
 
             services.AddIdentity<UserEntity, RoleEntity>().AddEntityFrameworkStores<SqlServerContext>()
                 .AddRoles<RoleEntity>()
@@ -30,6 +26,7 @@ namespace Infrastructure.Configuration
             {
                 option.UseSqlServer(configuration.GetConnectionString("TetronJob"));
             });
+            services.AddScoped<IDapper, Persistence.Repositories.Dapper>();
             //services.AddScoped<ISqlServer>(provider => provider.GetRequiredService<DataBaseContext>());
             services.AddScoped(typeof(IEfRepository<>), typeof(EfRepository<>));
             //services.AddScoped(typeof(IDapper<>), typeof(DapperRepository<>));

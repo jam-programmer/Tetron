@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.Models;
 using Application.Reports.Category;
+using Application.Reports.CategoryUser;
 using Application.Services.Category;
 using Domain.Entities;
 using Framework.Common.Application.Core;
+using Framework.CQRS.Query.Admin.Category;
 using Framework.ViewModels.Category;
 using Mapster;
 
@@ -17,12 +19,31 @@ namespace Framework.Factories.Category
     {
         private readonly ICategoryReport _report;
         private readonly ICategoryService _service;
+        private readonly ICategoryUserReport _categoryUserReport;
 
-        public CategoryFactory(ICategoryReport report, ICategoryService service)
+        public CategoryFactory(ICategoryReport report, ICategoryService service, ICategoryUserReport categoryUserReport)
         {
             _report = report;
             _service = service;
+            _categoryUserReport = categoryUserReport;
         }
+        public async Task<UserCategoryResult> GetUsersCategory(CategoryFilter filter)
+        {
+            var model = await _categoryUserReport
+                .GetUsersCategory<UsersCategory>(filter.CategoryId, filter.CityId, filter.ProvinceId, filter.Search);
+            UserCategoryResult result = new();
+            result.Users = model;
+            result.Filter = filter;
+            return result;
+        }
+
+        public async Task<IEnumerable<CQRS.Query.Admin.Category.Category>> GetCategoryForHomePageAsync()
+        {
+            var result = await _report.GetAllCategoriesAsync();
+            var response = result.Adapt<IEnumerable<CQRS.Query.Admin.Category.Category>>();
+            return response;
+        }
+
         public async Task<PaginatedList<TViewModel>> GetPagedSearchWithSizeAsync<TViewModel>(PaginatedSearchWithSize pagination,
             CancellationToken cancellationToken = default)
         {

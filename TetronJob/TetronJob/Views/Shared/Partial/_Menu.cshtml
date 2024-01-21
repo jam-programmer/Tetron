@@ -60,19 +60,31 @@
                 </a>
             </li>
 
-
-            <li class="menu-item">
-                <a asp-controller="Identity" asp-action="SignUp" class="menu-link ">
-                    <i class="menu-icon tf-icons bx bx-user-plus"></i>
-                    <div >ثبت نام در سایت</div>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a asp-controller="Identity" asp-action="SignIn" class="menu-link ">
-                    <i class="menu-icon tf-icons bx bx-user-circle"></i>
-                    <div >ورود به حساب کاربری</div>
-                </a>
-            </li>
+@if (!User!.Identity!.IsAuthenticated)
+{
+    
+    <li class="menu-item">
+        <a asp-controller="Identity" asp-action="SignUp" class="menu-link ">
+            <i class="menu-icon tf-icons bx bx-user-plus"></i>
+            <div >ثبت نام در سایت</div>
+        </a>
+    </li>
+    <li class="menu-item">
+        <a asp-controller="Identity" asp-action="SignIn" class="menu-link ">
+            <i class="menu-icon tf-icons bx bx-user-circle"></i>
+            <div >ورود به حساب کاربری</div>
+        </a>
+    </li>
+}
+else
+{ <li class="menu-item">
+      <a asp-controller="Profile" asp-action="Dashboard" class="menu-link ">
+          <i class="fa-solid fa-user"></i>
+          <div > حساب کاربری  </div>
+      </a>
+  </li>
+              
+}
 
 
 

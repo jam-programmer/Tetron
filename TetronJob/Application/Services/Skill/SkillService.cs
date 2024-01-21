@@ -32,6 +32,21 @@ namespace Application.Services.Skill
             return response;
         }
 
+        public async Task<Response> InsertAsync(List<SkillEntity> skills, CancellationToken cancellationToken)
+        {
+            Response response = new();
+            try
+            {
+                await _repository.InsertListAsync(skills);
+                response.IsSuccess = true;
+            }
+            catch (Exception e)
+            {
+                //log
+            }
+            return response;
+        }
+
         public async Task<Response> UpdateAsync(SkillEntity skill, CancellationToken cancellationToken)
         {
             Response response = new();

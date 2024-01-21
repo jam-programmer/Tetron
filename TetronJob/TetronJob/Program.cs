@@ -39,7 +39,7 @@ builder.Services.Configure<IdentityOptions>(option =>
 builder.Services.ConfigureApplicationCookie(cooke =>
 {
     cooke.ExpireTimeSpan = TimeSpan.FromDays(30);
-    cooke.LoginPath = "/Account/SignIn";
+    cooke.LoginPath = "/Identity/SignIn";
     cooke.AccessDeniedPath = "/";
     cooke.SlidingExpiration = true;
 });
@@ -60,8 +60,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 app.UseRouting();
-
-app.UseAuthorization(); app.MapControllerRoute(
+app.UseAuthentication();
+app.UseAuthorization(); 
+app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
 );

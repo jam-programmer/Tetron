@@ -12,9 +12,14 @@ using Application.Reports.UserAddress;
 using Application.Services.Category;
 using Application.Services.CategoryUser;
 using Application.Services.City;
+using Application.Services.Introduction;
+using Application.Services.Picture;
+using Application.Services.Placement;
 using Application.Services.Province;
+using Application.Services.Recruitment;
 using Application.Services.Role;
 using Application.Services.Skill;
+using Application.Services.SkillIntroduction;
 using Application.Services.User;
 using Application.Services.UserAddress;
 using Microsoft.Extensions.Configuration;
@@ -56,6 +61,14 @@ namespace Application
  
             services.AddScoped<ISkillReport, SkillReport>();
             services.AddScoped<ISkillService, SkillService>();
+
+ 
+            services.AddScoped<IIntroductionService, IntroductionService>();
+            services.AddScoped<IRecruitmentService, RecruitmentService>();
+            services.AddScoped<IPictureService, PictureService>();
+            services.AddScoped<IPlacementService, PlacementService>();
+            services.AddScoped<ISkillIntroductionService, SkillIntroductionService>();
+
 
 
 

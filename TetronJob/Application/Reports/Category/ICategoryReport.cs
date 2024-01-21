@@ -9,5 +9,7 @@ namespace Application.Reports.Category
             CancellationToken cancellationToken = default);
         Task<CategoryEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
         Task<IEnumerable<CategoryEntity>> GetAllCategoriesAsync();
+
+
     }
 }

@@ -27,5 +27,6 @@ namespace Framework.Factories.Identity.User
 
 
         Task<Response> SignInAsync(SignInCommand command);
+        Task SignOutAsync();
     }
 }

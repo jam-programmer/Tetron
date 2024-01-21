@@ -22,7 +22,8 @@ async function LoadCity() {
                 option.value = item.id;
                 select.add(option);
 
-            });
+            }); var $disabledResults = $(".search-j2");
+            $disabledResults.select2();
         })
         .catch(error => {
             console.log(error);

@@ -46,8 +46,7 @@
 }
 
 .card-bg {
-    background-image: url('https://iranthinktanks.com/wp-content/uploads/2020/11/investigating-the-capacities-and-issues-of-the-garment-industry-780x470.jpg');
-    background-size: cover;
+      background-size: cover;
     background-position: center;
 }
 
@@ -58,7 +57,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 255, 0.5);
+  
 }
 
 

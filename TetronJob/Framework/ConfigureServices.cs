@@ -6,7 +6,10 @@ using Framework.Factories.Category;
 using Framework.Factories.City;
 using Framework.Factories.Identity.Role;
 using Framework.Factories.Identity.User;
+using Framework.Factories.Introduction;
+using Framework.Factories.Placement;
 using Framework.Factories.Province;
+using Framework.Factories.Recruitment;
 using Framework.Factories.Skill;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -49,6 +52,9 @@ namespace Framework
             services.AddScoped<IProvincesFactory, ProvincesFactory>();
             services.AddScoped<ICityFactory, CityFactory>();
             services.AddScoped<ISkillFactory, SkillFactory>();
+            services.AddScoped<IRecruitmentFactory, RecruitmentFactory>();
+            services.AddScoped<IPlacementFactory, PlacementFactory>();
+            services.AddScoped<IIntroductionFactory, IntroductionFactory>();
             return services;
         }
     }

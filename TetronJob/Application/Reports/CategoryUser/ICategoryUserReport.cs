@@ -8,5 +8,8 @@ namespace Application.Reports.CategoryUser
             GetCategoriesByUserIdAsync(Guid userId,CancellationToken cancellation);
 
         Task<bool>CheckExistCategoryAsync(Guid userId,CancellationToken cancellation);
+
+        Task<List<TModel>> GetUsersCategory<TModel>(Guid? CategoryId,
+            Guid? CityId, Guid? ProvinceId, string search = "");
     }
 }

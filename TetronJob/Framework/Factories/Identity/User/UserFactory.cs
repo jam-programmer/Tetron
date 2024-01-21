@@ -396,7 +396,10 @@ namespace Framework.Factories.Identity.User
 
         }
 
-
-
+        public async Task SignOutAsync()
+        { 
+            await _signInManager.SignOutAsync();
+           
+        }
     }
 }

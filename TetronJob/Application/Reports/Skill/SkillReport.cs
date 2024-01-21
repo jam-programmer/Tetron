@@ -7,6 +7,7 @@ using Application.Extensions;
 using Application.Models;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Reports.Skill
 {
@@ -18,7 +19,6 @@ namespace Application.Reports.Skill
         {
             _repository = repository;
         }
-
         public async Task<PaginatedList<TDestination>> GetAllPaginatedAsync<TDestination>(PaginatedWithSize pagination,
             CancellationToken cancellationToken = default)
         {
@@ -31,7 +31,6 @@ namespace Application.Reports.Skill
                 config: null, cancellationToken);
 
         }
-
         public async Task<SkillEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             if (cancellationToken.IsCancellationRequested)
@@ -41,10 +40,18 @@ namespace Application.Reports.Skill
             return await _repository.GetByIdAsync(id);
         }
 
-      
         public async Task<IEnumerable<SkillEntity>> GetSkills()
         {
             return await _repository.GetListAsync();
+        }
+
+
+        public async Task<IEnumerable<SkillEntity>> GetSelectedSkillByIdAsync(List<Guid> ids,
+            CancellationToken cancellation)
+        {
+            var query =await _repository.GetByQueryAsync();
+            query = query.Where(w => ids.Contains(w.Id));
+            return await query.ToListAsync(cancellation);
         }
     }
 }

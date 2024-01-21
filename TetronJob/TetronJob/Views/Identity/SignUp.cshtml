@@ -127,7 +127,7 @@
                     </div>
                 </div>
                 <!-- Personal Info -->
-                <div id="BodyStep2" class="content">
+                <div id="BodyStep2" class="content ">
                     <div class="content-header mb-3">
                         <h6 class="mb-1">اطلاعات موقعیتی</h6>
                         <small>موقعیت مکانی خود را وارد کنید.</small>
@@ -138,7 +138,7 @@
                             <label for="select2Basic" class="form-label">انتخاب استان</label>
                             <div class="position-relative">
                                 <select onchange="LoadCity()" asp-items="@ViewBag.Provinces"
-                                        class="form-select" id="province">
+                                        class="form-select search-j2" id="province">
                                     <option selected="selected" disabled="disabled">یک استان انتخاب کنید</option>
 
                                 </select>
@@ -147,7 +147,7 @@
 
                         <div class="col-md-6 col-12 mb-4">
                             <label  class="form-label">انتخاب شهر</label>
-                            <select class="form-select" 
+                            <select class="form-select search-j2"
                                     id="city" >
                                 <option selected="selected" disabled="disabled">یک شهر انتخاب کنید</option>
 
@@ -226,6 +226,7 @@
     <script src="~/assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
     <script src="~/assets/vendor/libs/bootstrap-select/i18n/defaults-fa_IR.js"></script>
     <script src="~/assets/vendor/libs/select2/select2.js"></script>
+
     <script src="~/assets/vendor/libs/select2/i18n/fa.js"></script>
     <script src="~/assets/vendor/libs/apex-charts/apexcharts.js"></script>
     <script src="~/assets/js/main.js"></script>
@@ -244,4 +245,5 @@
     <link rel="stylesheet" href="~/assets/vendor/libs/bs-stepper/bs-stepper.css">
     <link rel="stylesheet" href="~/assets/vendor/libs/bootstrap-select/bootstrap-select.css">
     <link rel="stylesheet" href="~/assets/vendor/libs/select2/select2.css">
+  
 }

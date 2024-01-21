@@ -4,8 +4,11 @@ using Framework.ViewModels.City;
 using Framework.ViewModels.Province;
 using Framework.ViewModels.User;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Framework.CQRS.Notification.Master.User;
+
 
 namespace TetronJob.Controllers
 {
@@ -21,6 +24,10 @@ namespace TetronJob.Controllers
         [HttpGet]
         public IActionResult SignIn()
         {
+            if (User.Identity!.IsAuthenticated)
+            {
+                return Redirect("/Profile/Dashboard");
+            }
             return View();
         }
 
@@ -31,7 +38,16 @@ namespace TetronJob.Controllers
             return Json(result);
         }
 
+        public async Task<IActionResult> SignOut()
+        {
+            if (!User.Identity!.IsAuthenticated)
+            {
+                return Redirect("/");
+            }
 
+            await _mediator.Publish(new SignOut());
+            return Redirect("/");
+        }
 
 
 
@@ -39,6 +55,10 @@ namespace TetronJob.Controllers
         [HttpGet]
         public async Task<IActionResult> SignUp()
         {
+            if (User.Identity!.IsAuthenticated)
+            {
+                return Redirect("/Profile/Dashboard");
+            }
             await Provinces();
             await Categories();
             return View();
