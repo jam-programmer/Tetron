@@ -1,14 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿
+using Application.Reports.Article;
+using Application.Reports.ArticleCategory;
 using Application.Reports.Category;
 using Application.Reports.CategoryUser;
 using Application.Reports.City;
+using Application.Reports.Introduction;
+using Application.Reports.Placement;
 using Application.Reports.Province;
+using Application.Reports.Recruitment;
 using Application.Reports.Role;
 using Application.Reports.Skill;
+using Application.Reports.Slider;
 using Application.Reports.User;
 using Application.Reports.UserAddress;
+using Application.Services.Article;
+using Application.Services.ArticleCategory;
 using Application.Services.Category;
 using Application.Services.CategoryUser;
 using Application.Services.City;
@@ -20,6 +26,7 @@ using Application.Services.Recruitment;
 using Application.Services.Role;
 using Application.Services.Skill;
 using Application.Services.SkillIntroduction;
+using Application.Services.Slider;
 using Application.Services.User;
 using Application.Services.UserAddress;
 using Microsoft.Extensions.Configuration;
@@ -63,15 +70,28 @@ namespace Application
             services.AddScoped<ISkillService, SkillService>();
 
  
+            services.AddScoped<IIntroductionReport, IntroductionReport>();
             services.AddScoped<IIntroductionService, IntroductionService>();
+
             services.AddScoped<IRecruitmentService, RecruitmentService>();
+            services.AddScoped<IRecruitmentReport, RecruitmentReport>();
+
             services.AddScoped<IPictureService, PictureService>();
+
+
             services.AddScoped<IPlacementService, PlacementService>();
+            services.AddScoped<IPlacementReport, PlacementReport>();
+
             services.AddScoped<ISkillIntroductionService, SkillIntroductionService>();
 
+            services.AddScoped<IArticleCategoryReport, ArticleCategoryReport>();
+            services.AddScoped<IArticleCategoryService, ArticleCategoryService>();
 
+            services.AddScoped<IArticleReport, ArticleReport>();
+            services.AddScoped<IArticleService, ArticleService>();
 
-
+            services.AddScoped<ISliderReport, SliderReport>();
+            services.AddScoped<ISliderService, SliderService>();
 
 
             return services;

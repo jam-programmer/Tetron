@@ -2,6 +2,7 @@
 using FluentValidation.AspNetCore;
 using Framework.Common;
 using Framework.Common.Behaviors;
+using Framework.Factories.ArticleCategory;
 using Framework.Factories.Category;
 using Framework.Factories.City;
 using Framework.Factories.Identity.Role;
@@ -45,7 +46,7 @@ namespace Framework
                 typeof(ValidateCommandBehavior<,>));
 
 
-
+            services.AddScoped<IArticleCategoryFactory, ArticleCategoryFactory>();
             services.AddScoped<ICategoryFactory, CategoryFactory>();
             services.AddScoped<IRoleFactory, RoleFactory>();
             services.AddScoped<IUserFactory, UserFactory>();

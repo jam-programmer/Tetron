@@ -22,6 +22,62 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain.Entities.ArticleCategoryEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ArticleCategoryTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ArticleCategory");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ArticleEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ArticleBody")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ArticleCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ArticleImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ArticleTags")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ArticleTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("VisitCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleCategoryId");
+
+                    b.ToTable("Article");
+                });
+
             modelBuilder.Entity("Domain.Entities.CategoryEntity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -373,6 +429,35 @@ namespace Infrastructure.Migrations
                     b.ToTable("SkillIntroduction");
                 });
 
+            modelBuilder.Entity("Domain.Entities.SliderEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SliderAlt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SliderImagePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SliderLink")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Slider");
+                });
+
             modelBuilder.Entity("Domain.Entities.UserAddressEntity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -586,6 +671,17 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.ArticleEntity", b =>
+                {
+                    b.HasOne("Domain.Entities.ArticleCategoryEntity", "Category")
+                        .WithMany("Article")
+                        .HasForeignKey("ArticleCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("Domain.Entities.CategoryUserEntity", b =>
                 {
                     b.HasOne("Domain.Entities.CategoryEntity", "Category")
@@ -770,6 +866,11 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.ArticleCategoryEntity", b =>
+                {
+                    b.Navigation("Article");
                 });
 
             modelBuilder.Entity("Domain.Entities.CategoryEntity", b =>

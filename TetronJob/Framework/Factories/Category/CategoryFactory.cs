@@ -71,7 +71,7 @@ namespace Framework.Factories.Category
             var result = await _service.DeleteAsync(category, cancellation);
             if (result.IsSuccess == true)
             {
-                FileProcessing.RemoveFile(category.Name!, "CategoryImage");
+                FileProcessing.RemoveFile(category.Image!, "CategoryImage");
             }
 
             return result;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Models;
+using Application.Reports.Recruitment;
 using Application.Reports.User;
 using Application.Reports.UserAddress;
 using Application.Services.Picture;
@@ -12,21 +13,32 @@ using Domain.Entities;
 using Domain.Enums;
 using Framework.Common.Application.Core;
 using Framework.CQRS.Command.Master.Recruitment;
+using Framework.CQRS.Query.Recruitment;
 using Mapster;
 
 namespace Framework.Factories.Recruitment
 {
     public class RecruitmentFactory: IRecruitmentFactory
     {
+        private readonly IRecruitmentReport _report;
         private readonly IRecruitmentService _service;
         private readonly IPictureService _pictureService;
         private readonly IUserAddressReport _addressReport;
 
-        public RecruitmentFactory(IRecruitmentService service, IPictureService pictureService, IUserAddressReport addressReport)
+        public RecruitmentFactory(IRecruitmentReport report, IRecruitmentService service, IPictureService pictureService, IUserAddressReport addressReport)
         {
+            _report = report;
             _service = service;
             _pictureService = pictureService;
             _addressReport = addressReport;
+        }
+        public async Task<List<CQRS.Query.Recruitment.Recruitment>> GetRecruitmentsWithFilter(GetRecruitmentWithFilterQuery query)
+        {
+            var model = await _report.GetRecruitments(query.Filter.CityId, query.Filter.ProvinceId,
+                query.Filter.Search);
+            List<CQRS.Query.Recruitment.Recruitment> recruitment =
+                model.Adapt<List<CQRS.Query.Recruitment.Recruitment>>();
+            return recruitment;
         }
 
         public async Task<Response> InsertRecruitmentAsync(InsertRecruitmentCommand command, CancellationToken cancellation)

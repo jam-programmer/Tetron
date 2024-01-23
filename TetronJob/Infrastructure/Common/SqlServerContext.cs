@@ -24,7 +24,6 @@ namespace Infrastructure.Common
         #region Entities
         public virtual DbSet<CategoryEntity> Category { get; set; }
         public virtual DbSet<CityEntity> City { get; set; }
-
         public virtual DbSet<ProvinceEntity> Province { get; set; }
         public virtual DbSet<UserAddressEntity> UserAddress { get; set; }
         public virtual DbSet<CategoryUserEntity> CategoryUser { get; set; }
@@ -36,7 +35,9 @@ namespace Infrastructure.Common
         public virtual DbSet<SkillIntroductionEntity> SkillIntroduction { get; set; }
 
 
-
+        public virtual DbSet<ArticleEntity> Article { get; set; }
+        public virtual DbSet<ArticleCategoryEntity> ArticleCategory { get; set; }
+        public virtual DbSet<SliderEntity> Slider { get; set; }
 
 
         #endregion

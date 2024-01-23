@@ -1,0 +1,146 @@
+﻿@model List<Framework.CQRS.Query.Introduction.Introduction>
+@{
+    ViewData["Title"] = "آگهی های آماده همکاری";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+    <nav aria-label="breadcrumb">
+        <ol class="lh-1-85 breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">خانه</a>
+            </li>
+
+            <li class="breadcrumb-item active text-pink">آگهی های آماده همکاری</li>
+        </ol>
+    </nav>
+</div>
+<div class="container-xxl flex-grow-1 container-p-y mb-5">
+    <div class="app-email card">
+        <div class="border-0">
+            <div class="row g-0">
+
+                <div class="col app-email-sidebar border-end flex-grow-0" id="app-email-sidebar">
+
+                    <form asp-controller="Advertising" asp-action="Introduction" method="get">
+                        <div class="btn-compost-wrapper d-grid">
+                            <button class="btn btn-pink text-white" id="emailComposeSidebarLabel">
+                                اعمال فیلتر
+                            </button>
+                            <a class="btn btn-blue text-dark mt-2" asp-controller="Advertising" 
+                               asp-action="Introduction" asp-route-id="@ViewBag.Id" id="emailComposeSidebarLabel">
+                                تازه سازی
+                            </a>
+                        </div>
+                        <div class="email-filters py-2 ps ps__rtl ps--active-y">
+                            
+                            <div class="p-3">
+
+                                <div>
+                                    <label class="form-label">جستجو</label>
+                                    <div class="position-relative">
+                                        <input type="text" class="form-control" name="search" placeholder="جستجو" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="form-label">انتخاب استان</label>
+                                    <div class="position-relative">
+                                        <select onchange="LoadCity()" asp-items="@ViewBag.Provinces" name="ProvinceId"
+                                                class="form-select search-j2" id="province">
+                                            <option selected="selected" disabled="disabled">یک استان انتخاب کنید</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="form-label">انتخاب شهر</label>
+                                    <select class="form-select search-j2" name="CityId"
+                                            id="city">
+                                        <option selected="selected" disabled="disabled">یک شهر انتخاب کنید</option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+                            <!--/ Email Filters -->
+                            <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 311px; right: 246px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 207px;"></div></div>
+                        </div>
+                    </form>
+
+
+
+
+                </div>
+
+                <div class="col app-emails-list">
+                    <div class="card shadow-none border-0">
+                        <div class="card-body emails-list-header p-3 py-lg-3 py-2 d-lg-none d-xl-none">
+
+                            <div class="d-flex justify-content-between align-items-center  mb-lg-3">
+                                <div class="d-flex align-items-center w-100">
+                                    <i class="bx bx-menu bx-sm cursor-pointer d-block d-lg-none me-3" data-bs-toggle="sidebar" data-target="#app-email-sidebar" data-overlay=""></i>
+
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
+
+                        <div class="email-list pt-0 ps ps__rtl ps--active-y">
+                            <ul class="list-unstyled m-0">
+                                @foreach (var item in Model)
+                                {
+                                    <li class="email-list-item">
+                                        <div class="d-flex align-items-center">
+                                            @if (item.IntroductionImage == "default.jpg")
+                                            {
+                                                <img src="~/img/@item.IntroductionImage" alt="user-avatar" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" height="32" width="32">
+                                          
+                                            }
+                                            else
+                                            {
+                                                <img src="~/Introduction/@item.IntroductionImage" alt="user-avatar" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" height="32" width="32">
+                                          
+                                            }  <div class="email-list-item-content ms-2 ms-sm-0 me-2">
+                                                <span class="email-list-item-username me-2">عنوان آگهی:@item.IntroductionTitle</span>
+
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <span class="email-list-item-label  d-md-inline-block me-2">شماره تماس:@item.IntroductionPhoneNumber</span>
+                                              
+
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                            <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 263px; right: 1010px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 113px;"></div></div><div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 263px; right: -9px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 113px;"></div></div>
+                        </div>
+                    </div>
+                    <div class="app-overlay"></div>
+                </div>
+                <!-- /Emails List -->
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+@section Style
+    {
+    <link rel="stylesheet" href="~/assets/vendor/libs/select2/select2.css">
+    <link rel="stylesheet" href="~/assets/vendor/css/pages/app-email.css">
+}
+@section Script
+    {
+    <script src="~/assets/vendor/libs/select2/select2.js"></script>
+    <script src="~/assets/js/forms-selects.js"></script>
+
+    <script src="~/assets/js/app-email.js"></script>
+}

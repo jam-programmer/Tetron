@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 using Framework.CQRS.Query.Admin.Category;
+using Framework.CQRS.Query.Introduction;
+using Framework.CQRS.Query.Placement;
+using Framework.CQRS.Query.Recruitment;
 
 namespace TetronJob.Controllers
 {
@@ -88,7 +91,7 @@ namespace TetronJob.Controllers
 
 
         #region Show
-        [Route("/8")]
+     
         [HttpGet]
         public async Task<IActionResult> CategoryUser
             (Guid id,Guid CityId,Guid ProvinceId,string search="")
@@ -104,7 +107,51 @@ namespace TetronJob.Controllers
             await Provinces();
             return View(model.Users);
         }
-       
+
+        [HttpGet]
+        public async Task<IActionResult> Introduction(Guid CityId, Guid ProvinceId, string search = "")
+        {
+            await Provinces();
+            var result =await _mediator.Send(new GetIntroductionWithFilterQuery()
+            {
+                Filter = new Filter()
+                {
+                    CityId = CityId,ProvinceId = ProvinceId,Search = search
+                }
+            });
+            return View(result);
+        }
+
+
+  [HttpGet]
+        public async Task<IActionResult> Placement(Guid CityId, Guid ProvinceId, string search = "")
+        {
+            await Provinces();
+            var result =await _mediator.Send(new GetPlacementWithFilterQuery()
+            {
+                Filter = new Filter()
+                {
+                    CityId = CityId,ProvinceId = ProvinceId,Search = search
+                }
+            });
+            return View(result);
+        }
+
+
+
+  [HttpGet]
+        public async Task<IActionResult> Recruitment(Guid CityId, Guid ProvinceId, string search = "")
+        {
+            await Provinces();
+            var result =await _mediator.Send(new GetRecruitmentWithFilterQuery()
+            {
+                Filter = new Filter()
+                {
+                    CityId = CityId,ProvinceId = ProvinceId,Search = search
+                }
+            });
+            return View(result);
+        }
 
 
 
