@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewData["Title"] = "تماس با ما";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="lh-1-85 breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">خانه</a>
+            </li>
+
+            <li class="breadcrumb-item active text-pink">   تماس با ما</li>
+        </ol>
+    </nav>
+    <div class="col-xl-6 col-lg-6 col-md-12 offset-xl-3 offset-lg-3 mb-5">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">تماس با ما</h5>
+                <div class="text-white  p-1 alert bg-danger">
+                    ثبت هرگونه محتوای غیر اخلاقی پیگرد قانونی دارد
+
+
+                </div>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        
+
+                        <div class="mb-3 col-lg-12 col-xl-12 col-12">
+                            <label class="form-label" >نام و نام خانوادگی</label>
+                            <input type="text" class="form-control form-control-sm" id="fullname" placeholder="نام و نام خانوادگی">
+                        </div>
+                        <div class="mb-3 col-lg-6 col-xl-6 col-12">
+                            <label class="form-label" >عنوان پیام</label>
+                            <input type="text" class="form-control form-control-sm" id="title" placeholder="عنوان پیام">
+                        </div>
+                        <div class="mb-3 col-lg-6 col-xl-6 col-12">
+                            <label class="form-label" >شماره تماس</label>
+                            <input type="tel" class="form-control form-control-sm" id="phone" placeholder="09**********">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label" for="message">پیام</label>
+                        <textarea id="message" class="form-control form-control-sm"
+                                  rows="4" placeholder="پیام را اینجا بنویسید"></textarea>
+                    </div>
+
+                    <a onclick="SendContactRequest()" class="btn bg-primary btn-sm text-white">ارسال</a>
+                    
+                 
+
+                    <a asp-controller="Home" asp-action="Index" class="btn bg-warning btn-sm text-white">بازگشت</a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Script
+{
+    <script src="~/js/request.js" asp-append-version="true"></script>
+}

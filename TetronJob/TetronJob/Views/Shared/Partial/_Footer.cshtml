@@ -28,8 +28,11 @@
 
             <div class="col-2 mb-2 footerbox">
                 <div>
-                    <a href="/" style="font-size: 24px;"> <i class="fa-solid fa-search mt-2 text-pink"></i> </a>
-                    <br> <span>جستجو</span>
+                    <a asp-controller="Home" asp-action="ContactUs" style="font-size: 24px;">
+                        <i class="fa-solid fa-envelope mt-2 text-pink"></i>
+
+                    </a>
+                    <br> <span>تماس با ما</span>
                 </div>
             </div>
             <div class="col-2 mb-2 footerbox">
@@ -40,7 +43,9 @@
             </div>
             <div class="col-2 mb-2 footerbox">
                 <div>
-                    <a href="/" style="font-size: 24px;"> <i class="fa-solid fa-envelope mt-2 text-pink"></i> </a>
+                    <a asp-controller="Home" asp-action="About" style="font-size: 24px;">
+                        <i class="fa-regular fa-circle-question mt-2 text-pink"></i>
+                    </a>
                     <br> <span>درباره ما</span>
                 </div>
             </div>

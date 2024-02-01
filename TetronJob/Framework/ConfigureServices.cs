@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using FluentValidation.AspNetCore;
+﻿using FluentValidation.AspNetCore;
 using Framework.Common;
 using Framework.Common.Behaviors;
 using Framework.Factories.Article;
@@ -18,6 +17,8 @@ using Framework.Factories.Slider;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Globalization;
+using Framework.Factories.Contact;
 
 
 namespace Framework
@@ -62,6 +63,7 @@ namespace Framework
             services.AddScoped<IIntroductionFactory, IntroductionFactory>();
             services.AddScoped<ISliderFactory, SliderFactory>();
             services.AddScoped<ISettingFactory, SettingFactory>();
+            services.AddScoped<IContactFactory, ContactFactory>();
             return services;
         }
     }

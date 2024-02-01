@@ -33,9 +33,10 @@ namespace Application.Reports.Article
 
         public async Task<ArticleEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            var article = await _repository.GetByIdAsync(id);
-            return article;
-        }
+            var article = await _repository.GetByQueryAsync();
+            article =  article.Include(i => i.Category);
+            return (await article.SingleOrDefaultAsync(s => s.Id == id))!;
+        } 
 
         public async Task<PaginatedList<TDestination>> GetAllPaginatedAsync<TDestination>(PaginatedSearchWithSize pagination, Guid categoryId,
             CancellationToken cancellationToken = default)

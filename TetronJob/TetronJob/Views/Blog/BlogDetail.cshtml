@@ -6,6 +6,18 @@
 }
 
 <div class="row mb-5 p-3">
+    <nav aria-label="breadcrumb">
+        <ol class="lh-1-85 breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">خانه</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a asp-controller="Blog" asp-action="BlogCategory">دسته بندی مقالات</a>
+            </li> 
+           
+            <li class="breadcrumb-item active text-pink"> @Model.ArticleTitle  </li>
+        </ol>
+    </nav>
     <div class="col-xl-8 col-lg-8 col-md-8 offset-xl-2  offset-lg-2 col-md-2">
         <div class="card overflow-hidden">
             <div class="card-body">
@@ -16,15 +28,15 @@
                     <span class="badge bg-label-secondary p-2 rounded me-3">
                         <i class="bx bx-pen bx-sm"></i>
                     </span>
-                   @Model.ArticleTitle
+                    @Model.ArticleTitle
                 </h4>
                 <p>
-                    @Html.Raw(Model.ArticleBody )
+                    @Html.Raw(Model.ArticleBody)
                 </p>
-                <div class="d-flex justify-content-between flex-wrap gap-3 my-4">   
+                <div class="d-flex justify-content-between flex-wrap gap-3 my-4">
                     <h6>برچسب مقاله</h6>
                     <h6>
-                        
+
                         @if (!string.IsNullOrEmpty(Model.ArticleTags))
                         {
                             List<Dictionary<string, string>>? tags = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(Model.ArticleTags);
@@ -43,7 +55,7 @@
 
                     </h6>
                 </div>
-              
+
             </div>
         </div>
     </div>

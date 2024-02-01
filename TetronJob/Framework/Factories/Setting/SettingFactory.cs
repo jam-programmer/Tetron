@@ -73,5 +73,12 @@ namespace Framework.Factories.Setting
             LawViewModel law = setting.Adapt<LawViewModel>();
             return law;
         }
+
+        public async Task<AboutViewModel> GetAboutAsync()
+        {
+            var setting = await _report.GetSettingAsync();
+            AboutViewModel about = setting.Adapt<AboutViewModel>();
+            return about;
+        }
     }
 }

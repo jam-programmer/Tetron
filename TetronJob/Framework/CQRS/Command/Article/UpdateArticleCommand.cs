@@ -30,6 +30,7 @@ namespace Framework.CQRS.Command.Article
         public string ArticleBody { set; get; }
         public string ArticleTags { set; get; }
         public Guid ArticleCategoryId { set; get; }
+        public string? ArticleCategoryArticleCategoryTitle { set; get; }
         public string ArticleImage { set; get; }
         public Guid Id { set; get; }
     }

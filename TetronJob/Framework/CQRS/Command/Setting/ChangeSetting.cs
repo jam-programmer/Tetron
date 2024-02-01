@@ -10,6 +10,8 @@ namespace Framework.CQRS.Command.Setting
 {
     public class ChangeSetting:IRequest<ChangeSetting>
     {
+        public string? Email { set; get; }
+        public string? Number { set; get; }
         public string? SiteTitle { set; get; }
         public string? Instagram { set; get; }
         public string? Telegram { set; get; }

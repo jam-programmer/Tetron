@@ -166,7 +166,7 @@ async function SendRequestPlacement() {
 
 async function SendRequestIntroduction() {
 
-    debugger;
+   
     var skills = document.getElementById("Skill");
     var title = document.getElementById("title");
     var phone = document.getElementById("phone");
@@ -255,6 +255,71 @@ async function SendRequestIntroduction() {
     }
 
 
+async function SendContactRequest() {
+    var title = document.getElementById("title");
+    var phone = document.getElementById("phone");
+    var fullName = document.getElementById("fullname");
+    var message = document.getElementById("message");
+    if (title.value === "" || phone.value === "" || message.value === "" || fullName.value==="") {
+        CustomAlert("عدم تکمیل اطلاعات", "لطفا اطلاعات را تکمیل نمائید.", "Warning");
+        return;
+    }
+    var formData = new FormData();
 
 
 
+
+
+    formData.append('Message', message.value);
+    formData.append('PhoneNumber', phone.value);
+    formData.append('FullName', fullName.value);
+    formData.append('Title', title.value);
+    try {
+
+        const timerInterval = setInterval(() => {
+            const timer = Swal.getPopup().querySelector("b");
+            if (timer) {
+                timer.textContent = `${Swal.getTimerLeft()}`;
+            }
+        }, 100);
+
+        Swal.fire({
+            title: "پردازش اطلاعات پیام",
+            html: "لطفا منتظر بمانید.",
+            timer: 5000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+            willClose: () => {
+                clearInterval(timerInterval);
+            }
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                console.log("I was closed by the timer");
+            }
+        });
+        const response = await fetch('/ContactUs', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'enctype': 'multipart/form-data'
+            }
+        });
+        const data = await response.json();
+        if (data.isSuccess) {
+            setTimeout(() => {
+                CustomAlert("پیام شما ثبت شد", "با تشکر از شما پیام شما ثبت شد،کارشناسان ما به زودی با شما ارتباط برقرار میکنند.", "Success");
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 3000);
+            }, 5000);
+        } else {
+            CustomAlert("پیام ثبت نشد", data.message, "Error");
+        }
+    } catch (error) {
+        console.log('error', 'خطا: ' + error);
+    }
+
+
+}

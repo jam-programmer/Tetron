@@ -13,5 +13,7 @@ namespace Framework.Factories.Setting
         Task<ChangeSetting> GetSettingAsync(ChangeSetting? model,bool? get=false);
         Task<HelpViewModel> GetHelpAsync();
         Task<LawViewModel> GetLawAsync();
+
+        Task<AboutViewModel> GetAboutAsync();
     }
 }

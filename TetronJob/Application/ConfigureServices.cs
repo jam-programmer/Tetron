@@ -4,6 +4,7 @@ using Application.Reports.ArticleCategory;
 using Application.Reports.Category;
 using Application.Reports.CategoryUser;
 using Application.Reports.City;
+using Application.Reports.Contact;
 using Application.Reports.Introduction;
 using Application.Reports.Placement;
 using Application.Reports.Province;
@@ -20,6 +21,7 @@ using Application.Services.ArticleCategory;
 using Application.Services.Category;
 using Application.Services.CategoryUser;
 using Application.Services.City;
+using Application.Services.Contact;
 using Application.Services.Introduction;
 using Application.Services.Picture;
 using Application.Services.Placement;
@@ -102,6 +104,11 @@ namespace Application
 
             services.AddScoped<ISettingReport, SettingReport>();
             services.AddScoped<ISettingService, SettingService>();
+
+
+
+            services.AddScoped<IContactReport, ContactReport>();
+            services.AddScoped<IContactService, ContactService>();
 
 
 

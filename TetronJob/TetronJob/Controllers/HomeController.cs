@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Framework.CQRS.Command.Contact;
 using Framework.CQRS.Query.Setting;
 using MediatR;
 using TetronJob.Models;
@@ -45,6 +46,27 @@ namespace TetronJob.Controllers
             var model = await _mediator.Send(new GetLawQuery());
             return View(model);
         }
+        [Route("About")]
+        public async Task<IActionResult> About()
+        {
+            var model = await _mediator.Send(new GetAboutQuery());
+            return View(model);
+        }
 
+
+        [Route("ContactUs")]
+        public IActionResult ContactUs()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("ContactUs")]
+        public async Task<IActionResult> ContactUs([FromForm] InsertContactCommand command)
+        {
+
+            var result = await _mediator.Send(command);
+            return Json(result);
+        }
     }
 }
