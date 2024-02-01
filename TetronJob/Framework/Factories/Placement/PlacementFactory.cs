@@ -1,4 +1,5 @@
 ﻿using Application.Models;
+using Application.Reports.Picture;
 using Application.Reports.Placement;
 using Application.Reports.UserAddress;
 using Application.Services.Picture;
@@ -11,25 +12,25 @@ using Framework.CQRS.Command.Master.Placement;
 using Framework.CQRS.Query.Introduction;
 using Framework.CQRS.Query.Placement;
 using Mapster;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Framework.Factories.Placement
 {
-    public class PlacementFactory: IPlacementFactory
+    public class PlacementFactory : IPlacementFactory
     {
         private readonly IUserAddressReport _addressReport;
         private readonly IPlacementService _placementService;
         private readonly IPictureService _pictureService;
         private readonly IPlacementReport _placementReport;
+        private readonly IPictureReport _pictureReport;
 
-        public PlacementFactory(IUserAddressReport addressReport, IPlacementService placementService, IPictureService pictureService, IPlacementReport placementReport)
+        public PlacementFactory(IUserAddressReport addressReport, IPlacementService placementService, IPictureService pictureService, IPlacementReport placementReport, IPictureReport pictureReport)
         {
             _addressReport = addressReport;
             _placementService = placementService;
             _pictureService = pictureService;
             _placementReport = placementReport;
+            _pictureReport = pictureReport;
         }
-
         public async Task<List<CQRS.Query.Placement.Placement>> GetPlacementsWithFilter(GetPlacementWithFilterQuery query)
         {
             var model = await _placementReport.GetPlacements(query.Filter.CityId, query.Filter.ProvinceId,
@@ -39,16 +40,16 @@ namespace Framework.Factories.Placement
             return placements;
         }
 
-        public async Task<Response> InsertPlacementAsync(InsertPlacementCommand command,CancellationToken cancellation)
+        public async Task<Response> InsertPlacementAsync(InsertPlacementCommand command, CancellationToken cancellation)
         {
             PlacementEntity placement = command.Adapt<PlacementEntity>();
-            placement.PlacementImage = FileProcessing.FileUpload(command.PlacementImage, 
+            placement.PlacementImage = FileProcessing.FileUpload(command.PlacementImage,
                 null, "Placement");
             var user = await _addressReport.GetUserAddressByIdAsync(command.UserId!.Value);
             placement.CityId = user!.CityId;
             placement.ProvinceId = user!.ProvinceId;
             placement.Condition = ConvertEnum.ConvertCondition(command.Condition);
-            var result = await _placementService.InsertAsync(placement,cancellation);
+            var result = await _placementService.InsertAsync(placement, cancellation);
             if (result.IsSuccess == false)
             {
                 return result;
@@ -77,7 +78,7 @@ namespace Framework.Factories.Placement
 
         public async Task<Response> UpdatePlacementAsync(UpdatePlacementCommand command, CancellationToken cancellation)
         {
-            var model = await _placementReport.GetByIdAsync(command.Id,cancellation);
+            var model = await _placementReport.GetByIdAsync(command.Id, cancellation);
             model = command.Adapt<PlacementEntity>(); model.Condition = ConvertEnum.ConvertCondition(command.Condition);
             model.PlacementImage =
                     FileProcessing.FileUpload(command.PlacementImageFile, command.PlacementImage, "Placement");
@@ -100,7 +101,7 @@ namespace Framework.Factories.Placement
 
         public async Task<UpdatePlacementCommand> GetPlacementByIdAsync(GetPlacementByIdQuery request, CancellationToken cancellation)
         {
-            var model = await _placementReport.GetByIdAsync(request.Id,cancellation);
+            var model = await _placementReport.GetByIdAsync(request.Id, cancellation);
             UpdatePlacementCommand command = model.Adapt<UpdatePlacementCommand>();
             return command;
         }
@@ -111,6 +112,26 @@ namespace Framework.Factories.Placement
             var model = await _placementReport.GetByIdAsync(id, cancellation);
             model.Condition = condition;
             await _placementService.UpdateAsync(model, cancellation);
+        }
+
+        public async Task<PlacementDetail> GetPlacementDetailByIdAsync(Guid id)
+        {
+            PlacementDetail placement = new();
+            var model = await _placementReport.GetByIdAsync(id);
+            placement = model.Adapt<PlacementDetail>();
+            placement.CityName = model.City.Name;
+            placement.ProvinceName = model.Province.Name;
+            placement.UserFullName = model.User.FullName;
+
+            var pictures = await _pictureReport.GetByParentIdAsync(id);
+            if (pictures != null && pictures.Count > 0)
+            {
+                foreach (var picture in pictures)
+                {
+                    placement!.Images!.Add(picture.Path!);
+                }
+            }
+            return placement;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Application.Reports.Skill
     {
         Task<PaginatedList<TDestination>> GetAllPaginatedAsync<TDestination>(PaginatedWithSize pagination,
             CancellationToken cancellationToken = default);
-        Task<SkillEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<SkillEntity> GetByIdAsync(Guid? id, CancellationToken cancellationToken = default);
         Task<IEnumerable<SkillEntity>> GetSkills(); Task<IEnumerable<SkillEntity>> GetSelectedSkillByIdAsync(List<Guid> ids,
             CancellationToken cancellation);
     }

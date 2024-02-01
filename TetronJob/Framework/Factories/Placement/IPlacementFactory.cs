@@ -26,7 +26,7 @@ namespace Framework.Factories.Placement
         Task Change(Guid id, ConditionEnum condition, CancellationToken cancellation);
 
 
-
+        Task<PlacementDetail> GetPlacementDetailByIdAsync(Guid id);
 
 
 

@@ -27,8 +27,8 @@ namespace Framework.Factories.Identity.User
 
         #endregion
 
-
-
+        Task<UserCategory> GetUserCategoryByIdAsync(Guid id);
+        Task<List<UserAdvertises>?> GetUserAdvertisesAsync(Guid id);
         Task<Response> SignInAsync(SignInCommand command);
         Task SignOutAsync();
     }

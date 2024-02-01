@@ -14,8 +14,8 @@ namespace Application.Reports.User
         Task<Response> ActiveUserAsync(string nationalCodeOrMail);
         Task<UserEntity?> GetUserByUserName(string national, CancellationToken cancellationToken = default);
 
-
+        Task<UserEntity?> GetUserByIdWithOtherInfoAsync(Guid userId);
         Task<IEnumerable<UserEntity>> GetUserForSelectAsync();
-
+        Task<List<TModel>?> GetUserAdvertising<TModel>(Guid userId);
     }
 }

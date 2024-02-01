@@ -99,18 +99,20 @@
                            @foreach (var item in Model)
                            {
                                <li class="email-list-item" >
-                                   <div class="d-flex align-items-center">
-                                       <img src="../../assets/img/avatars/1.png" alt="user-avatar" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" height="32" width="32">
-                                       <div class="email-list-item-content ms-2 ms-sm-0 me-2">
-                                           <span class="email-list-item-username me-2">@item.FullName</span>
-                                         
-                                       </div>
+                                   <a asp-controller="Advertising" asp-action="UserDetail" asp-route-id="@item.Id">
                                        <div class="d-flex align-items-center">
-                                           <span class="email-list-item-label  d-md-inline-block me-2" >@item.ProvinceName</span>
-                                           <small class="email-list-item-time text-muted">@item.CityName</small>
+                                           <img src="../../assets/img/avatars/1.png" alt="user-avatar" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" height="32" width="32">
+                                           <div class="email-list-item-content ms-2 ms-sm-0 me-2">
+                                               <span class="email-list-item-username me-2">@item.FullName</span>
+                                         
+                                           </div>
+                                           <div class="d-flex align-items-center">
+                                               <span class="email-list-item-label  d-md-inline-block me-2" >@item.ProvinceName</span>
+                                               <small class="email-list-item-time text-muted">@item.CityName</small>
                                            
+                                           </div>
                                        </div>
-                                   </div>
+                                   </a>
                                </li>
                            }
                                 </ul>

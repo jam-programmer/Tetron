@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 using Framework.CQRS.Query.Admin.Category;
+using Framework.CQRS.Query.Admin.User;
 using Framework.CQRS.Query.Introduction;
 using Framework.CQRS.Query.Placement;
 using Framework.CQRS.Query.Recruitment;
@@ -37,7 +38,7 @@ namespace TetronJob.Controllers
         {
             return View();
         }
-        
+
 
         [HttpGet]
         public IActionResult RequestRecruitment()
@@ -48,7 +49,7 @@ namespace TetronJob.Controllers
         [HttpPost]
         public async Task<IActionResult> RequestRecruitment([FromForm] InsertRecruitmentCommand command)
         {
-            command.UserId=Guid.Parse(UserId()!);
+            command.UserId = Guid.Parse(UserId()!);
             var result = await _mediator.Send(command);
             return Json(result);
         }
@@ -56,7 +57,7 @@ namespace TetronJob.Controllers
         [HttpPost]
         public async Task<IActionResult> RequestPlacement([FromForm] InsertPlacementCommand command)
         {
-            command.UserId=Guid.Parse(UserId()!);
+            command.UserId = Guid.Parse(UserId()!);
             var result = await _mediator.Send(command);
             return Json(result);
         }
@@ -65,7 +66,7 @@ namespace TetronJob.Controllers
         [HttpPost]
         public async Task<IActionResult> RequestIntroduction([FromForm] InsertIntroductionCommand command)
         {
-            command.UserId=Guid.Parse(UserId()!);
+            command.UserId = Guid.Parse(UserId()!);
             var result = await _mediator.Send(command);
             return Json(result);
         }
@@ -91,10 +92,10 @@ namespace TetronJob.Controllers
 
 
         #region Show
-     
+
         [HttpGet]
         public async Task<IActionResult> CategoryUser
-            (Guid id,Guid CityId,Guid ProvinceId,string search="")
+            (Guid id, Guid CityId, Guid ProvinceId, string search = "")
         {
             ViewBag.Id = id;
             var model = await _mediator.Send(new CategoryFilter()
@@ -112,26 +113,30 @@ namespace TetronJob.Controllers
         public async Task<IActionResult> Introduction(Guid CityId, Guid ProvinceId, string search = "")
         {
             await Provinces();
-            var result =await _mediator.Send(new GetIntroductionWithFilterQuery()
+            var result = await _mediator.Send(new GetIntroductionWithFilterQuery()
             {
                 Filter = new Filter()
                 {
-                    CityId = CityId,ProvinceId = ProvinceId,Search = search
+                    CityId = CityId,
+                    ProvinceId = ProvinceId,
+                    Search = search
                 }
             });
             return View(result);
         }
 
 
-  [HttpGet]
+        [HttpGet]
         public async Task<IActionResult> Placement(Guid CityId, Guid ProvinceId, string search = "")
         {
             await Provinces();
-            var result =await _mediator.Send(new GetPlacementWithFilterQuery()
+            var result = await _mediator.Send(new GetPlacementWithFilterQuery()
             {
                 Filter = new Filter()
                 {
-                    CityId = CityId,ProvinceId = ProvinceId,Search = search
+                    CityId = CityId,
+                    ProvinceId = ProvinceId,
+                    Search = search
                 }
             });
             return View(result);
@@ -139,20 +144,64 @@ namespace TetronJob.Controllers
 
 
 
-  [HttpGet]
+        [HttpGet]
         public async Task<IActionResult> Recruitment(Guid CityId, Guid ProvinceId, string search = "")
         {
             await Provinces();
-            var result =await _mediator.Send(new GetRecruitmentWithFilterQuery()
+            var result = await _mediator.Send(new GetRecruitmentWithFilterQuery()
             {
                 Filter = new Filter()
                 {
-                    CityId = CityId,ProvinceId = ProvinceId,Search = search
+                    CityId = CityId,
+                    ProvinceId = ProvinceId,
+                    Search = search
                 }
             });
             return View(result);
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> UserDetail(Guid id)
+        {
+
+            var model = await _mediator.Send(new GetUserCategoryByIdQuery()
+            {
+                Id = id
+            });
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> PlacementDetail(Guid id)
+        {
+            var model = await _mediator.Send(new GetPlacementDetailQuery()
+            {
+                Id = id
+            });
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> IntroductionDetail(Guid id)
+        {
+            var model = await _mediator.Send(new GetIntroductionDetailQuery()
+            {
+                Id = id
+            });
+            return View(model);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> RecruitmentDetail(Guid id)
+        {
+            var model = await _mediator.Send(new GetRecruitmentDetailQuery()
+            {
+                Id = id
+            });
+            return View(model);
+        }
 
 
 

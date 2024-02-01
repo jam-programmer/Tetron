@@ -34,7 +34,11 @@ namespace Application.Reports.Introduction
 
         public async Task<IntroductionEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            return await _repository.GetByIdAsync(id);
+            var query = await _repository.GetByQueryAsync();
+            query = query.Include(i => i.Province);
+            query = query.Include(i => i.User);
+            query = query.Include(i => i.City);
+            return await query.SingleOrDefaultAsync(s => s.Id == id);
         }
 
         public async Task<List<IntroductionEntity>> GetIntroductions

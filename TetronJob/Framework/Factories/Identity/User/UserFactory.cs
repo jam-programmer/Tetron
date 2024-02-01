@@ -367,6 +367,22 @@ namespace Framework.Factories.Identity.User
             return user;
         }
 
+        public async Task<UserCategory> GetUserCategoryByIdAsync(Guid id)
+        {
+            var model = await _userReport.GetUserByIdWithOtherInfoAsync(id);
+            UserCategory user = new();
+            user.CityName = model.Address.City.Name;
+            user.ProvinceName = model.Address.Province.Name;
+            user.FullName = model.FullName;
+            user.Id = model.Id;
+            return user;
+        }
+
+        public async Task<List<UserAdvertises>?> GetUserAdvertisesAsync(Guid id)
+        {
+            return await _userReport.GetUserAdvertising<UserAdvertises>(id);
+        }
+
         #endregion
 
 

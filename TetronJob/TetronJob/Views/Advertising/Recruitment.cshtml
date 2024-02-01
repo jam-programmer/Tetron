@@ -100,27 +100,29 @@
                                 @foreach (var item in Model)
                                 {
                                     <li class="email-list-item">
-                                        <div class="d-flex align-items-center">
+                                        <a asp-controller="Advertising" asp-action="RecruitmentDetail" asp-route-id="@item.Id">
+                                            <div class="d-flex align-items-center">
 
-                                            @if (item.RecruitmentImage == "default.jpg")
-                                            {
-                                                <img src="~/img/@item.RecruitmentImage" alt="user-avatar" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" height="32" width="32">
+                                                @if (item.RecruitmentImage == "default.jpg")
+                                                {
+                                                    <img src="~/img/@item.RecruitmentImage" alt="user-avatar" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" height="32" width="32">
 
-                                            }
-                                            else
-                                            {
-                                                <img src="~/Recruitment/@item.RecruitmentImage" alt="user-avatar" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" height="32" width="32">
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/Recruitment/@item.RecruitmentImage" alt="user-avatar" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" height="32" width="32">
 
-                                            }
-                                            <div class="email-list-item-content ms-2 ms-sm-0 me-2">
-                                                <span class="email-list-item-username me-2">عنوان آگهی:@item.RecruitmentTitle</span>
+                                                }
+                                                <div class="email-list-item-content ms-2 ms-sm-0 me-2">
+                                                    <span class="email-list-item-username me-2">عنوان آگهی:@item.RecruitmentTitle</span>
 
-                                            </div> <div class="email-list-item-content ms-2 ms-sm-0 me-2">
-                                                <span class="email-list-item-username me-2">نوع آگهی:@item.RecruitmentTitle</span>
+                                                </div> <div class="email-list-item-content ms-2 ms-sm-0 me-2">
+                                                    <span class="email-list-item-username me-2">نوع آگهی:@item.RecruitmentTitle</span>
 
-                                            </div>
+                                                </div>
                                            
-                                        </div>
+                                            </div>
+                                        </a>
                                     </li>
                                 }
                             </ul>

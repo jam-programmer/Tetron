@@ -1,0 +1,80 @@
+﻿@model Framework.CQRS.Query.Placement.PlacementDetail
+@{
+    ViewData["Title"] = Model.PlacementFullName;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="lh-1-85 breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">خانه</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a asp-controller="Advertising" asp-action="Placement"> آگهی های آماده همکاری </a>
+            </li>
+            <li class="breadcrumb-item active text-pink"> @Model.PlacementFullName </li>
+        </ol>
+    </nav>
+</div>
+<div class="row mb-5 p-3">
+    <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+        <div class="card p-3">
+            <div class="swiper swiper-cube swiper-3d swiper-initialized swiper-horizontal swiper-pointer-events swiper-rtl swiper-watch-progress" id="swiper-3d-cube-effect">
+                <div class="swiper-wrapper" id="swiper-wrapper-d64bc4ab875a2688" aria-live="polite" style="cursor: grab; transform-origin: 50% 50% -200px; transform: translate3d(0px, 0px, 0px) rotateX(0deg) rotateY(180deg); --swiper-cube-translate-z: 0px; transition-duration: 0ms;">
+
+                    @if (Model.PlacementImage == "default.jpg")
+                    {
+                        <div class="swiper-slide" style="background-image: url(/img/default.jpg); width: 400px; transform: rotateX(0deg) rotateY(0deg) translate3d(0px, 0px, 0px); transition-duration: 0ms;" role="group" aria-label="1 / 5">
+
+                            <div class="swiper-slide-shadow-left" style="opacity: 0;"></div><div class="swiper-slide-shadow-right" style="opacity: 1;"></div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="swiper-slide" style="background-image: url(/Placement/@Model.PlacementImage); width: 400px; transform: rotateX(0deg) rotateY(0deg) translate3d(0px, 0px, 0px); transition-duration: 0ms;" role="group" aria-label="1 / 5">
+
+                            <div class="swiper-slide-shadow-left" style="opacity: 0;"></div><div class="swiper-slide-shadow-right" style="opacity: 1;"></div>
+                        </div>
+                    }
+
+                    @if (Model.Images != null)
+                    {
+                        @foreach (var img in Model.Images)
+                        {
+                            <div class="swiper-slide" style="background-image: url(/Gallery/@img); width: 400px; transform: rotateX(0deg) rotateY(0deg) translate3d(0px, 0px, 0px); transition-duration: 0ms;" role="group" aria-label="1 / 5">
+
+                                <div class="swiper-slide-shadow-left" style="opacity: 0;"></div><div class="swiper-slide-shadow-right" style="opacity: 1;"></div>
+                            </div>
+                        }
+                    }
+
+
+
+                    <div class="swiper-cube-shadow" style="height: 400px; transform: translate3d(0px, 220px, -200px) rotateX(90deg) rotateZ(0deg) scale(0.94);"></div>
+                </div>
+                <div class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal"><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active" aria-current="true"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span></div>
+                <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8 col-lg-8 col-md-6 col-12">
+        <div class="card p-4">
+            <label class="text-pink">نام و نام خانوادگی :</label>
+            <h4>@Model.PlacementFullName</h4>
+            <hr class="m-0" />
+            <label class="text-pink mt-3">منتشر کننده آگهی:</label>
+            <h6>@Model.UserFullName </h6>
+
+            <label class="text-pink">شماره تماس آگهی:</label>
+            <h5>@Model.PlacementNumber</h5>
+            <label class="text-pink"> توضیحات آگهی:</label>
+            <p>
+                @Html.Raw(Model.PlacementDescription)
+            </p>
+          
+        </div>
+
+    </div>
+</div>
+

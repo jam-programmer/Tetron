@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Models;
+﻿using Application.Models;
+using Application.Reports.Picture;
 using Application.Reports.Recruitment;
-using Application.Reports.User;
 using Application.Reports.UserAddress;
 using Application.Services.Picture;
 using Application.Services.Recruitment;
@@ -13,29 +8,31 @@ using Domain.Entities;
 using Domain.Enums;
 using Framework.Common;
 using Framework.Common.Application.Core;
-using Framework.CQRS.Command.Master.Placement;
 using Framework.CQRS.Command.Master.Recruitment;
 using Framework.CQRS.Query.Placement;
 using Framework.CQRS.Query.Recruitment;
 using Mapster;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Framework.Factories.Recruitment
 {
-    public class RecruitmentFactory: IRecruitmentFactory
+    public class RecruitmentFactory : IRecruitmentFactory
     {
         private readonly IRecruitmentReport _report;
         private readonly IRecruitmentService _service;
         private readonly IPictureService _pictureService;
         private readonly IUserAddressReport _addressReport;
+        private readonly IPictureReport _pictureReport;
 
-        public RecruitmentFactory(IRecruitmentReport report, IRecruitmentService service, IPictureService pictureService, IUserAddressReport addressReport)
+        public RecruitmentFactory(IRecruitmentReport report, IRecruitmentService service, IPictureService pictureService, IUserAddressReport addressReport, IPictureReport pictureReport)
         {
             _report = report;
             _service = service;
             _pictureService = pictureService;
             _addressReport = addressReport;
+            _pictureReport = pictureReport;
         }
+
+
         public async Task<List<CQRS.Query.Recruitment.Recruitment>> GetRecruitmentsWithFilter(GetRecruitmentWithFilterQuery query)
         {
             var model = await _report.GetRecruitments(query.Filter.CityId, query.Filter.ProvinceId,
@@ -47,11 +44,11 @@ namespace Framework.Factories.Recruitment
 
         public async Task<Response> InsertRecruitmentAsync(InsertRecruitmentCommand command, CancellationToken cancellation)
         {
-            RecruitmentEntity recruitment =  command.Adapt<RecruitmentEntity>();
+            RecruitmentEntity recruitment = command.Adapt<RecruitmentEntity>();
             recruitment.RecruitmentImage = FileProcessing.FileUpload(command.RecruitmentImage, null, "Recruitment");
             var user = await _addressReport.GetUserAddressByIdAsync(command.UserId);
             recruitment.CityId = user!.CityId;
-            recruitment.ProvinceId=user!.ProvinceId;
+            recruitment.ProvinceId = user!.ProvinceId;
             recruitment.Condition = ConvertEnum.ConvertCondition(command.Condition);
             var result = await _service.InsertAsync(recruitment, cancellation);
             if (result.IsSuccess == false)
@@ -70,7 +67,7 @@ namespace Framework.Factories.Recruitment
 
                 }
             }
-            
+
             return Response.Succeded();
         }
 
@@ -86,7 +83,7 @@ namespace Framework.Factories.Recruitment
             var model = await _report.GetByIdAsync(command.Id, cancellation);
             model = command.Adapt<RecruitmentEntity>();
             model.RecruitmentImage =
-                FileProcessing.FileUpload(command.RecruitmentImageFile, 
+                FileProcessing.FileUpload(command.RecruitmentImageFile,
                     command.RecruitmentImage, "Recruitment");
             model.Condition = ConvertEnum.ConvertCondition(command.Condition);
             if (model.UserId != command.UserId)
@@ -119,6 +116,27 @@ namespace Framework.Factories.Recruitment
             var model = await _report.GetByIdAsync(id, cancellation);
             model.Condition = condition;
             await _service.UpdateAsync(model, cancellation);
+        }
+
+        public async Task<RecruitmentDetail> GetRecruitmentDetailByIdAsync(Guid id)
+        {
+
+            RecruitmentDetail recruitment = new();
+            var model = await _report.GetByIdAsync(id);
+            recruitment = model.Adapt<RecruitmentDetail>();
+            recruitment.CityName = model.City.Name;
+            recruitment.ProvinceName = model.Province.Name;
+            recruitment.UserFullName = model.User.FullName;
+
+            var pictures = await _pictureReport.GetByParentIdAsync(id);
+            if (pictures != null && pictures.Count > 0)
+            {
+                foreach (var picture in pictures)
+                {
+                    recruitment!.Images!.Add(picture.Path!);
+                }
+            }
+            return recruitment;
         }
     }
 }

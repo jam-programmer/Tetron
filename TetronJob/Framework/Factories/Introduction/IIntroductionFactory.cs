@@ -23,5 +23,8 @@ namespace Framework.Factories.Introduction
 
         Task Change(Guid id, ConditionEnum condition,CancellationToken cancellation);
 
+
+        Task<IntroductionDetail> GetIntroductionDetailByIdAsync(Guid id);
+
     }
 }

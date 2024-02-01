@@ -19,6 +19,16 @@ namespace Infrastructure.Persistence.Repositories
             _connection = new SqlConnection(ConnectionOptions.ConnectionString);
         }
 
+        public async Task<List<TEntity>?> ExecuteQuery<TEntity>(string query)
+        {
+            if (!string.IsNullOrEmpty(query))
+            {
+                var model = await _connection.QueryAsync<TEntity>(query);
+                return model.ToList();
+            }
+            return null;
+        }
+
         public async Task<List<TEntity>> Execute<TEntity>(string storedProcedure, Dictionary<string, string> parmeter)
         {
             if (string.IsNullOrEmpty(storedProcedure))

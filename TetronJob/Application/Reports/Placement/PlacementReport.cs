@@ -39,7 +39,11 @@ namespace Application.Reports.Placement
 
         public async Task<PlacementEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            return await _repository.GetByIdAsync(id);
+           var query=await _repository.GetByQueryAsync();
+           query = query.Include(i => i.Province);
+           query = query.Include(i => i.City);
+           query = query.Include(i => i.User);
+           return await query.SingleOrDefaultAsync(s => s.Id == id);
         }
 
      

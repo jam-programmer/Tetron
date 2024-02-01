@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Application.Extensions;
 using Application.Models;
 using Domain.Entities;
+using Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,10 +15,12 @@ namespace Application.Reports.User
     public class UserReport:IUserReport
     {
         private readonly UserManager<UserEntity> _userManager;
+        private readonly IDapper _dapper;
 
-        public UserReport(UserManager<UserEntity> userManager)
+        public UserReport(UserManager<UserEntity> userManager, IDapper dapper)
         {
             _userManager = userManager;
+            _dapper = dapper;
         }
         public async Task<UserEntity?> GetUserByIdAsync(Guid userId, CancellationToken cancellation)
         {
@@ -104,9 +107,24 @@ namespace Application.Reports.User
             return await _userManager.FindByNameAsync(username);
         }
 
+        public async Task<UserEntity?> GetUserByIdWithOtherInfoAsync(Guid userId)
+        {
+            var query =  _userManager.Users.AsQueryable();
+            query = query.Include(i => i.Address).ThenInclude(t=>t!.City);
+            query = query.Include(i => i.Address).ThenInclude(t=>t!.Province);
+          
+            return await query.SingleOrDefaultAsync(s => s.Id == userId);
+        }
+
         public async Task<IEnumerable<UserEntity>> GetUserForSelectAsync()
         {
             return await _userManager.Users.ToListAsync();
+        }
+
+        public async Task<List<TModel>?> GetUserAdvertising<TModel>(Guid userId)
+        {
+            string query = $"SELECT * FROM [dbo].[Advertising] WHERE UserId='{userId}' ";
+            return await _dapper.ExecuteQuery<TModel>(query);
         }
     }
 }

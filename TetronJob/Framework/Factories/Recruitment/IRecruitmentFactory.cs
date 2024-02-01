@@ -35,7 +35,7 @@ namespace Framework.Factories.Recruitment
 
         Task Change(Guid id, ConditionEnum condition, CancellationToken cancellation);
 
-
+        Task<RecruitmentDetail> GetRecruitmentDetailByIdAsync(Guid id);
 
 
 

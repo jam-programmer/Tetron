@@ -31,13 +31,14 @@ namespace Application.Reports.Skill
                 config: null, cancellationToken);
 
         }
-        public async Task<SkillEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+
+        public async Task<SkillEntity> GetByIdAsync(Guid? id, CancellationToken cancellationToken = default)
         {
             if (cancellationToken.IsCancellationRequested)
             {
                 //todo
             }
-            return await _repository.GetByIdAsync(id);
+            return await _repository.GetByIdAsync(id.Value);
         }
 
         public async Task<IEnumerable<SkillEntity>> GetSkills()

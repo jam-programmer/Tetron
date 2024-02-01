@@ -101,31 +101,33 @@
                                 @foreach (var item in Model)
                                 {
                                     <li class="email-list-item">
-                                        <div class="d-flex align-items-center">
-
-                                            @if (item.PlacementImage == "default.jpg")
-                                            {
-                                                <img src="~/img/@item.PlacementImage" alt="user-avatar" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" height="32" width="32">
-                                          
-                                            }
-                                            else
-                                            {
-                                                <img src="~/Placement/@item.PlacementImage" alt="user-avatar" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" height="32" width="32">
-                                          
-                                            }
-                                            <div class="email-list-item-content ms-2 ms-sm-0 me-2">
-                                                <span class="email-list-item-username me-2">عنوان آگهی:@item.PlacementFullName</span>
-
-                                            </div>
+                                        <a asp-controller="Advertising" asp-action="PlacementDetail" asp-route-id="@item.Id">
                                             <div class="d-flex align-items-center">
-                                                <span class="email-list-item-label  d-md-inline-block me-2">شماره تماس:@item.PlacementNumber</span>
-                                                <small class="email-list-item-time text-muted">
-                                                    <span class="text-danger">منتشر کننده:</span>
-                                                    @item.UserFullName
-                                                </small>
 
+                                                @if (item.PlacementImage == "default.jpg")
+                                                {
+                                                    <img src="~/img/@item.PlacementImage" alt="user-avatar" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" height="32" width="32">
+                                          
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/Placement/@item.PlacementImage" alt="user-avatar" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" height="32" width="32">
+                                          
+                                                }
+                                                <div class="email-list-item-content ms-2 ms-sm-0 me-2">
+                                                    <span class="email-list-item-username me-2">عنوان آگهی:@item.PlacementFullName</span>
+
+                                                </div>
+                                                <div class="d-flex align-items-center">
+                                                    <span class="email-list-item-label  d-md-inline-block me-2">شماره تماس:@item.PlacementNumber</span>
+                                                    <small class="email-list-item-time text-muted">
+                                                        <span class="text-danger">منتشر کننده:</span>
+                                                        @item.UserFullName
+                                                    </small>
+
+                                                </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </li>
                                 }
                             </ul>

@@ -6,6 +6,7 @@ using Application.Reports.CategoryUser;
 using Application.Reports.City;
 using Application.Reports.Contact;
 using Application.Reports.Introduction;
+using Application.Reports.Picture;
 using Application.Reports.Placement;
 using Application.Reports.Province;
 using Application.Reports.Recruitment;
@@ -82,6 +83,7 @@ namespace Application
             services.AddScoped<IRecruitmentReport, RecruitmentReport>();
 
             services.AddScoped<IPictureService, PictureService>();
+            services.AddScoped<IPictureReport, PictureReport>();
 
 
             services.AddScoped<IPlacementService, PlacementService>();

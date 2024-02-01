@@ -100,26 +100,28 @@
                                 @foreach (var item in Model)
                                 {
                                     <li class="email-list-item">
-                                        <div class="d-flex align-items-center">
-                                            @if (item.IntroductionImage == "default.jpg")
-                                            {
-                                                <img src="~/img/@item.IntroductionImage" alt="user-avatar" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" height="32" width="32">
-                                          
-                                            }
-                                            else
-                                            {
-                                                <img src="~/Introduction/@item.IntroductionImage" alt="user-avatar" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" height="32" width="32">
-                                          
-                                            }  <div class="email-list-item-content ms-2 ms-sm-0 me-2">
-                                                <span class="email-list-item-username me-2">عنوان آگهی:@item.IntroductionTitle</span>
-
-                                            </div>
+                                        <a asp-controller="Advertising" asp-action="IntroductionDetail" asp-route-id="@item.Id">
                                             <div class="d-flex align-items-center">
-                                                <span class="email-list-item-label  d-md-inline-block me-2">شماره تماس:@item.IntroductionPhoneNumber</span>
+                                                @if (item.IntroductionImage == "default.jpg")
+                                                {
+                                                    <img src="~/img/@item.IntroductionImage" alt="user-avatar" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" height="32" width="32">
+                                          
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/Introduction/@item.IntroductionImage" alt="user-avatar" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" height="32" width="32">
+                                          
+                                                }  <div class="email-list-item-content ms-2 ms-sm-0 me-2">
+                                                    <span class="email-list-item-username me-2">عنوان آگهی:@item.IntroductionTitle</span>
+
+                                                </div>
+                                                <div class="d-flex align-items-center">
+                                                    <span class="email-list-item-label  d-md-inline-block me-2">شماره تماس:@item.IntroductionPhoneNumber</span>
                                               
 
+                                                </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </li>
                                 }
                             </ul>

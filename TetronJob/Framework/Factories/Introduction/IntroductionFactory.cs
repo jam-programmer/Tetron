@@ -1,5 +1,6 @@
 ﻿using Application.Models;
 using Application.Reports.Introduction;
+using Application.Reports.Picture;
 using Application.Reports.Skill;
 using Application.Reports.SkillIntroduction;
 using Application.Reports.UserAddress;
@@ -13,7 +14,6 @@ using Framework.Common.Application.Core;
 using Framework.CQRS.Command.Master.Introduction;
 using Framework.CQRS.Query.Introduction;
 using Mapster;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Framework.Factories.Introduction
 {
@@ -25,10 +25,10 @@ namespace Framework.Factories.Introduction
         private readonly IPictureService _pictureService;
         private readonly ISkillIntroductionService _introductionSkillService;
         private readonly ISkillReport _skillReport;
-
+        private readonly IPictureReport _pictureReport;
         private readonly ISkillIntroductionReport _skillIntroductionReport;
 
-        public IntroductionFactory(IIntroductionReport introductionReport, IUserAddressReport addressReport, IIntroductionService introductionService, IPictureService pictureService, ISkillIntroductionService introductionSkillService, ISkillReport skillReport, ISkillIntroductionReport skillIntroductionReport)
+        public IntroductionFactory(IIntroductionReport introductionReport, IUserAddressReport addressReport, IIntroductionService introductionService, IPictureService pictureService, ISkillIntroductionService introductionSkillService, ISkillReport skillReport, IPictureReport pictureReport, ISkillIntroductionReport skillIntroductionReport)
         {
             _introductionReport = introductionReport;
             _addressReport = addressReport;
@@ -36,6 +36,7 @@ namespace Framework.Factories.Introduction
             _pictureService = pictureService;
             _introductionSkillService = introductionSkillService;
             _skillReport = skillReport;
+            _pictureReport = pictureReport;
             _skillIntroductionReport = skillIntroductionReport;
         }
 
@@ -156,9 +157,38 @@ namespace Framework.Factories.Introduction
 
         public async Task Change(Guid id, ConditionEnum condition, CancellationToken cancellation)
         {
-            var model = await _introductionReport.GetByIdAsync(id,cancellation);
-            model.Condition= condition;
-          var res=  await _introductionService.UpdateAsync(model,cancellation);
+            var model = await _introductionReport.GetByIdAsync(id, cancellation);
+            model.Condition = condition;
+            var res = await _introductionService.UpdateAsync(model, cancellation);
+        }
+
+        public async Task<IntroductionDetail> GetIntroductionDetailByIdAsync(Guid id)
+        {
+            IntroductionDetail introduction = new();
+            var model = await _introductionReport.GetByIdAsync(id);
+            introduction = model.Adapt<IntroductionDetail>();
+            introduction.CityName = model.City.Name;
+            introduction.ProvinceName = model.Province.Name;
+            var skills = await _skillIntroductionReport.GetSkillsOfIntroductionAsync(id);
+            if (skills.Count > 0)
+            {
+                foreach (var skill in skills)
+                {
+                    var item = await _skillReport.GetByIdAsync(skill);
+                    introduction!.Skills!.Add(item.SkillName!);
+
+                }
+            }
+
+            var pictures = await _pictureReport.GetByParentIdAsync(id);
+            if (pictures != null && pictures.Count > 0)
+            {
+                foreach (var picture in pictures)
+                {
+                    introduction!.Images!.Add(picture.Path!);
+                }
+            }
+            return introduction;
         }
     }
 }
