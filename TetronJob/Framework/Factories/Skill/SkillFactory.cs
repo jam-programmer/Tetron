@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.Models;
 using Application.Reports.Skill;
+using Application.Reports.SkillIntroduction;
 using Application.Services.Skill;
 using Domain.Entities;
 using Framework.ViewModels.Skill;

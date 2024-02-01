@@ -39,7 +39,7 @@ namespace Framework.Factories.Article
         {
             var article = await _report.GetByIdAsync(command.Id, cancellation);
             article = command.Adapt<ArticleEntity>();
-            article.ArticleImage = FileProcessing.FileUpload(command.ArticleImage, command.Path, "CategoryImage");
+            article.ArticleImage = FileProcessing.FileUpload(command.File, command.ArticleImage, "ArticleImage");
             return await _service.UpdateAsync(article, cancellation);
         }
 
@@ -49,7 +49,7 @@ namespace Framework.Factories.Article
             var result = await _service.DeleteAsync(article, cancellation);
             if (result.IsSuccess == true)
             {
-                FileProcessing.RemoveFile(article.ArticleImage!, "CategoryImage");
+                FileProcessing.RemoveFile(article.ArticleImage!, "ArticleImage");
             }
 
             return result;
@@ -59,8 +59,14 @@ namespace Framework.Factories.Article
         {
             var article = await _report.GetByIdAsync(request.Id, cancellation);
             UpdateArticleCommand updateArticle = article.Adapt<UpdateArticleCommand>();
-            updateArticle.Path = article.ArticleImage;
+           
             return updateArticle;
+        }
+
+        public async Task<PaginatedList<TViewModel>> GetPagedSearchWithSizeAsync<TViewModel>(PaginatedSearchWithSize pagination, Guid categoryId,
+            CancellationToken cancellationToken = default)
+        {
+            return await _report.GetAllPaginatedAsync<TViewModel>(pagination,categoryId, cancellationToken);
         }
     }
 }

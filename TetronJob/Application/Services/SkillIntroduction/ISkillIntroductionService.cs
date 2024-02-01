@@ -12,5 +12,6 @@ namespace Application.Services.SkillIntroduction
     {
         Task<Response> InsertAsync(List<SkillIntroductionEntity> skills);
         Task InsertAsync(SkillIntroductionEntity skill);
+        Task DeleteAsync(List<SkillIntroductionEntity> skills);
     }
 }

@@ -1,0 +1,24 @@
+﻿@model List<Framework.CQRS.Query.Slider.Image>
+
+<div clss="row">
+    <div class="col-12 mb-3">
+
+        <div class="swiper swiper-coverflow swiper-3d swiper-initialized swiper-horizontal swiper-pointer-events swiper-rtl swiper-watch-progress" id="swiper-3d-coverflow-effect">
+            <div class="swiper-wrapper" id="swiper-wrapper-d1ee3cc6f932ea35" aria-live="polite" style="cursor: grab; transition-duration: 0ms; transform: translate3d(108.5px, 0px, 0px);">
+                @foreach(var item in Model)
+                {
+                  
+                    <div class="swiper-slide swiper-slide-visible" style="background-image: url(Slider/@item.SliderImagePath); transition-duration: 0ms; transform: translate3d(0px, 0px, -200px) rotateX(0deg) rotateY(-100deg) scale(1); z-index: -1;" role="group" >
+                     
+                        <div class="swiper-slide-shadow-left" style="opacity: 0; transition-duration: 0ms;"></div>
+                        <div class="swiper-slide-shadow-right" style="opacity: 2; transition-duration: 0ms;"></div>
+                    </div>
+                   
+                }
+
+            </div>
+            <div class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal"><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active" aria-current="true"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span></div>
+            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+        </div>
+    </div>
+</div>

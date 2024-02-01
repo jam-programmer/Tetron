@@ -1,0 +1,102 @@
+﻿@using Framework.Common
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Framework.CQRS.Command.Slider.UpdateSliderCommand
+@{
+    ViewData["Title"] = "افزودن تصویر";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 breadcrumb-wrapper mb-4">
+        <span class="text-muted fw-light">
+            مدیریت محتوا /
+        </span> ویرایش تصویر
+    </h4>
+
+    <div class="row">
+        <div class="col-md-12">
+            @if (ViewBag.Alert != null)
+            {
+                <div class="alert alert-warning alert-dismissible d-flex align-items-center" role="alert">
+                    <i class="bx bx-xs bx-wallet me-2"></i>
+                    @ViewBag.Alert
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            <div class="card mb-4">
+                <h5 class="card-header heading-color">ویرایش تصویر </h5>
+                <form asp-area="Admin" asp-controller="Slider" asp-action="Edit" enctype="multipart/form-data">
+                    <div class="card-body">
+
+
+
+
+
+
+
+
+                        <div class="row">
+                            <div>
+                                <div class="classic col col-sm-3 col-lg-2 mt-3">
+                                    @if (Model.SliderImage == "default.jpg")
+                                    {
+                                        <img src="~/img/@Model.SliderImage" width="150" height="110" id="imagePath_1" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" />
+
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Slider/@Model.SliderImage" width="150" height="110" id="imagePath_1" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" />
+
+                                    }
+                                    <label class="form-label mb-3">تصویر </label>
+                                    <input onchange="ChangeImage(this,1)"
+                                           id="image_1" asp-for="SliderImageFile" type="file" class="form-control" />
+                                    <span class="text-danger" asp-validation-for="SliderImageFile"></span>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-12 mb-4">
+                                <label class="form-label">  لینک </label>
+                                <input asp-for="SliderLink" type="text" class="form-control" placeholder=" لینک" />
+                                <span class="text-danger" asp-validation-for="SliderLink"></span>
+                            </div>
+
+
+                            <div class="col-xl-6 col-lg-6 col-12 mb-4">
+                                <label class="form-label"> متن جایگزین </label>
+                                <input asp-for="SliderAlt" type="text" class="form-control" placeholder="متن جایگزین" />
+                                <span class="text-danger" asp-validation-for="SliderAlt"></span>
+
+                            </div>
+
+                            <div class="col-xl-6 col-lg-6 col-12 mb-4">
+                                <label for="TagifyBasic" class="form-label"> موقعیت </label>
+                                <select asp-for="Position" id="select2Basic"
+                                        class="select2 form-select form-select-lg select2-hidden-accessible" asp-items="Html.GetEnumSelectList<PositionSliderEnum>()"
+                                        data-allow-clear="true" data-select2-id="select2Basic" tabindex="-1" aria-hidden="true">
+                                </select> <span class="text-danger" asp-validation-for="Position"></span>
+                            </div>
+
+
+
+
+                            <input type="hidden" asp-for="SliderImage"/>
+                            <input type="hidden" asp-for="Id"/>
+                        </div>
+
+
+
+
+
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-sm btn-primary">ثبت</button>
+                            <a asp-area="Admin" asp-controller="Slider" asp-action="Index" class="btn btn-sm btn-warning text-white">بازگشت</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

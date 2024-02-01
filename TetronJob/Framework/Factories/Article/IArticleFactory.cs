@@ -14,5 +14,10 @@ namespace Framework.Factories.Article
         Task<Response> UpdateArticleAsync(UpdateArticleCommand command, CancellationToken cancellation);
         Task<Response> DeleteArticleAsync(DeleteArticleCommand command, CancellationToken cancellation);
         Task<UpdateArticleCommand> GetArticleByIdAsync(GetArticleByIdQuery request, CancellationToken cancellation);
+
+
+        Task<PaginatedList<TViewModel>> GetPagedSearchWithSizeAsync<TViewModel>
+        (PaginatedSearchWithSize pagination,Guid categoryId,
+            CancellationToken cancellationToken = default);
     }
 }

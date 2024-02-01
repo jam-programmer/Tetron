@@ -1,4 +1,4 @@
-﻿
+﻿@model Application.Models.PaginatedList<Framework.CQRS.Query.Article.ArticleOfCategory>
 @{
     ViewData["Title"] = "لیست مقالات";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,59 +15,50 @@
             <li class="breadcrumb-item">
                 <a href="/">دسته بندی مقالات</a>
             </li>
-            <li class="breadcrumb-item active text-pink"> دوخت و الگو  </li>
+            <li class="breadcrumb-item active text-pink"> @ViewBag.Name  </li>
         </ol>
     </nav>
-    <div class="col-md-6 col-lg-3 mb-3">
-        <div class="card h-100">
-            <img class="card-img-top" height="200" src="~/assets/img/elements/2.jpg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title"> آموزش خیاطی</h5>
+   
+   
+    @foreach (var item in Model.items)
+    {
+        <div class="col-md-6 col-lg-3 mb-3">
+            <a asp-controller="Blog" asp-action="BlogDetail" asp-route-id="@item.Id">
 
-                <a href="javascript:void(0)" class="btn btn-pink btn-sm text-white ">گزینه نمایشی</a>
-                <p class="card-text">
-                    <small class="text-muted">آخرین به روز رسانی 3 دقیقه پیش</small>
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 col-lg-3 mb-3">
-        <div class="card h-100">
-            <img class="card-img-top" height="200" src="~/assets/img/elements/2.jpg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title"> آموزش خیاطی</h5>
+            <div class="card h-100">
+                @if (item.ArticleImage == "default.jpg")
+                {
 
-                <a href="javascript:void(0)" class="btn btn-pink btn-sm text-white ">گزینه نمایشی</a>
-                <p class="card-text">
-                    <small class="text-muted">آخرین به روز رسانی 3 دقیقه پیش</small>
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 col-lg-3 mb-3">
-        <div class="card h-100">
-            <img class="card-img-top" height="200" src="~/assets/img/elements/2.jpg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title"> آموزش خیاطی</h5>
+                    <img class="card-img-top" height="200" src="~/img/@item.ArticleImage" alt="Card image cap">
+                }
+                else
+                {
+                    <img class="card-img-top" height="200" src="~/ArticleImage/@item.ArticleImage" alt="Card image cap">
+                }
+                <div class="card-body">
+                    <h5 class="card-title">@item.ArticleTitle</h5>
 
-                <a href="javascript:void(0)" class="btn btn-pink btn-sm text-white ">گزینه نمایشی</a>
-                <p class="card-text">
-                    <small class="text-muted">آخرین به روز رسانی 3 دقیقه پیش</small>
-                </p>
+                    <a asp-controller="Blog" asp-action="BlogDetail" asp-route-id="@item.Id" class="btn btn-pink btn-sm text-white "> مشاهده مطلب</a>
+                    <p class="card-text">
+                        <small class="text-muted">@item.ConvertToPersianDate(item.CreateTime)</small>
+                    </p>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="col-md-6 col-lg-3 mb-3">
-        <div class="card h-100">
-            <img class="card-img-top" height="200" src="~/assets/img/elements/2.jpg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title"> آموزش خیاطی</h5>
+            </a>
 
-                <a href="javascript:void(0)" class="btn btn-pink btn-sm text-white ">گزینه نمایشی</a>
-                <p class="card-text">
-                    <small class="text-muted">آخرین به روز رسانی 3 دقیقه پیش</small>
-                </p>
-            </div>
         </div>
-    </div>
+    }
+    @if (Model.totalPages > 1)
+    {
+        
+            <div class="col-lg-6">
+                <nav class="pagination"
+                 data-parent="@ViewBag.Parent"
+                 data-name="@ViewBag.Name"
+                     data-page-index="@Model.pageIndex"
+                     data-total-pages="@Model.totalPages"
+                     data-path="/Blog/Blogs"></nav>
+            </div>
+      
+    }
 </div>

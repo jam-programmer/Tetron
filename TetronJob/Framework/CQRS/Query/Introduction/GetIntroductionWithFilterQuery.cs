@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Enums;
 using Framework.Factories.Introduction;
 using MediatR;
 
@@ -32,7 +33,7 @@ namespace Framework.CQRS.Query.Introduction
     {
         public string? IntroductionImage { set; get; }
         public Guid? Id { set; get; }
-       
+       public ConditionEnum Condition { set; get; }
         public string? IntroductionPhoneNumber { set; get; }
         public string? IntroductionTitle { set; get; }
     }

@@ -1,7 +1,9 @@
 ﻿using Application.Extensions;
 using Application.Models;
 using Domain.Entities;
+using Domain.Enums;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Reports.Slider
 {
@@ -25,6 +27,12 @@ namespace Application.Reports.Slider
             (Guid id, CancellationToken cancellationToken = default)
         {
             return await _repository.GetByIdAsync(id);
+        }
+
+        public async Task<List<SliderEntity>> GetWithPositionAsync(PositionEnum? position)
+        {
+            var query= await _repository.GetByQueryAsync();
+            return await query.Where(w => w.Position == position).ToListAsync();
         }
     }
 }

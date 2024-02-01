@@ -1,0 +1,116 @@
+﻿@model Framework.CQRS.Command.Setting.ChangeSetting
+@{
+    ViewData["Title"] = "تنظیمات";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 breadcrumb-wrapper mb-4">
+        <span class="text-muted fw-light">
+            آگهی و درخواست/
+        </span> افزودن دسته بندی
+    </h4>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            @if (ViewBag.Alert != null)
+            {
+                <div class="alert alert-warning alert-dismissible d-flex align-items-center" role="alert">
+                    <i class="bx bx-xs bx-wallet me-2"></i>
+                    @ViewBag.Alert
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            <div class="card mb-4">
+                <h5 class="card-header heading-color">تنظیمات</h5>
+                <form asp-area="Admin" asp-controller="Setting" asp-action="Setting" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <div>
+                            <label class="form-label">عنوان سایت</label>
+                            <input asp-for="SiteTitle" type="text" class="form-control" placeholder="عنوان سایت" />
+                        </div>
+
+                        <div>
+                            <label class="form-label">شناسه کاوه نگار</label>
+                            <input asp-for="SmsKey" type="text" class="form-control" placeholder="شناسه کاوه نگار" />
+                        </div>
+
+
+                        <div>
+                            <label class="form-label">اینستاگرام</label>
+                            <input asp-for="Instagram" type="text" class="form-control" placeholder="  اینستاگرام" />
+                        </div>
+
+
+                        <div>
+                            <label class="form-label">تلگرام</label>
+                            <input asp-for="Telegram" type="text" class="form-control" placeholder="  تلگرام" />
+                        </div>
+
+                        <div>
+                            <label class="form-label">واتساپ</label>
+                            <input asp-for="WhatsApp" type="text" class="form-control" placeholder="  واتساپ" />
+                        </div>
+
+                        
+                        <div class="form-group  col-12 mt-5">
+                            <label>اینماد</label>
+                            <textarea id="maxlength-textarea" asp-for="Enamad"
+                            class="form-control ckeditor mt-5" maxlength="400" rows="8" placeholder=" اینماد"></textarea>
+                        </div>
+
+                        
+                        
+                        <div class="form-group  col-12 mt-5">
+                            <label>درباره ما</label>
+                            <textarea id="maxlength-textarea" asp-for="About"
+                            class="form-control ckeditor mt-5" maxlength="400" rows="10" placeholder="درباره ما"></textarea>
+                        </div>
+
+                        
+                        <div class="form-group  col-12 mt-5">
+                            <label>قوانین سایت</label>
+                            <textarea id="maxlength-textarea" asp-for="Law"
+                            class="form-control ckeditor mt-5" maxlength="400" rows="10" placeholder="قوانین سایت"></textarea>
+                        </div>
+
+                        <div class="form-group  col-12 mt-5">
+                            <label> راهنمای سایت</label>
+                            <textarea id="maxlength-textarea" asp-for="Help"
+                            class="form-control ckeditor mt-5" maxlength="400" rows="10" placeholder="راهنمای سایت"></textarea>
+                        </div>
+
+                        
+                        
+                        
+                        
+
+
+
+
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-sm btn-primary">ثبت</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+</div>
+@section Scripts
+{    <script src="https://cdn.ckeditor.com/4.18.0/full/ckeditor.js"></script>
+  
+}

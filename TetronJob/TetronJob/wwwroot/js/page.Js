@@ -4,6 +4,8 @@ $(document).ready(function () {
     var pageIndexData = $(".pagination").data("page-index");
     var totalPagesData = $(".pagination").data("total-pages");
     var path = $(".pagination").data("path");
+    var parentId = $(".pagination").data("parent");
+    var name = $(".pagination").data("name");
 
     var pageIndex = Number(pageIndexData);
     var totalPages = Number(totalPagesData);
@@ -49,7 +51,15 @@ $(document).ready(function () {
 
         var queryString = Object.keys(aramsObjPrevious).map(key => key + '=' + aramsObjPrevious[key]).join('&');
         var fullUrlPrevious = path + '?' + queryString;
-
+        if (parentId) {
+            fullUrlPrevious = fullUrlPrevious + '&id=' + parentId;
+        }
+        if (parentId) {
+            fullUrlPrevious = fullUrlPrevious + '&id=' + parentId;
+        }
+        if (name) {
+            fullUrlPrevious = fullUrlPrevious + '&name=' + name;
+        }
 
 
         if (previousPage >= 1) {
@@ -82,6 +92,16 @@ $(document).ready(function () {
             var queryString = Object.keys(params).map(key => key + '=' + params[key]).join('&');
             var fullUrl = path + '?' + queryString;
 
+
+            if (parentId) {
+                fullUrl = fullUrl + '&id=' + parentId;
+            }
+            if (name) {
+                fullUrl = fullUrl + '&name=' + name;
+            }
+
+
+
             if (i === curent) {
                 liPage.className = "page-item active";
             } else {
@@ -102,6 +122,20 @@ $(document).ready(function () {
         var paramsObjNext = { Page: curent + 1, PageSize: 10 };
         var queryStringNext = Object.keys(paramsObjNext).map(key => key + '=' + paramsObjNext[key]).join('&');
         var fullUrlNext = path + '?' + queryStringNext;
+
+
+
+        if (parentId) {
+            fullUrlNext = fullUrlNext + '&id=' + parentId;
+        }
+        if (name) {
+            fullUrlNext = fullUrlNext + '&name=' + name;
+        }
+
+
+
+
+
 
 
         debugger;

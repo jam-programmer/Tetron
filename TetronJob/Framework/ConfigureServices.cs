@@ -2,6 +2,7 @@
 using FluentValidation.AspNetCore;
 using Framework.Common;
 using Framework.Common.Behaviors;
+using Framework.Factories.Article;
 using Framework.Factories.ArticleCategory;
 using Framework.Factories.Category;
 using Framework.Factories.City;
@@ -11,7 +12,9 @@ using Framework.Factories.Introduction;
 using Framework.Factories.Placement;
 using Framework.Factories.Province;
 using Framework.Factories.Recruitment;
+using Framework.Factories.Setting;
 using Framework.Factories.Skill;
+using Framework.Factories.Slider;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,6 +49,7 @@ namespace Framework
                 typeof(ValidateCommandBehavior<,>));
 
 
+            services.AddScoped<IArticleFactory, ArticleFactory>();
             services.AddScoped<IArticleCategoryFactory, ArticleCategoryFactory>();
             services.AddScoped<ICategoryFactory, CategoryFactory>();
             services.AddScoped<IRoleFactory, RoleFactory>();
@@ -56,6 +60,8 @@ namespace Framework
             services.AddScoped<IRecruitmentFactory, RecruitmentFactory>();
             services.AddScoped<IPlacementFactory, PlacementFactory>();
             services.AddScoped<IIntroductionFactory, IntroductionFactory>();
+            services.AddScoped<ISliderFactory, SliderFactory>();
+            services.AddScoped<ISettingFactory, SettingFactory>();
             return services;
         }
     }

@@ -1,9 +1,11 @@
-﻿@{
+﻿@using Domain.Enums
+@{
     ViewData["Title"] = "صفحه اصلی";
 }
 
 
-<div clss="row">
+@await Component.InvokeAsync("SliderComponent",PositionEnum.Home)
+@* <div clss="row">
     <div class="col-12 mb-3">
     
         <div class="swiper swiper-coverflow swiper-3d swiper-initialized swiper-horizontal swiper-pointer-events swiper-rtl swiper-watch-progress" id="swiper-3d-coverflow-effect">
@@ -33,7 +35,7 @@
             <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
         </div>
     </div>
-</div>
+</div> *@
 
 
 

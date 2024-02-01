@@ -8,5 +8,11 @@ namespace Application.Reports.ArticleCategory
         Task<PaginatedList<TDestination>> GetAllPaginatedAsync<TDestination>(PaginatedSearchWithSize pagination,
             CancellationToken cancellationToken = default);
         Task<ArticleCategoryEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+
+
+        Task<List<ArticleCategoryEntity>> GetArticleCategories(CancellationToken cancellationToken = default);
+
+
+        Task<List<ArticleCategoryEntity>>GetCategories(CancellationToken cancellationToken = default);
     }
 }

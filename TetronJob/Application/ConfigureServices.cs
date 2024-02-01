@@ -9,7 +9,9 @@ using Application.Reports.Placement;
 using Application.Reports.Province;
 using Application.Reports.Recruitment;
 using Application.Reports.Role;
+using Application.Reports.Setting;
 using Application.Reports.Skill;
+using Application.Reports.SkillIntroduction;
 using Application.Reports.Slider;
 using Application.Reports.User;
 using Application.Reports.UserAddress;
@@ -24,6 +26,7 @@ using Application.Services.Placement;
 using Application.Services.Province;
 using Application.Services.Recruitment;
 using Application.Services.Role;
+using Application.Services.Setting;
 using Application.Services.Skill;
 using Application.Services.SkillIntroduction;
 using Application.Services.Slider;
@@ -82,6 +85,7 @@ namespace Application
             services.AddScoped<IPlacementService, PlacementService>();
             services.AddScoped<IPlacementReport, PlacementReport>();
 
+            services.AddScoped<ISkillIntroductionReport, SkillIntroductionReport>();
             services.AddScoped<ISkillIntroductionService, SkillIntroductionService>();
 
             services.AddScoped<IArticleCategoryReport, ArticleCategoryReport>();
@@ -92,6 +96,15 @@ namespace Application
 
             services.AddScoped<ISliderReport, SliderReport>();
             services.AddScoped<ISliderService, SliderService>();
+
+
+
+
+            services.AddScoped<ISettingReport, SettingReport>();
+            services.AddScoped<ISettingService, SettingService>();
+
+
+
 
 
             return services;

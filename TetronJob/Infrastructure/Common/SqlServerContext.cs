@@ -38,6 +38,7 @@ namespace Infrastructure.Common
         public virtual DbSet<ArticleEntity> Article { get; set; }
         public virtual DbSet<ArticleCategoryEntity> ArticleCategory { get; set; }
         public virtual DbSet<SliderEntity> Slider { get; set; }
+        public virtual DbSet<SettingEntity> Setting { get; set; }
 
 
         #endregion

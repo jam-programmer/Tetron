@@ -1,4 +1,5 @@
-﻿using Framework.CQRS.Query.Introduction;
+﻿using Domain.Enums;
+using Framework.CQRS.Query.Introduction;
 using Framework.Factories.Placement;
 using MediatR;
 
@@ -24,6 +25,7 @@ namespace Framework.CQRS.Query.Placement
     }
     public class Placement
     {
+        public ConditionEnum Condition { set; get; }
         public string? PlacementImage { set; get; }
         public Guid? Id { set; get; }
         public string? UserFullName { set; get; }

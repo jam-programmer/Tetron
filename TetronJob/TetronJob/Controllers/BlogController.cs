@@ -1,19 +1,48 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Models;
+using Framework.CQRS.Query.Article;
+using Framework.CQRS.Query.ArticleCategory;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TetronJob.Controllers
 {
     public class BlogController : Controller
     {
-        [HttpGet]
-        public IActionResult BlogCategory()
+        private readonly IMediator _mediator;
+
+        public BlogController(IMediator mediator)
         {
-            return View();
+            _mediator = mediator;
+        }
+        [HttpGet]
+        public async Task<IActionResult> BlogCategory()
+        {
+            var model = await _mediator.Send(new GetArticleCategoriesQuery());
+            return View(model);
+        }
+
+     
+        [HttpGet]
+        public async Task<IActionResult> Blogs([FromQuery] PaginatedSearchWithSize options,Guid id,string name)
+        {
+            GetArticleOfCategoryQuery request = new GetArticleOfCategoryQuery()
+            {
+                Paginated = options,Id = id
+            };
+            var paginated = await _mediator.Send(request);
+            ViewBag.Name = name;
+            ViewBag.Parent = id;
+            return View(paginated);
         }
 
         [HttpGet]
-        public IActionResult Blogs()
+        public async Task<IActionResult> BlogDetail(Guid id)
         {
-            return View();
+            var model = await _mediator.Send(new GetArticleByIdQuery()
+            {
+                Id = id
+            });
+            return View(model);
         }
     }
 }

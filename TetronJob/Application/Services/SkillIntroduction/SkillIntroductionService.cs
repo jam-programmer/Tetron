@@ -37,5 +37,18 @@ namespace Application.Services.SkillIntroduction
          
             }
         }
+
+        public async Task DeleteAsync(List<SkillIntroductionEntity> skills)
+        {
+            try
+            {
+                await _repository.DeleteListAsync(skills);
+
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
     }
 }

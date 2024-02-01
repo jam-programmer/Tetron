@@ -1,0 +1,101 @@
+﻿@model Application.Models.PaginatedList<Framework.CQRS.Query.Slider.ImageViewModel>
+@{
+    ViewData["Title"] = "تصاویر";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 breadcrumb-wrapper mb-4">
+        <span class="text-muted fw-light"> مدیریت محتوا/</span> تصاویر
+    </h4>
+
+    <!-- DataTable with Buttons -->
+    <div class="card">
+        <div class="card-datatable p-2">
+            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                <div class="card-header flex-column flex-md-row">
+
+                    <div class="row ">
+
+                        <div class="col-6 justify-content-center justify-content-md-end">
+                            <a asp-area="Admin" asp-controller="Slider" asp-action="Create" class="btn btn-secondary create-new btn-primary ms-2" tabindex="0" aria-controls="DataTables_Table_0" type="button">
+                                <span><i class="bx bx-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">افزودن رکورد جدید</span></span>
+                            </a>
+
+
+                        </div>
+                       
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+
+                                <th>تصویر </th>
+                                <th>متن جایگزین</th>
+                               
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+
+
+                            @foreach (var item in Model.items)
+                            {
+                                <tr id="item_@item.Id">
+
+
+
+                                    <td>
+                                        @if (item.SliderImagePath == "default.jpg")
+                                        {
+                                            <img src="~/img/@item.SliderImagePath" alt="user-avatar" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" height="32" width="32">
+
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Slider/@item.SliderImagePath" alt="user-avatar" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" height="32" width="32">
+
+                                        }
+                                    </td>
+                                    <td>@item.SliderAlt</td>
+                                   
+
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" asp-controller="Slider" asp-action="Edit"
+                                                   asp-route-id="@item.Id"><i class="bx bx-edit-alt me-1"></i> ویرایش</a>
+
+
+
+                                                <a class="dropdown-item" onclick="Delete('@item.Id', 'Slider')">
+                                                    <i class="bx bx-trash me-1"></i> حذف
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-footer">
+                    <div class="col-lg-6">
+                        <nav class="pagination"
+                             data-page-index="@Model.pageIndex"
+                             data-total-pages="@Model.totalPages"
+                             data-path="/Admin/Slider/Index"></nav>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

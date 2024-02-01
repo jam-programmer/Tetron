@@ -104,6 +104,9 @@ namespace Application.Reports.User
             return await _userManager.FindByNameAsync(username);
         }
 
-     
+        public async Task<IEnumerable<UserEntity>> GetUserForSelectAsync()
+        {
+            return await _userManager.Users.ToListAsync();
+        }
     }
 }

@@ -388,6 +388,47 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.SettingEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("About")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Enamad")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Help")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Instagram")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Law")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SiteTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SmsKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telegram")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WhatsApp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Setting");
+                });
+
             modelBuilder.Entity("Domain.Entities.SkillEntity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -438,19 +479,16 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Position")
+                    b.Property<int?>("Position")
                         .HasColumnType("int");
 
                     b.Property<string>("SliderAlt")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SliderImagePath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SliderLink")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

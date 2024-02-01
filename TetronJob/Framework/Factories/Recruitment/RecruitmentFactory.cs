@@ -11,10 +11,14 @@ using Application.Services.Picture;
 using Application.Services.Recruitment;
 using Domain.Entities;
 using Domain.Enums;
+using Framework.Common;
 using Framework.Common.Application.Core;
+using Framework.CQRS.Command.Master.Placement;
 using Framework.CQRS.Command.Master.Recruitment;
+using Framework.CQRS.Query.Placement;
 using Framework.CQRS.Query.Recruitment;
 using Mapster;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Framework.Factories.Recruitment
 {
@@ -48,7 +52,7 @@ namespace Framework.Factories.Recruitment
             var user = await _addressReport.GetUserAddressByIdAsync(command.UserId);
             recruitment.CityId = user!.CityId;
             recruitment.ProvinceId=user!.ProvinceId;
-            recruitment.Condition = ConditionEnum.Waiting;
+            recruitment.Condition = ConvertEnum.ConvertCondition(command.Condition);
             var result = await _service.InsertAsync(recruitment, cancellation);
             if (result.IsSuccess == false)
             {
@@ -68,6 +72,53 @@ namespace Framework.Factories.Recruitment
             }
             
             return Response.Succeded();
+        }
+
+        public async Task<PaginatedList<TCommand>> GetPagedSearchWithSizeAsync<TCommand>(PaginatedSearchWithSize pagination,
+            CancellationToken cancellationToken = default)
+        {
+            return await _report.GetAllPaginatedAsync<TCommand>(pagination, cancellationToken);
+        }
+
+        public async Task<Response> UpdateRecruitmentAsync(UpdateRecruitmentCommand command,
+            CancellationToken cancellation)
+        {
+            var model = await _report.GetByIdAsync(command.Id, cancellation);
+            model = command.Adapt<RecruitmentEntity>();
+            model.RecruitmentImage =
+                FileProcessing.FileUpload(command.RecruitmentImageFile, 
+                    command.RecruitmentImage, "Recruitment");
+            model.Condition = ConvertEnum.ConvertCondition(command.Condition);
+            if (model.UserId != command.UserId)
+            {
+                var user = await _addressReport.GetUserAddressByIdAsync(command.UserId!);
+                model.CityId = user!.CityId;
+                model.ProvinceId = user!.ProvinceId;
+            }
+
+            return await _service.UpdateAsync(model, cancellation);
+        }
+
+        public async Task<Response> DeleteRecruitmentAsync(DeleteRecruitmentCommand command, CancellationToken cancellation)
+        {
+            var model = await _report.GetByIdAsync(command.Id, cancellation);
+            FileProcessing.RemoveFile(model.RecruitmentImage!, "Recruitment");
+            return await _service.DeleteAsync(model, cancellation);
+        }
+
+        public async Task<UpdateRecruitmentCommand> GetRecruitmentByIdAsync(GetRecruitmentByIdQuery request, CancellationToken cancellation)
+        {
+            var model = await _report.GetByIdAsync(request.Id, cancellation);
+            UpdateRecruitmentCommand recruitment = model.Adapt<UpdateRecruitmentCommand>();
+            return recruitment;
+        }
+
+
+        public async Task Change(Guid id, ConditionEnum condition, CancellationToken cancellation)
+        {
+            var model = await _report.GetByIdAsync(id, cancellation);
+            model.Condition = condition;
+            await _service.UpdateAsync(model, cancellation);
         }
     }
 }

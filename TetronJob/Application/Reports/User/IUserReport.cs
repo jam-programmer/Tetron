@@ -13,7 +13,9 @@ namespace Application.Reports.User
         Task<Response> ExistUserAsync(string national);
         Task<Response> ActiveUserAsync(string nationalCodeOrMail);
         Task<UserEntity?> GetUserByUserName(string national, CancellationToken cancellationToken = default);
-       
+
+
+        Task<IEnumerable<UserEntity>> GetUserForSelectAsync();
 
     }
 }

@@ -49,6 +49,21 @@ namespace Framework.Factories.ArticleCategory
             return updateCategory;
         }
 
+        public async Task<List<CategoryBox>> GetCategoriesBox()
+        {
+            var model = await _articleCategoryReport.GetCategories();
+            List<CategoryBox> categories = model.Adapt<List<CategoryBox>>();
+            return categories;
+
+        }
+
+        public async Task<List<ArticleCategoryViewModel>> GetSelectListOfArticleCategoriesAsync(CancellationToken cancellation)
+        {
+            var model = await _articleCategoryReport.GetArticleCategories(cancellation);
+            List<ArticleCategoryViewModel> articleCategory = model.Adapt<List<ArticleCategoryViewModel>>();
+            return articleCategory;
+        }
+
         public async Task<PaginatedList<TViewModel>> GetPagedSearchWithSizeAsync<TViewModel>(PaginatedSearchWithSize pagination,
             CancellationToken cancellationToken = default)
         {

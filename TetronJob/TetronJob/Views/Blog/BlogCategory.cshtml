@@ -1,4 +1,4 @@
-﻿
+﻿@model List<Framework.CQRS.Query.ArticleCategory.CategoryBox>
 @{
     ViewData["Title"] = "لیست دسته بندی مقالات";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,216 +9,51 @@
 }
 
     <div class="card overflow-hidden mb-5">
-        <!-- Help Center Header -->
-        <div class="help-center-header d-flex flex-column justify-content-center align-items-center">
-            <h3 class="text-center zindex-1 secondary-font">عنوان مقاله مورد نظر را جستجو کنید</h3>
-            <div class="input-wrapper my-3 input-group input-group-merge zindex-1">
-                <span class="input-group-text" id="basic-addon1"><i class="bx bx-search-alt bx-xs text-muted"></i></span>
-                <input type="text" class="form-control form-control-lg" placeholder="هر چیزی پیدا کنید (طراحی و دوخت یا الگوی طراحی)" aria-label="Search" aria-describedby="basic-addon1">
-            </div>
-            <p class="text-center zindex-1 px-3 mb-0">
-                موضوعات رایج مقالات: آموزش خیاطی ،طراحی لباس ایرانی
-            </p>
-        </div>
-     
+       
         <!-- Knowledge Base -->
-        <div class="help-center-knowledge-base help-center-bg-alt py-5">
+        <div class="help-center-knowledge-base help-center-bg-alt py-5 mb-5">
             <div class="container-xl py-2">
                 <h4 class="text-center pb-4 secondary-font">پایگاه دانش</h4>
                 <div class="row">
                     <div class="col-lg-10 mx-auto">
                         <div class="row">
-                            <div class="col-md-4 col-sm-6 mb-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <span class="badge bg-label-success p-2 rounded me-2"><i class="bx bx-cart bx-sm"></i></span>
-                                            <h5 class="fw-semibold mt-3 ms-1">تجارت الکترونیک</h5>
-                                        </div>
-                                        <ul class="lh-1-85">
-                                            <li class="text-primary py-1">
-                                                <a href="./pages-help-center-categories.html">مراحل قیمت گذاری</a>
-                                            </li>
-                                            <li class="text-primary pb-1">
-                                                <a href="./pages-help-center-categories.html">همگام سازی مربعی</a>
-                                            </li>
-                                        </ul>
-                                        <p class="mb-0 fw-semibold">
-                                            <a href="javascript:void(0);">56 مقاله</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6 mb-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <span class="badge bg-label-info p-2 rounded me-2"><i class="bx bx-laptop bx-sm"></i></span>
-                                            <h5 class="fw-semibold mt-3 ms-1">ایجاد وب&zwnj;سایت</h5>
-                                        </div>
-                                        <ul class="lh-1-85">
-                                            <li class="text-primary py-1">
-                                                <a href="./pages-help-center-categories.html">قدم&zwnj;های اول</a>
-                                            </li>
-                                            <li class="text-primary pb-1">
-                                                <a href="./pages-help-center-categories.html">افزودن تصاویر</a>
-                                            </li>
-                                        </ul>
-                                        <p class="mb-0 fw-semibold">
-                                            <a href="javascript:void(0);">111 مقاله</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6 mb-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <span class="badge bg-label-primary p-2 rounded me-2"><i class="bx bx-user bx-sm"></i></span>
-                                            <h5 class="fw-semibold mt-3 ms-1">حساب شما</h5>
-                                        </div>
-                                        <ul class="lh-1-85">
-                                            <li class="text-primary py-1">
-                                                <a href="./pages-help-center-categories.html">نحوه قیمت گذاری</a>
-                                            </li>
-                                            <li class="text-primary pb-1">
-                                                <a href="./pages-help-center-categories.html">مدیریت سفارشات</a>
-                                            </li>
-                                        </ul>
-                                        <p class="mb-0 fw-semibold">
-                                            <a href="javascript:void(0);">29 مقاله</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6 mb-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <span class="badge bg-label-danger p-2 rounded me-2"><i class="bx bx-world bx-sm"></i></span>
-                                            <h5 class="fw-semibold mt-3 ms-1">دامنه&zwnj;ها و ایمیل</h5>
-                                        </div>
-                                        <ul class="lh-1-85">
-                                            <li class="text-primary py-1">
-                                                <a href="./pages-help-center-categories.html">دسترسی به حساب مدیر</a>
-                                            </li>
-                                            <li class="text-primary pb-1">
-                                                <a href="./pages-help-center-categories.html">نحوه ارسال ایمیل</a>
-                                            </li>
-                                        </ul>
-                                        <p class="mb-0 fw-semibold">
-                                            <a href="javascript:void(0);">22 مقاله</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6 mb-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <span class="badge bg-label-warning p-2 rounded me-2"><i class="bx bx-mobile-alt bx-sm"></i></span>
-                                            <h5 class="fw-semibold mt-3 ms-1">برنامه های موبایل</h5>
-                                        </div>
-                                        <ul class="lh-1-85">
-                                            <li class="text-primary py-1">
-                                                <a href="./pages-help-center-categories.html">شروع کار با برنامه</a>
-                                            </li>
-                                            <li class="text-primary pb-1">
-                                                <a href="./pages-help-center-categories.html">شروع کار با اندروید</a>
-                                            </li>
-                                        </ul>
-                                        <p class="mb-0 fw-semibold">
-                                            <a href="javascript:void(0);">24 مقاله</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6 mb-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <span class="badge bg-label-secondary p-2 rounded me-2"><i class="bx bx-envelope bx-sm"></i></span>
-                                            <h5 class="fw-semibold mt-3 ms-1">بازاریابی ایمیل</h5>
-                                        </div>
-                                        <ul class="lh-1-85">
-                                            <li class="text-primary py-1">
-                                                <a href="./pages-help-center-categories.html">شروع</a>
-                                            </li>
-                                            <li class="text-primary pb-1">
-                                                <a href="./pages-help-center-categories.html">این چگونه کار می کند؟</a>
-                                            </li>
-                                        </ul>
-                                        <p class="mb-0 fw-semibold">
-                                            <a href="javascript:void(0);">27 مقاله</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                           
+                         @foreach (var item in Model)
+                         {
+                             <div class="col-md-4 col-sm-6 mb-4">
+                                
+                                 <div class="card">
+                                     <div class="card-body">
+                                         <div class="d-flex align-items-center mb-2">
+                                             <span class="badge bg-label-success p-2 rounded me-2">
+                                                 <i class="bx bx-book bx-sm"></i>
+                                             </span>
+                                             <h5 class="fw-semibold mt-3 ms-1">@item.ArticleCategoryTitle</h5>
+                                         </div>
+                                         <ul class="lh-1-85">
+                                             @if (item.Article != null)
+                                             {
+                                                 @foreach (var article in item.Article)
+                                                 {
+                                                     <li class="text-primary py-1">
+                                                         <a asp-controller="Blog" asp-action="BlogDetail" asp-route-id="@article.Id"> @article.ArticleTitle </a>
+                                                     </li>
+                                                 }
+                                             }
+
+                                         </ul>
+                                         <p class="mb-0 fw-semibold">
+                                             <a asp-controller="Blog" asp-action="Blogs" asp-route-id="@item.Id" asp-route-name="@item.ArticleCategoryTitle">مشاهده همه</a>
+                                         </p>
+                                     </div>
+                                 </div>
+                             </div>
+                         }
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- /Knowledge Base -->
-        <!-- Keep Learning -->
-        <div class="help-center-keep-learning py-5">
-            <div class="container-xl my-3">
-                <h4 class="text-center pb-4 secondary-font">به یادگیری ادامه دهید</h4>
-                <div class="row">
-                    <div class="col-lg-10 mx-auto">
-                        <div class="row">
-                            <div class="col-md-4 mb-md-0 mb-5 text-center">
-                                <img src="~/assets/img/icons/unicons/chart.png" class="mb-2" height="48" alt="Help center blog">
-                                <h5 class="my-3">بلاگ نویسی</h5>
-                                <p class="mb-1">
-                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                </p>
-                                <a href="./pages-help-center-categories.html" class="d-flex align-items-center justify-content-center mt-2">
-                                    <span class="align-middle me-1">آشنایی بیشتر</span>
-                                    <i class="bx bx-right-arrow-circle scaleX-n1-rtl"></i>
-                                </a>
-                            </div>
-                            <div class="col-md-4 mb-md-0 mb-5 text-center">
-                                <img src="~/assets/img/icons/unicons/cc-warning.png" class="mb-2" height="48" alt="Help center inspiration">
-                                <h5 class="my-3">الهام گیری</h5>
-                                <p class="mb-1">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده</p>
-                                <a href="./pages-help-center-categories.html" class="d-flex align-items-center justify-content-center mt-2">
-                                    <span class="align-middle me-1">آشنایی بیشتر</span>
-                                    <i class="bx bx-right-arrow-circle scaleX-n1-rtl"></i>
-                                </a>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <img src="~/assets/img/icons/unicons/community.png" class="mb-2" height="48" alt="Help center inspiration">
-                                <h5 class="my-3">انجمن</h5>
-                                <p class="mb-1">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده</p>
-                                <a href="./pages-help-center-categories.html" class="d-flex align-items-center justify-content-center mt-2">
-                                    <span class="align-middle me-1">آشنایی بیشتر</span>
-                                    <i class="bx bx-right-arrow-circle scaleX-n1-rtl"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /Keep Learning -->
-        <!-- Help Area -->
-        <div class="help-center-contact-us help-center-bg-alt">
-            <div class="container-xl">
-                <div class="row justify-content-center py-5 my-3">
-                    <div class="col-md-8 col-lg-6 text-center">
-                        <h4 class="secondary-font">همچنان کمک نیاز دارید؟</h4>
-                        <p class="mb-4">
-                            متخصصین ما همواره آماده راهنمایی هستند. با ما در طول ساعات <br>
-                            کاری تماس بگیرید و یا در هر زمان ایمیل ارسال کنید و ما با شما تماس می گیریم.
-                        </p>
-                        <div class="d-flex justify-content-center flex-wrap gap-4">
-                            <a href="javascript:void(0);" class="btn btn-label-primary">از جامعه ما دیدن کنید</a>
-                            <a href="javascript:void(0);" class="btn btn-label-primary">تماس با ما</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /Help Area -->
+       
     </div>

@@ -8,53 +8,12 @@
                     <i class="menu-icon tf-icons bx bx-menu"></i>
                     <div >دسته بندی‌ها</div>
                 </a>
-                <ul class="menu-sub">
-
-
-
-                    <li class="menu-item active">
-                        <a href="index.html" class="menu-link">
-                            <div >طراحان لباس</div>
-                        </a>
-                    </li>
-
-
-                    <li class="menu-item active">
-                        <a href="index.html" class="menu-link">
-                            <div >طراحان پارچه</div>
-                        </a>
-                    </li>
-
-
-
-                    <li class="menu-item active">
-                        <a href="index.html" class="menu-link">
-                            <div >طراحان دیجیتال</div>
-                        </a>
-                    </li>
-
-
-                    <li class="menu-item active">
-                        <a href="index.html" class="menu-link">
-                            <div >هنرمندان و خلاقان</div>
-                        </a>
-                    </li>
-
-
-                    <li class="menu-item active">
-                        <a href="index.html" class="menu-link">
-                            <div >مزون و فروشندگان</div>
-                        </a>
-                    </li>
-
-
-
-                </ul>
+                @await  Component.InvokeAsync("MenuCategoryComponent")
             </li>
 
             <!-- Layouts -->
             <li class="menu-item">
-                <a href="javascript:void(0)" class="menu-link ">
+                <a asp-controller="Home" asp-action="Help" class="menu-link ">
                     <i class="menu-icon tf-icons bx bx-info-circle"></i>
                     <div >راهنمای سایت</div>
                 </a>

@@ -14,5 +14,10 @@ namespace Application.Reports.Article
         (PaginatedSearchWithSize pagination,
             CancellationToken cancellationToken = default);
         Task<ArticleEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+
+
+        Task<PaginatedList<TDestination>> GetAllPaginatedAsync<TDestination>
+        (PaginatedSearchWithSize pagination,Guid categoryId,
+            CancellationToken cancellationToken = default);
     }
 }

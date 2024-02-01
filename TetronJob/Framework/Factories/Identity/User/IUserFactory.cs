@@ -1,5 +1,6 @@
 ﻿using Application.Models;
 using Framework.CQRS.Command.Admin.User;
+using Framework.CQRS.Query.Admin.User;
 using Framework.ViewModels.User;
 
 namespace Framework.Factories.Identity.User
@@ -21,6 +22,8 @@ namespace Framework.Factories.Identity.User
         Task<UpdateUserViewModel> GetUserByIdAsync(RequestGetUserById request, CancellationToken cancellationToken = default);
         Task<Response> DeleteUserAsync(DeleteUserViewModel model, CancellationToken cancellationToken = default);
 
+
+        Task<IEnumerable<SelectUser>> GetSelectUserListAsync();
 
         #endregion
 

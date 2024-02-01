@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Framework.CQRS.Query.Admin.Category.Category>
+<ul class="menu-sub">
+    
+    @foreach (var item in Model)
+    {
+        <li class="menu-item ">
+            <a asp-controller="Advertising" asp-action="CategoryUser" asp-route-id="@item.Id" class="menu-link">
+                <div>
+                    @item.Name
+                </div>
+            </a>
+        </li>
+    }
+
+   
+
+</ul>

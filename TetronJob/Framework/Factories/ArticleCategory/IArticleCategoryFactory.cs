@@ -16,5 +16,10 @@ namespace Framework.Factories.ArticleCategory
         Task<UpdateArticleCategoryCommand> GetCategoryByIdAsync
             (GetArticleCategoryByIdQuery request, CancellationToken cancellation);
 
+
+        Task<List<CategoryBox>> GetCategoriesBox();
+
+        Task<List<ArticleCategoryViewModel>> GetSelectListOfArticleCategoriesAsync(CancellationToken cancellation);
+
     }
 }

@@ -2,6 +2,7 @@
 using Application.Models;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Reports.Article
 {
@@ -34,6 +35,23 @@ namespace Application.Reports.Article
         {
             var article = await _repository.GetByIdAsync(id);
             return article;
+        }
+
+        public async Task<PaginatedList<TDestination>> GetAllPaginatedAsync<TDestination>(PaginatedSearchWithSize pagination, Guid categoryId,
+            CancellationToken cancellationToken = default)
+        {
+            var query = await _repository.GetByQueryAsync();
+            query = query.Where(w => w.ArticleCategoryId == categoryId).Include(i=>i.Category);
+            // Apply search filter.
+            if (!string.IsNullOrEmpty(pagination.Keyword))
+            {
+                query = query
+                    .Where(r => r.ArticleTitle!.Contains(pagination.Keyword))
+                    .AsQueryable();
+            }
+
+            return await query.PaginatedListAsync<ArticleEntity, TDestination>(pagination.Page, pagination.PageSize,
+                config: null, cancellationToken);
         }
     }
 }

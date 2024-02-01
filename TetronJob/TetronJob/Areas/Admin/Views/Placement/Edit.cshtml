@@ -1,0 +1,116 @@
+﻿
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Framework.Common
+@model Framework.CQRS.Command.Master.Placement.UpdatePlacementCommand
+ @{   ViewData["Title"] = "ویرایش آگهی آماده همکاری";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 breadcrumb-wrapper mb-4">
+        <span class="text-muted fw-light">  آگهی و درخواست/</span> ویرایش آگهی آماده کاری
+    </h4>
+
+    <div class="row">
+        <div class="col-md-12">
+            @if (ViewBag.Alert != null)
+            {
+                <div class="alert alert-warning alert-dismissible d-flex align-items-center" role="alert">
+                    <i class="bx bx-xs bx-wallet me-2"></i>
+                    @ViewBag.Alert
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            <div class="card mb-4">
+                <h5 class="card-header heading-color">ویرایش آگهی </h5>
+                <form asp-area="Admin" asp-controller="Placement" asp-action="Edit" enctype="multipart/form-data">
+                    <div class="card-body">
+
+                        <div class="row">
+
+
+                            <div>
+                                <div class="classic col col-sm-3 col-lg-2 mt-3">
+                                    @if (Model.PlacementImage == "default.jpg")
+                                    {
+                                        <img src="~/img/@Model.PlacementImage" width="150" height="110" id="imagePath_1" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" />
+
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Placement/@Model.PlacementImage" width="150" height="110" id="imagePath_1" class="d-block flex-shrink-0 rounded-circle me-sm-3 me-0" />
+
+                                    }<br/>
+                                    <label class="form-label mb-3">تصویر </label>
+                                    <input onchange="ChangeImage(this,1)"
+                                           id="image_1" asp-for="PlacementImageFile" type="file" class="form-control" />
+                                    <span class="text-danger" asp-validation-for="PlacementImageFile"></span>
+                                </div>
+                            </div>
+                            <div class="mb-3 col-lg-6 col-xl-6 col-12">
+                                <label class="form-label" for="basic-default-fullname"> نام و نام خانوادگی</label>
+                                <input type="text" asp-for="PlacementFullName" class="form-control " id="title" placeholder="نام و نام خانوادگی ">
+
+                                <span class="text-danger" asp-validation-for="PlacementFullName"></span>
+                            </div>
+                            <div class="mb-3 col-lg-6 col-xl-6 col-12">
+                                <label class="form-label" for="basic-default-company">شماره تماس</label>
+                                <input type="tel" asp-for="PlacementNumber" class="form-control " id="phone" placeholder="09**********">
+                                <span class="text-danger" asp-validation-for="PlacementNumber"></span>
+                            </div>
+
+                            <div class="mb-3 col-lg-6 col-xl-6 col-12">
+                                <label for="TagifyBasic" class="form-label"> وضعیت </label>
+                                <select asp-for="Condition" id="select2Basic"
+                                        class="select2 form-select form-select-lg select2-hidden-accessible" asp-items="Html.GetEnumSelectList<ConditionViewMode>()"
+                                        data-allow-clear="true" data-select2-id="select2Basic" tabindex="-1" aria-hidden="true">
+                                </select>
+                            </div>
+
+
+                            <div class="mb-3 col-lg-6 col-xl-6 col-12">
+                                <label class="form-label">انتخاب منتشر کننده</label>
+                                <div class="position-relative">
+                                    <select asp-items="@ViewBag.Users" class="form-select  search-j2" asp-for="UserId">
+                                        <option selected="selected" disabled="disabled">یک کاربر انتخاب کنید</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="description">توضیحات</label>
+                            <textarea id="description" class="form-control form-control-sm" asp-for="PlacementDescription"
+                                      rows="4" placeholder="توضیحات را اینجا بنویسید"></textarea>
+                        </div>
+
+                        <input type="hidden" asp-for="PlacementImage"/>
+                        <input type="hidden" asp-for="Id"/>
+
+
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-sm btn-primary">ثبت</button>
+                            <a asp-area="Admin" asp-controller="Placement" asp-action="Index" class="btn btn-sm btn-warning text-white">بازگشت</a>
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section Style
+    {
+    <link rel="stylesheet" href="~/assets/vendor/libs/bs-stepper/bs-stepper.css">
+    <link rel="stylesheet" href="~/assets/vendor/libs/bootstrap-select/bootstrap-select.css">
+    <link rel="stylesheet" href="~/assets/vendor/libs/select2/select2.css">
+}
+@section Scripts
+    {
+    <script src="~/assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+
+    <script src="~/assets/vendor/libs/select2/select2.js"></script>
+    <script src="~/assets/js/forms-selects.js"></script>
+}

@@ -8,6 +8,7 @@ namespace Domain.Enums
 {
     public enum PositionEnum
     {
-        Bottom, Top, Main, BottomAbout, TopAbout, MainAbout, BottomBlog, TopBlog, MainBlog, BottomSearch, TopSearch, MainSearch
+        Home, Advertising,Category,About
+
     }
 }

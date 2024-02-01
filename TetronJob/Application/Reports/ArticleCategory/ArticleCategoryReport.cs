@@ -2,6 +2,7 @@
 using Application.Models;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Reports.ArticleCategory
 {
@@ -13,7 +14,9 @@ namespace Application.Reports.ArticleCategory
         {
             _repository = repository;
         }
-        public async Task<PaginatedList<TDestination>> GetAllPaginatedAsync<TDestination>(PaginatedSearchWithSize pagination,
+
+        public async Task<PaginatedList<TDestination>> GetAllPaginatedAsync<TDestination>(
+            PaginatedSearchWithSize pagination,
             CancellationToken cancellationToken = default)
         {
             var query = await _repository.GetByQueryAsync();
@@ -26,7 +29,8 @@ namespace Application.Reports.ArticleCategory
                     .AsQueryable();
             }
 
-            return await query.PaginatedListAsync<ArticleCategoryEntity, TDestination>(pagination.Page, pagination.PageSize,
+            return await query.PaginatedListAsync<ArticleCategoryEntity, TDestination>(pagination.Page,
+                pagination.PageSize,
                 config: null, cancellationToken);
         }
 
@@ -35,5 +39,29 @@ namespace Application.Reports.ArticleCategory
             var articleCategory = await _repository.GetByIdAsync(id);
             return articleCategory;
         }
+
+        public async Task<List<ArticleCategoryEntity>> GetArticleCategories(
+            CancellationToken cancellationToken = default)
+        {
+            var query = await _repository.GetByQueryAsync();
+            return await query.ToListAsync(cancellationToken);
+        }
+
+        public async Task<List<ArticleCategoryEntity>> GetCategories(CancellationToken cancellationToken = default)
+        {
+            var query = await _repository.GetByQueryAsync();
+            var result = query.Select(s => new ArticleCategoryEntity
+            {
+                ArticleCategoryTitle = s.ArticleCategoryTitle,
+                Id = s.Id,
+                Article = s.Article.Take(5).OrderByDescending(d=>d.CreateTime).Select(a => new ArticleEntity
+                {
+                    Id = a.Id,
+                    ArticleTitle = a.ArticleTitle
+                }).ToList()
+            }).ToList();
+            return result;
+        }
+
     }
 }

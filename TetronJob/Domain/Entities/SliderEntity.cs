@@ -9,9 +9,9 @@ namespace Domain.Entities
 {
     public class SliderEntity:BaseEntity
     {
-        public string SliderImagePath { set; get; }
-        public string SliderAlt { set; get; }
-        public string SliderLink { set; get; }
-        public PositionEnum Position { set; get; }
+        public string? SliderImagePath { set; get; }
+        public string? SliderAlt { set; get; }
+        public string? SliderLink { set; get; }
+        public PositionEnum? Position { set; get; }
     }
 }

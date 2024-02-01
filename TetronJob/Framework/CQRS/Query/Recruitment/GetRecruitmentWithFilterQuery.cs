@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domain.Enums;
 using Framework.CQRS.Query.Introduction;
 using Framework.Factories.Recruitment;
 using MediatR;
 
 namespace Framework.CQRS.Query.Recruitment
 {
-    public class GetRecruitmentWithFilterQuery:IRequest<List<Recruitment>>
+    public class GetRecruitmentWithFilterQuery : IRequest<List<Recruitment>>
     {
         public Filter Filter { set; get; }
     }
@@ -30,6 +26,7 @@ namespace Framework.CQRS.Query.Recruitment
 
     public class Recruitment
     {
+        public ConditionEnum Condition { set; get; }
         public string? RecruitmentType { set; get; }
         public string? RecruitmentPhoneNumber { set; get; }
         public Guid Id { set; get; }

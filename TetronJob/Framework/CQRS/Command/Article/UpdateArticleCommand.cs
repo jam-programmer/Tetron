@@ -26,11 +26,11 @@ namespace Framework.CQRS.Command.Article
     public class UpdateArticleCommand:IRequest<Response>
     {
         public string ArticleTitle { set; get; }
-        public IFormFile ArticleImage { set; get; }
+        public IFormFile? File { set; get; }
         public string ArticleBody { set; get; }
         public string ArticleTags { set; get; }
         public Guid ArticleCategoryId { set; get; }
-        public string Path { set; get; }
+        public string ArticleImage { set; get; }
         public Guid Id { set; get; }
     }
 

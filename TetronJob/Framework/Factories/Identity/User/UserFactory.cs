@@ -9,6 +9,7 @@ using Application.Services.UserAddress;
 using Domain.Entities;
 using Framework.Common.Application.Core;
 using Framework.CQRS.Command.Admin.User;
+using Framework.CQRS.Query.Admin.User;
 using Framework.Mapping.User;
 using Framework.ViewModels.User;
 using Mapster;
@@ -359,6 +360,12 @@ namespace Framework.Factories.Identity.User
             return removeUser;
         }
 
+        public async Task<IEnumerable<SelectUser>> GetSelectUserListAsync()
+        {
+            var model = await _userReport.GetUserForSelectAsync();
+            IEnumerable<SelectUser> user = model.Adapt<IEnumerable<SelectUser>>();
+            return user;
+        }
 
         #endregion
 

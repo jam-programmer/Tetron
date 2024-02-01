@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Models;
+﻿using Application.Models;
 using Domain.Entities;
+using Domain.Enums;
 
 namespace Application.Reports.Slider
 {
@@ -13,5 +9,7 @@ namespace Application.Reports.Slider
         Task<PaginatedList<TDestination>> GetAllPaginatedAsync<TDestination>(PaginatedWithSize pagination,
             CancellationToken cancellationToken = default);
         Task<SliderEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+
+        Task<List<SliderEntity>> GetWithPositionAsync(PositionEnum? position);
     }
 }

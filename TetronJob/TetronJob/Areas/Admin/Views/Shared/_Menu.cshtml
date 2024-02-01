@@ -1,7 +1,7 @@
 ﻿<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
         <a href="/" class="app-brand-link">
-            
+
             <span class="app-brand-text demo menu-text fw-bold ms-2">پنل مدیریت</span>
         </a>
 
@@ -16,8 +16,8 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
-        
-    <li class="menu-header small text-uppercase"><span class="menu-header-text">احراز هویت</span></li>
+
+        <li class="menu-header small text-uppercase"><span class="menu-header-text">احراز هویت</span></li>
         <!-- Layouts -->
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -31,14 +31,14 @@
                         <div class="p-1">لیست نقش ها</div>
                     </a>
                 </li>
-             
+
                 <li class="menu-item">
-                    <a asp-area ="Admin" asp-controller="Role" asp-action="Create"  class="menu-link">
+                    <a asp-area="Admin" asp-controller="Role" asp-action="Create" class="menu-link">
                         <div class="p-1"> افزودن نقش جدید </div>
                     </a>
                 </li>
-                
-                
+
+
 
             </ul>
         </li>
@@ -66,7 +66,7 @@
         </li>
 
         <li class="menu-header small text-uppercase"><span class="menu-header-text">موقعیت مکانی</span></li>
-      
+
         <!-- Layouts -->
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -88,7 +88,7 @@
                 </li>
             </ul>
         </li>
-        
+
         <li class="menu-header small text-uppercase"><span class="menu-header-text">آگهی و درخواست</span></li>
         <!-- Layouts -->
         <li class="menu-item">
@@ -131,5 +131,169 @@
                 </li>
             </ul>
         </li>
+
+
+
+
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="fa-solid fa-user-clock"></i>
+                <div class="p-1">‌ اشتراک گذاری ها</div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a asp-area="Admin" asp-controller="Introduction" asp-action="Index" class="menu-link">
+                        <div class="p-1">لیست اشتراک گذاری ها </div>
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a asp-area="Admin" asp-controller="Introduction" asp-action="Create" class="menu-link">
+                        <div class="p-1"> افزودن اشتراک گذاری جدید </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="fa-solid fa-handshake"></i>
+                <div class="p-1">‌ آماده همکاری ها</div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a asp-area="Admin" asp-controller="Placement" asp-action="Index" class="menu-link">
+                        <div class="p-1">لیست آماده همکاری ها </div>
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a asp-area="Admin" asp-controller="Placement" asp-action="Create" class="menu-link">
+                        <div class="p-1"> افزودن آماده همکاری جدید </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="fa-solid fa-hand-holding-hand"></i>
+                <div class="p-1">‌ استخدام ها</div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a asp-area="Admin" asp-controller="Recruitment" asp-action="Index" class="menu-link">
+                        <div class="p-1">لیست استخدام ها </div>
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a asp-area="Admin" asp-controller="Recruitment" asp-action="Create" class="menu-link">
+                        <div class="p-1"> افزودن استخدام جدید </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+
+
+
+
+        <li class="menu-header small text-uppercase"><span class="menu-header-text">مدیریت محتوا</span></li>
+        <!-- Layouts -->
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="fa-solid fa-layer-group"></i>
+                <div class="p-1">‌دسته بندی مقالات</div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a asp-area="Admin" asp-controller="ArticleCategory" asp-action="Index" class="menu-link">
+                        <div class="p-1">لیست دسته بندی ها</div>
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a asp-area="Admin" asp-controller="ArticleCategory" asp-action="Create" class="menu-link">
+                        <div class="p-1"> افزودن دسته بندی جدید </div>
+                    </a>
+                </li>
+
+
+
+            </ul>
+        </li>
+
+
+
+
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="fa-solid fa-newspaper"></i>
+                <div class="p-1">‌  مقالات</div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a asp-area="Admin" asp-controller="Article" asp-action="Index" class="menu-link">
+                        <div class="p-1">لیست مقالات</div>
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a asp-area="Admin" asp-controller="Article" asp-action="Create" class="menu-link">
+                        <div class="p-1"> افزودن مقاله جدید </div>
+                    </a>
+                </li>
+
+
+
+            </ul>
+        </li>
+
+
+
+
+     <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="fa-solid fa-images"></i>
+                <div class="p-1">‌اسلایدر ها</div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a asp-area="Admin" asp-controller="Slider" asp-action="Index" class="menu-link">
+                        <div class="p-1">لیست تصاویر</div>
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a asp-area="Admin" asp-controller="Slider" asp-action="Create" class="menu-link">
+                        <div class="p-1"> افزودن تصویر جدید </div>
+                    </a>
+                </li>
+
+
+
+            </ul>
+        </li>
+
+
+
+
+
+
+
+
+
+
     </ul>
 </aside>

@@ -1,0 +1,51 @@
+﻿@using Newtonsoft.Json
+@model Framework.CQRS.Command.Article.UpdateArticleCommand
+@{
+    ViewData["Title"] = Model.ArticleTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row mb-5 p-3">
+    <div class="col-xl-8 col-lg-8 col-md-8 offset-xl-2  offset-lg-2 col-md-2">
+        <div class="card overflow-hidden">
+            <div class="card-body">
+                <div class="text-center">
+                    <img src="~/ArticleImage/@Model.ArticleImage" class="img-thumbnail " height="300" width="540"/>
+                </div>
+                <h4 class="d-flex align-items-center mt-2 mb-4">
+                    <span class="badge bg-label-secondary p-2 rounded me-3">
+                        <i class="bx bx-pen bx-sm"></i>
+                    </span>
+                   @Model.ArticleTitle
+                </h4>
+                <p>
+                    @Html.Raw(Model.ArticleBody )
+                </p>
+                <div class="d-flex justify-content-between flex-wrap gap-3 my-4">   
+                    <h6>برچسب مقاله</h6>
+                    <h6>
+                        
+                        @if (!string.IsNullOrEmpty(Model.ArticleTags))
+                        {
+                            List<Dictionary<string, string>>? tags = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(Model.ArticleTags);
+
+                            if (tags != null)
+                            {
+                                foreach (var tag in tags)
+                                {
+                                    foreach (var value in tag.Values)
+                                    {
+                                        <span class="badge bg-warning">@value</span>
+                                    }
+                                }
+                            }
+                        }
+
+                    </h6>
+                </div>
+              
+            </div>
+        </div>
+    </div>
+</div>
+
