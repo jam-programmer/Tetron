@@ -19,6 +19,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Globalization;
 using Framework.Factories.Contact;
+using Framework.Factories.Sender;
 
 
 namespace Framework
@@ -64,6 +65,7 @@ namespace Framework
             services.AddScoped<ISliderFactory, SliderFactory>();
             services.AddScoped<ISettingFactory, SettingFactory>();
             services.AddScoped<IContactFactory, ContactFactory>();
+            services.AddScoped<ISenderFactory, SenderFactory>();
             return services;
         }
     }

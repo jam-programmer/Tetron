@@ -21,7 +21,7 @@ namespace Framework.Factories.Introduction
         Task<Response> DeleteIntroductionAsync(DeleteIntroductionCommand Command, CancellationToken cancellation);
         Task<UpdateIntroductionCommand> GetIntroductionByIdAsync(GetIntroductionByIdQuery request, CancellationToken cancellation);
 
-        Task Change(Guid id, ConditionEnum condition,CancellationToken cancellation);
+        Task<Response> Change(Guid id, ConditionEnum condition,CancellationToken cancellation);
 
 
         Task<IntroductionDetail> GetIntroductionDetailByIdAsync(Guid id);

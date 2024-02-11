@@ -1,7 +1,9 @@
 ﻿using Application.Models;
+using Domain.Enums;
 using FluentValidation;
 using Framework.Common;
 using Framework.Factories.Introduction;
+using Framework.Factories.Sender;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
@@ -32,14 +34,34 @@ namespace Framework.CQRS.Command.Master.Introduction
     public class UpdateIntroductionCommandHandler : IRequestHandler<UpdateIntroductionCommand, Response>
     {
         private readonly IIntroductionFactory _introductionFactory;
+        private readonly ISenderFactory _senderFactory;
 
-        public UpdateIntroductionCommandHandler(IIntroductionFactory introductionFactory)
+        public UpdateIntroductionCommandHandler(IIntroductionFactory introductionFactory, ISenderFactory senderFactory)
         {
             _introductionFactory = introductionFactory;
+            _senderFactory = senderFactory;
         }
         public async Task<Response> Handle(UpdateIntroductionCommand request, CancellationToken cancellationToken)
         {
-            return await _introductionFactory.UpdateIntroductionAsync(request, cancellationToken);
+            var result= await _introductionFactory.UpdateIntroductionAsync(request, cancellationToken);
+            if (result.IsSuccess == true)
+            {
+                Dictionary<string, string>? data = (Dictionary<string, string>)result.Data!;
+                if (request.Condition == ConditionViewMode.منتشرشد)
+                {
+                    var name = data["Name"];
+                    var number = data["PhoneNumber"];
+                    await _senderFactory.Accept(name, number);
+                }
+                if (request.Condition == ConditionViewMode.ردشد)
+                {
+                    var name = data["Name"];
+                    var number = data["PhoneNumber"];
+                    await _senderFactory.Cancel(name, number);
+                }
+            }
+
+            return result;
         }
     }
 }

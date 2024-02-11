@@ -79,6 +79,9 @@ namespace Framework.Factories.Placement
         public async Task<Response> UpdatePlacementAsync(UpdatePlacementCommand command, CancellationToken cancellation)
         {
             var model = await _placementReport.GetByIdAsync(command.Id, cancellation);
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("Name", model!.User!.FullName!);
+            data.Add("PhoneNumber", model!.User!.PhoneNumber!);
             model = command.Adapt<PlacementEntity>(); model.Condition = ConvertEnum.ConvertCondition(command.Condition);
             model.PlacementImage =
                     FileProcessing.FileUpload(command.PlacementImageFile, command.PlacementImage, "Placement");
@@ -89,7 +92,10 @@ namespace Framework.Factories.Placement
                 model.ProvinceId = user!.ProvinceId;
             }
 
-            return await _placementService.UpdateAsync(model, cancellation);
+            var result= await _placementService.UpdateAsync(model, cancellation);
+           
+            result.Data = data;
+            return result;
         }
 
         public async Task<Response> DeletePlacementAsync(DeletePlacementCommand command, CancellationToken cancellation)
@@ -103,6 +109,7 @@ namespace Framework.Factories.Placement
         {
             var model = await _placementReport.GetByIdAsync(request.Id, cancellation);
             UpdatePlacementCommand command = model.Adapt<UpdatePlacementCommand>();
+            command.Condition = ConvertEnum.ConvertConditionViewModel(model.Condition);
             return command;
         }
 

@@ -22,7 +22,7 @@ namespace Application.Reports.User
             _userManager = userManager;
             _dapper = dapper;
         }
-        public async Task<UserEntity?> GetUserByIdAsync(Guid userId, CancellationToken cancellation)
+        public async Task<UserEntity?> GetUserByIdAsync(Guid userId, CancellationToken cancellation=default)
         {
             if (cancellation.IsCancellationRequested)
             {

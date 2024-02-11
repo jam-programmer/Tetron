@@ -2,6 +2,7 @@
 using FluentValidation;
 using Framework.Common;
 using Framework.Factories.Recruitment;
+using Framework.Factories.Sender;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
@@ -25,15 +26,34 @@ namespace Framework.CQRS.Command.Master.Recruitment
     public class UpdateRecruitmentCommandHandler : IRequestHandler<UpdateRecruitmentCommand, Response>
     {
         private readonly IRecruitmentFactory _recruitmentFactory;
+        private readonly ISenderFactory _senderFactory;
 
-        public UpdateRecruitmentCommandHandler(IRecruitmentFactory recruitmentFactory)
+        public UpdateRecruitmentCommandHandler(IRecruitmentFactory recruitmentFactory, ISenderFactory senderFactory)
         {
             _recruitmentFactory = recruitmentFactory;
+            _senderFactory = senderFactory;
         }
 
         public async Task<Response> Handle(UpdateRecruitmentCommand request, CancellationToken cancellationToken)
         {
-            return await _recruitmentFactory.UpdateRecruitmentAsync(request, cancellationToken);
+            var result= await _recruitmentFactory.UpdateRecruitmentAsync(request, cancellationToken);
+            if (result.IsSuccess == true)
+            {
+                Dictionary<string, string>? data = (Dictionary<string, string>)result.Data!;
+                if (request.Condition == ConditionViewMode.منتشرشد)
+                {
+                    var name = data["Name"];
+                    var number = data["PhoneNumber"];
+                    await _senderFactory.Accept(name, number);
+                }
+                if (request.Condition == ConditionViewMode.ردشد)
+                {
+                    var name = data["Name"];
+                    var number = data["PhoneNumber"];
+                    await _senderFactory.Cancel(name, number);
+                }
+            }
+            return result;
         }
     }
     public class UpdateRecruitmentValidation : BaseValidator<UpdateRecruitmentCommand>

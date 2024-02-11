@@ -7,6 +7,7 @@ using Application.Models;
 using FluentValidation;
 using Framework.Common;
 using Framework.Factories.Placement;
+using Framework.Factories.Sender;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
@@ -27,14 +28,34 @@ namespace Framework.CQRS.Command.Master.Placement
     public class UpdatePlacementCommandHandler : IRequestHandler<UpdatePlacementCommand, Response>
     {
         private readonly IPlacementFactory _placementFactory;
+        private readonly ISenderFactory _senderFactory;
 
-        public UpdatePlacementCommandHandler(IPlacementFactory placementFactory)
+        public UpdatePlacementCommandHandler(IPlacementFactory placementFactory, ISenderFactory senderFactory)
         {
             _placementFactory = placementFactory;
+            _senderFactory = senderFactory;
         }
         public async Task<Response> Handle(UpdatePlacementCommand request, CancellationToken cancellationToken)
         {
-            return await _placementFactory.UpdatePlacementAsync(request, cancellationToken);
+            var result= await _placementFactory.UpdatePlacementAsync(request, cancellationToken);
+            if (result.IsSuccess == true)
+            {
+                Dictionary<string, string>? data = (Dictionary<string, string>)result.Data!;
+                if (request.Condition == ConditionViewMode.منتشرشد)
+                {
+                    var name = data["Name"];
+                    var number = data["PhoneNumber"];
+                    await _senderFactory.Accept(name, number);
+                }
+                if (request.Condition == ConditionViewMode.ردشد)
+                {
+                    var name = data["Name"];
+                    var number = data["PhoneNumber"];
+                    await _senderFactory.Cancel(name, number);
+                }
+            }
+
+            return result;
         }
     }
 

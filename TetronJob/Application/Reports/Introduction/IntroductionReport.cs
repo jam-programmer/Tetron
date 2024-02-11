@@ -38,7 +38,7 @@ namespace Application.Reports.Introduction
             query = query.Include(i => i.Province);
             query = query.Include(i => i.User);
             query = query.Include(i => i.City);
-            return await query.SingleOrDefaultAsync(s => s.Id == id);
+            return (await query.AsNoTracking().SingleOrDefaultAsync(s => s.Id == id, cancellationToken: cancellationToken))!;
         }
 
         public async Task<List<IntroductionEntity>> GetIntroductions

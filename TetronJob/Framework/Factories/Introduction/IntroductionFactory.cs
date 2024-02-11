@@ -97,6 +97,9 @@ namespace Framework.Factories.Introduction
         public async Task<Response> UpdateIntroductionAsync(UpdateIntroductionCommand Command, CancellationToken cancellation)
         {
             var introduction = await _introductionReport.GetByIdAsync(Command.Id, cancellation);
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("Name", introduction!.User!.FullName!);
+            data.Add("PhoneNumber", introduction!.User!.PhoneNumber!);
             introduction = Command.Adapt<IntroductionEntity>();
             if (introduction.UserId != Command.UserId)
             {
@@ -124,8 +127,11 @@ namespace Framework.Factories.Introduction
 
                 await _introductionSkillService.InsertAsync(skillIntroduction);
             }
-            return await _introductionService.UpdateAsync(introduction, cancellation);
-
+          
+     
+            var result = await _introductionService.UpdateAsync(introduction, cancellation);
+            result.Data = data;
+            return result;
         }
 
         public async Task<Response> DeleteIntroductionAsync(DeleteIntroductionCommand Command, CancellationToken cancellation)
@@ -150,16 +156,22 @@ namespace Framework.Factories.Introduction
         {
             var introduction = await _introductionReport.GetByIdAsync(request.Id, cancellation);
             UpdateIntroductionCommand command = introduction.Adapt<UpdateIntroductionCommand>();
+            command.Condition = ConvertEnum.ConvertConditionViewModel(introduction.Condition);
             var skills = await _skillIntroductionReport.GetSkillsOfIntroductionAsync(request.Id);
             command.Skills = skills;
             return command;
         }
 
-        public async Task Change(Guid id, ConditionEnum condition, CancellationToken cancellation)
+        public async Task<Response> Change(Guid id, ConditionEnum condition, CancellationToken cancellation)
         {
             var model = await _introductionReport.GetByIdAsync(id, cancellation);
             model.Condition = condition;
-            var res = await _introductionService.UpdateAsync(model, cancellation);
+            var result = await _introductionService.UpdateAsync(model, cancellation);
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("Name", model!.User!.FullName!);
+            data.Add("PhoneNumber", model!.User!.PhoneNumber!);
+            result.Data = data;
+            return result;
         }
 
         public async Task<IntroductionDetail> GetIntroductionDetailByIdAsync(Guid id)

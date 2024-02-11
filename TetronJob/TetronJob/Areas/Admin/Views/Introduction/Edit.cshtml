@@ -65,9 +65,10 @@
 
                             <div class="mb-3 col-lg-4 col-xl-4 col-12">
                                 <label for="TagifyBasic" class="form-label"> وضعیت </label>
-                                <select asp-for="Condition" id="select2Basic"
-                                        class="select2 form-select form-select-lg select2-hidden-accessible" asp-items="Html.GetEnumSelectList<ConditionViewMode>()"
-                                        data-allow-clear="true" data-select2-id="select2Basic" tabindex="-1" aria-hidden="true">
+                                <select asp-for="Condition"
+                                        class="select2 form-select form-select-lg select2-hidden-accessible" 
+                                        asp-items="Html.GetEnumSelectList<ConditionViewMode>()"
+                                   >
                                 </select>
                             </div>
 

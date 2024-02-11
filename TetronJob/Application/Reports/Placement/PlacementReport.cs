@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Extensions;
+﻿using Application.Extensions;
 using Application.Models;
 using Domain.Entities;
 using Domain.Interfaces;
@@ -11,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Reports.Placement
 {
-    public class PlacementReport:IPlacementReport
+    public class PlacementReport : IPlacementReport
     {
         private readonly IEfRepository<PlacementEntity> _repository;
 
@@ -39,16 +34,16 @@ namespace Application.Reports.Placement
 
         public async Task<PlacementEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-           var query=await _repository.GetByQueryAsync();
-           query = query.Include(i => i.Province);
-           query = query.Include(i => i.City);
-           query = query.Include(i => i.User);
-           return await query.SingleOrDefaultAsync(s => s.Id == id);
+            var query = await _repository.GetByQueryAsync();
+            query = query.Include(i => i.Province);
+            query = query.Include(i => i.City);
+            query = query.Include(i => i.User);
+            return (await query.AsNoTracking().SingleOrDefaultAsync(s => s.Id == id, cancellationToken: cancellationToken))!;
         }
 
-     
 
-        public async Task<List<PlacementEntity>> 
+
+        public async Task<List<PlacementEntity>>
             GetPlacements(Guid? CityId, Guid? ProvinceId, string search = "")
         {
             var query = await _repository.GetByQueryAsync();

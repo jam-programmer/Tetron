@@ -9,9 +9,11 @@ using Domain.Enums;
 using Framework.Common;
 using Framework.Common.Application.Core;
 using Framework.CQRS.Command.Master.Recruitment;
+using Framework.CQRS.Query.Introduction;
 using Framework.CQRS.Query.Placement;
 using Framework.CQRS.Query.Recruitment;
 using Mapster;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Framework.Factories.Recruitment
 {
@@ -81,6 +83,9 @@ namespace Framework.Factories.Recruitment
             CancellationToken cancellation)
         {
             var model = await _report.GetByIdAsync(command.Id, cancellation);
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("Name", model!.User!.FullName!);
+            data.Add("PhoneNumber", model!.User!.PhoneNumber!);
             model = command.Adapt<RecruitmentEntity>();
             model.RecruitmentImage =
                 FileProcessing.FileUpload(command.RecruitmentImageFile,
@@ -93,7 +98,11 @@ namespace Framework.Factories.Recruitment
                 model.ProvinceId = user!.ProvinceId;
             }
 
-            return await _service.UpdateAsync(model, cancellation);
+           var result= await _service.UpdateAsync(model, cancellation);
+
+         
+            result.Data = data;
+            return result;
         }
 
         public async Task<Response> DeleteRecruitmentAsync(DeleteRecruitmentCommand command, CancellationToken cancellation)
@@ -107,6 +116,7 @@ namespace Framework.Factories.Recruitment
         {
             var model = await _report.GetByIdAsync(request.Id, cancellation);
             UpdateRecruitmentCommand recruitment = model.Adapt<UpdateRecruitmentCommand>();
+            recruitment.Condition = ConvertEnum.ConvertConditionViewModel(model.Condition);
             return recruitment;
         }
 

@@ -38,7 +38,7 @@ namespace Application.Reports.Recruitment
             query = query.Include(i => i.Province);
             query = query.Include(i => i.City);
             query = query.Include(i => i.User);
-            return await query.SingleOrDefaultAsync(s => s.Id == id);
+            return (await query.AsNoTracking().SingleOrDefaultAsync(s => s.Id == id, cancellationToken: cancellationToken))!;
         }
 
         public async Task<List<RecruitmentEntity>> GetRecruitments(Guid? CityId, Guid? ProvinceId, string search = "")

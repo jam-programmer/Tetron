@@ -140,6 +140,8 @@ namespace TetronJob.Areas.Admin.Controllers
             ViewBag.Provinces = new SelectList(result, "Id", "Name", id);
         }
         [HttpGet]
+        [AllowAnonymous]
+
         public async Task<JsonResult> Cities(Guid id)
         {
             var result = await _mediator.Send(new RequestGetCities()
