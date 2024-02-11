@@ -3,11 +3,13 @@ using Framework.ViewModels.Role;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
+using Microsoft.AspNetCore.Authorization;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace TetronJob.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         private readonly IMediator _mediator;

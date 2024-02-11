@@ -1,11 +1,13 @@
 ﻿using Framework.CQRS.Command.Setting;
 using Framework.CQRS.Query.Setting;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TetronJob.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class SettingController : Controller
     {
         private readonly  IMediator _mediator;

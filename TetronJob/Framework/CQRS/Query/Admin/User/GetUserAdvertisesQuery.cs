@@ -24,6 +24,7 @@ namespace Framework.CQRS.Query.Admin.User
 
     public class UserAdvertises
     {
+        public int sysId { set; get; }
         public Guid Id { set; get; }
         public string? Type { set; get; }
         public string? Title { set; get; }

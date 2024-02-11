@@ -15,5 +15,6 @@ namespace Framework.Factories.Setting
         Task<LawViewModel> GetLawAsync();
 
         Task<AboutViewModel> GetAboutAsync();
+        Task<Social> GetSocialAsync();
     }
 }

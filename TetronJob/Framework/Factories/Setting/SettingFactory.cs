@@ -80,5 +80,12 @@ namespace Framework.Factories.Setting
             AboutViewModel about = setting.Adapt<AboutViewModel>();
             return about;
         }
+
+        public async Task<Social> GetSocialAsync()
+        {
+            var setting = await _report.GetSettingAsync();
+            Social social = setting.Adapt<Social>();
+            return social;
+        }
     }
 }

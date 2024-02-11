@@ -71,7 +71,7 @@
                                                asp-route-id="@item.Id"><i class="bx bx-edit-alt me-1"></i> ویرایش</a>
 
 
-                                            @if(item.Id.ToString() !="d0952898-8ba2-4168-480b-08dc152232a5")
+                                            @if (item.Id.ToString() != "d0952898-8ba2-4168-480b-08dc152232a5" && item.Id.ToString() != "60d6a955-a094-4ca9-9d54-08dc0ee9ecec")
                                                 
                                                 {
                                                     <a class="dropdown-item" onclick="Delete('@item.Id','Role')"><i class="bx bx-trash me-1"></i> حذف</a>

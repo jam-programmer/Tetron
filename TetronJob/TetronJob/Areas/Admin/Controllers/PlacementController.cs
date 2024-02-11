@@ -5,12 +5,14 @@ using Framework.CQRS.Query.Admin.User;
 using Framework.CQRS.Query.Introduction;
 using Framework.CQRS.Query.Placement;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace TetronJob.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class PlacementController : Controller
     {
         private readonly IMediator _mediator;

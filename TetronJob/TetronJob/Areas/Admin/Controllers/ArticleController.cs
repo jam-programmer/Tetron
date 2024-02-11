@@ -6,12 +6,14 @@ using Framework.CQRS.Query.Article;
 using Framework.CQRS.Query.ArticleCategory;
 using Framework.ViewModels.User;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace TetronJob.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class ArticleController : Controller
     {
         private readonly IMediator _mediator;

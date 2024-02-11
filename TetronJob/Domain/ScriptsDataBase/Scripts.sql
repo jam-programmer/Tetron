@@ -8,11 +8,14 @@
 --GO
 
 
+
+
 --ALTER VIEW [dbo].[Advertising] AS
---select I.Id as Id,I.IntroductionTitle as Title,'' as [Type],I.IntroductionImage as [Image],I.UserId from [dbo].[Introduction] as I UNION 	   
---select P.Id as Id,P.PlacementFullName as Title,'' as [Type],P.PlacementImage    as [Image],P.UserId from [dbo].[Placement] as P UNION 	    
---select R.Id as Id,R.RecruitmentTitle  as Title,'' as [Type],R.RecruitmentImage  as [Image],R.UserId from [dbo].[Recruitment] as R
+--select 0 as sysId, I.Id as Id,I.IntroductionTitle as Title,N'آگهی اشتراک گذاری' as [Type],'/Introduction/'+I.IntroductionImage as [Image],I.UserId from [dbo].[Introduction] as I UNION 	   
+--select 1 as sysId, P.Id as Id,P.PlacementFullName as Title,N'آگهی آماده کار' as [Type],'/Placement/'+P.PlacementImage    as [Image],P.UserId from [dbo].[Placement] as P UNION 	    
+--select 2 as sysId, R.Id as Id,R.RecruitmentTitle  as Title,N'آگهی استخدام' as [Type],'/Recruitment/'+R.RecruitmentImage  as [Image],R.UserId from [dbo].[Recruitment] as R
 --GO
+
 --*****************************
 --GO
 --/****** Object:  StoredProcedure [dbo].[GetCategories]    Script Date: 12/11/1402 05:22:00 ب.ظ ******/

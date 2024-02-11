@@ -20,21 +20,7 @@
         <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
             <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- Social -->
-                <li class="nav-item dropdown-language dropdown me-2 me-xl-0 mx-2">
-                    <i class='bx bxl-instagram bx-sm  text-pink'></i>
-                </li>
-                <li class="nav-item dropdown-language dropdown me-2 me-xl-0 mx-2">
-                    <i class='bx bxl-telegram bx-sm  text-pink'></i>
-                </li>
-                <li class="nav-item dropdown-language dropdown me-2 me-xl-0 mx-2">
-                    <i class='bx bxl-whatsapp bx-sm  text-pink'></i>
-                </li>
-                <li class="nav-item dropdown-language dropdown me-2 me-xl-0 mx-2">
-                    <i class='bx bxl-linkedin bx-sm  text-pink'></i>
-                </li>
-                <li class="nav-item dropdown-language dropdown me-2 me-xl-0 mx-2">
-                    <i class='bx bxl-facebook bx-sm  text-pink'></i>
-                </li>
+                @await Component.InvokeAsync("SocialComponent")
                 <!--/ Social -->
                 <!-- Quick links  -->
                 <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0">
@@ -97,71 +83,47 @@
                 </li>
                 <!-- Quick links -->
                 <!-- User -->
-                <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                        <div class="avatar avatar-online">
-                            <img src="../../assets/img/avatars/1.png" alt class="rounded-circle">
-                        </div>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li>
-                            <a class="dropdown-item" href="pages-account-settings-account.html">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0 me-3">
-                                        <div class="avatar avatar-online">
-                                            <img src="../../assets/img/avatars/1.png" alt class="rounded-circle">
-                                        </div>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <span class="fw-semibold d-block">سمانه رضوی</span>
-                                        <small>مدیر سایت</small>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <div class="dropdown-divider"></div>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="pages-profile-user.html">
-                                <i class="bx bx-user me-2"></i>
-                                <span class="align-middle">پروفایل من</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="pages-account-settings-account.html">
-                                <i class="bx bx-cog me-2"></i>
-                                <span class="align-middle">تنظیمات</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <div class="dropdown-divider"></div>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="pages-help-center-landing.html">
-                                <i class="bx bx-support me-2"></i>
-                                <span class="align-middle">راهنمایی</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="pages-faq.html">
-                                <i class="bx bx-help-circle me-2"></i>
-                                <span class="align-middle">سوالات متداول</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <div class="dropdown-divider"></div>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="auth-login-cover.html" target="_blank">
-                                <i class="bx bx-power-off me-2"></i>
-                                <span class="align-middle">خروج</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+               @if (User.Identity.IsAuthenticated)
+               {
+                   <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                       <a class="nav-link dropdown-toggle hide-arrow"  data-bs-toggle="dropdown">
+                           <div class="avatar avatar-online">
+                               <img src="../../assets/img/avatars/1.png" alt class="rounded-circle">
+                           </div>
+                       </a>
+                       <ul class="dropdown-menu dropdown-menu-end">
+                           <li>
+                                <a class="dropdown-item" asp-controller="Profile" asp-action="Dashboard">
+                                   <div class="d-flex align-items-center">
+                                       <div class="flex-shrink-0 me-3">
+                                           <div class="avatar avatar-online">
+                                               <img src="../../assets/img/avatars/1.png" alt class="rounded-circle">
+                                           </div>
+                                       </div>
+                                       <div class="flex-grow-1">
+                                          
+                                               <span class="align-middle">پروفایل من</span>
+                                          
+                                       </div>
+                                   </div>
+                               </a>
+                           </li>
+                           <li>
+                               <div class="dropdown-divider"></div>
+                           </li>
+                           
+                       
+                       
+                       
+                           <li>
+                               <a class="dropdown-item" asp-controller="Identity" asp-action="SignOut" target="_blank">
+                                   <i class="bx bx-power-off me-2"></i>
+                                   <span class="align-middle">خروج</span>
+                               </a>
+                           </li>
+                       </ul>
+                   </li>
+               }
                 <!--/ User -->
             </ul>
         </div>

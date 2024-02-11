@@ -8,10 +8,12 @@ using System.Threading;
 using Framework.ViewModels.Category;
 using Framework.ViewModels.City;
 using Framework.ViewModels.Province;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TetronJob.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private readonly IMediator _mediator;

@@ -2,11 +2,13 @@
 using Framework.ViewModels.Province;
 using Framework.ViewModels.User;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TetronJob.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class ProvinceController : Controller
     {
         private readonly IMediator _mediator;

@@ -21,9 +21,34 @@
                     <span class="lh-1-85 text-primary mb-3">@item.Type </span>
                     
                     <div class="d-flex align-items-center justify-content-center">
-                        <a class="btn btn-pink btn-sm text-white d-flex align-items-center me-3">
-                          مشاهده آگهی
-                        </a>
+                        
+                        @switch (item.sysId)
+                        {
+                            case 0:
+                                <a 
+                                    asp-controller="Advertising" asp-action="IntroductionDetail" asp-route-id="@item.Id"
+                                    class="btn btn-pink btn-sm text-white d-flex align-items-center me-3">
+                                    مشاهده آگهی
+                                </a>
+                                break;
+                                 case 1:
+                                     <a 
+                                         asp-controller="Advertising" asp-action="PlacementDetail" asp-route-id="@item.Id"
+                                         class="btn btn-pink btn-sm text-white d-flex align-items-center me-3">
+                                         مشاهده آگهی
+                                     </a>
+                                break;
+                                 case 2:
+                                     <a 
+                                         asp-controller="Advertising" asp-action="RecruitmentDetail" asp-route-id="@item.Id"
+                                         class="btn btn-pink btn-sm text-white d-flex align-items-center me-3">
+                                         مشاهده آگهی
+                                     </a>
+                                break;
+                                
+                        }
+
+                       
                     </div>
                 </div>
             </div>
