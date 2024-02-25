@@ -18,12 +18,33 @@ namespace Framework.Factories.Sender
             _setting = setting;
             _userReport = userReport;
         }
+
+        public async Task Send(string number, string code)
+        {
+            var smsInfo = await _setting.GetSettingAsync();
+
+          
+           KavenegarApi api = new KavenegarApi(smsInfo!.SmsKey!.Replace(" ", ""));
+
+           try
+           {
+               var result =  api.VerifyLookup(number, "میباشد", 
+                   null, null, null, code, "LoginCode", VerifyLookupType.Sms);
+
+           }
+           catch (Exception e)
+           {
+               int j = 7;
+           }
+          
+        }
+
         public async Task Welcome(string name, string phoneNumber)
         {
             var smsInfo = await _setting.GetSettingAsync();
             KavenegarApi api = new KavenegarApi(smsInfo!.SmsKey);
             var result =  api.VerifyLookup(phoneNumber,
-                "کاربر", null, null, null, name, "welcome",
+                "کاربر", null, null, null, name +" ", "welcome",
                 VerifyLookupType.Sms);
         }
 
@@ -36,7 +57,7 @@ namespace Framework.Factories.Sender
             KavenegarApi api = new KavenegarApi(smsInfo.SmsKey);
         
             var result =  api.VerifyLookup(phoneNumber, "اطلاعیه:", 
-                null, null, null, name, "accept", VerifyLookupType.Sms);
+                null, null, null, name + " ", "accept", VerifyLookupType.Sms);
 
         }
 
@@ -48,7 +69,7 @@ namespace Framework.Factories.Sender
             KavenegarApi api = new KavenegarApi(smsInfo.SmsKey);
 
             var result = api.VerifyLookup(phoneNumber, "اطلاعیه:",
-                null, null, null, name, "Canecl", VerifyLookupType.Sms);
+                null, null, null, name + " ", "Canecl", VerifyLookupType.Sms);
         }
     }
 }

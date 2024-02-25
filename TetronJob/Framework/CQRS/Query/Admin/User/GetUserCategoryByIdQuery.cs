@@ -31,6 +31,7 @@ namespace Framework.CQRS.Query.Admin.User
     {
         public Guid Id { get; set; }
 
+        public string? Avatar { set; get; }
         public string? FullName { set; get; }
         public string? ProvinceName { set; get; }
         public string? CityName { set; get; }

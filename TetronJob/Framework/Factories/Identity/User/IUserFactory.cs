@@ -31,5 +31,15 @@ namespace Framework.Factories.Identity.User
         Task<List<UserAdvertises>?> GetUserAdvertisesAsync(Guid id);
         Task<Response> SignInAsync(SignInCommand command);
         Task SignOutAsync();
+
+
+        Task<Response> SendOtpAsync(SendOtp otp, CancellationToken cancellation);
+        Task<Response> SignInOtpAsync(SignInOtp sign, CancellationToken cancellation);
+
+
+
+        Task<UserImage> GetAvatarAsync(GetUserImageQuery query,CancellationToken cancellationToken = default);
+        Task<EditProfile> GetProfileByIdAsync(GetProfileQuery query, CancellationToken cancellation);
+        Task<Response> EditProfileAsync(EditProfile profile,CancellationToken cancellation);
     }
 }

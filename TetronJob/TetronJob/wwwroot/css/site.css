@@ -30,7 +30,13 @@
     border-radius: 10px;
 }
 
+.show-form {
+    display: block !important;
+}
 
+.hide-form {
+    display: none !important;
+}
 
 .footer-tetron {
     position: fixed;

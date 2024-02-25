@@ -7,6 +7,7 @@ using Application.Services.CategoryUser;
 using Application.Services.User;
 using Application.Services.UserAddress;
 using Domain.Entities;
+using Framework.Common;
 using Framework.Common.Application.Core;
 using Framework.CQRS.Command.Admin.User;
 using Framework.CQRS.Query.Admin.User;
@@ -14,11 +15,17 @@ using Framework.Mapping.User;
 using Framework.ViewModels.User;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
+using System.Threading;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Framework.Factories.Identity.User
 {
     public class UserFactory : IUserFactory
     {
+        private readonly IDistributedCache _cache;
         private readonly IRoleReport _roleReport;
         private readonly IUserService _userService;
         private readonly IUserReport _userReport;
@@ -28,8 +35,9 @@ namespace Framework.Factories.Identity.User
         private readonly ICategoryUserService _categoryUserService;
         private readonly SignInManager<UserEntity> _signInManager;
 
-        public UserFactory(IRoleReport roleReport, IUserService userService, IUserReport userReport, IUserAddressReport userAddressReport, IUserAddressService userAddressService, ICategoryUserReport categoryUserReport, ICategoryUserService categoryUserService, SignInManager<UserEntity> signInManager)
+        public UserFactory(IDistributedCache cache, IRoleReport roleReport, IUserService userService, IUserReport userReport, IUserAddressReport userAddressReport, IUserAddressService userAddressService, ICategoryUserReport categoryUserReport, ICategoryUserService categoryUserService, SignInManager<UserEntity> signInManager)
         {
+            _cache = cache;
             _roleReport = roleReport;
             _userService = userService;
             _userReport = userReport;
@@ -375,6 +383,7 @@ namespace Framework.Factories.Identity.User
             user.ProvinceName = model.Address.Province.Name;
             user.FullName = model.FullName;
             user.Id = model.Id;
+            user.Avatar = model.Avatar;
             return user;
         }
 
@@ -414,15 +423,118 @@ namespace Framework.Factories.Identity.User
             }
 
             await _signInManager.SignInAsync(user, isPersistent: command.Remember);
-             response.IsSuccess = true;
+            response.IsSuccess = true;
             return response;
 
         }
 
         public async Task SignOutAsync()
-        { 
+        {
             await _signInManager.SignOutAsync();
-           
+
+        }
+
+        public async Task<Response> SendOtpAsync(SendOtp otp, CancellationToken cancellation)
+        {
+            var user = await _userReport.GetUserByUserName(otp.NationalCode!, cancellation);
+            if (user == null)
+            {
+                return Response.Fail("حساب کاربری یافت نشد.");
+            }
+
+            if (user.EmailConfirmed == false || user.PhoneNumberConfirmed == false)
+            {
+                return Response.Fail("حساب کاربری مسدود می باشد.");
+            }
+            var findCache = await _cache.GetStringAsync(user.UserName!, cancellation);
+            if (!string.IsNullOrEmpty(findCache))
+            {
+                await _cache.RemoveAsync(user.UserName!, cancellation);
+            }
+
+            Random random = new();
+            var randomCode = random.Next(100000, 999999);
+            var options = new DistributedCacheEntryOptions()
+                .SetSlidingExpiration(TimeSpan.FromSeconds(120));
+
+            string otpCode = randomCode.ToString();
+            OtpModel userOtp = new OtpModel();
+            userOtp.NationalCode = user.UserName;
+            userOtp.OtpCode = otpCode;
+            var serializedModel = JsonSerializer.Serialize(userOtp);
+            await _cache.SetStringAsync(user.UserName!, serializedModel, options, token: cancellation);
+
+            
+
+            Response response = new Response();
+            response.IsSuccess = true;
+            Dictionary<string, string> date = new Dictionary<string, string>();
+            date.Add("phoneNumber",user.PhoneNumber!);
+            date.Add("otpCode", otpCode);
+            response.Data = date;
+            return response;
+        }
+
+        public async Task<Response> SignInOtpAsync(SignInOtp sign, CancellationToken cancellation)
+        {
+            var findCache = await _cache.GetStringAsync(sign.NationalCode, cancellation);
+            if (string.IsNullOrEmpty(findCache))
+            {
+                return Response.Fail("رمز یکبار مصرف نا معتبر است.");
+            }
+            var model = JsonSerializer.Deserialize<OtpModel>(findCache!);
+            if (model!.OtpCode != sign.OtpCode)
+            {
+                return Response.Fail("رمز یکبار مصرف نا معتبر است.");
+            }
+
+            var user = await _userReport.GetUserByUserName(sign.NationalCode, cancellation);
+            await _signInManager.SignInAsync(user!, isPersistent: true);
+            return Response.Succeded();
+        }
+
+        public async Task<UserImage> GetAvatarAsync(GetUserImageQuery query, CancellationToken cancellationToken = default)
+        {
+            var user = await _userReport.GetUserByIdAsync(query.Id, cancellationToken);
+            UserImage image = user.Adapt<UserImage>();
+            return image;
+        }
+
+        public async Task<EditProfile> GetProfileByIdAsync(GetProfileQuery query, CancellationToken cancellation)
+        {
+            var user = await _userReport.GetUserByIdAsync(query.Id, cancellation);
+            EditProfile profile = user.Adapt<EditProfile>();
+            return profile;
+        }
+
+        public async Task<Response> EditProfileAsync(EditProfile profile, CancellationToken cancellation)
+        {
+            var user = await _userReport.GetUserByIdAsync(profile.Id, cancellation);
+            user.FullName=profile.FullName;
+            user.Email=profile.Email;
+            user.PhoneNumber = profile.PhoneNumber;
+
+            if (profile.AvatarFile != null)
+            {
+                user!.Avatar = FileProcessing.FileUpload(profile.AvatarFile, profile.Avatar, "UsersImage");
+            }
+            if (!string.IsNullOrEmpty(profile.Password))
+            {
+                var resultRemovePassword = await _userService
+                    .RemoveCurrentPasswordAsync(user!, cancellation);
+                if (resultRemovePassword.IsSuccess == false)
+                {
+                    //todo 
+                }
+
+                var resultSetNewPassword = await _userService.AddNewPasswordAsync(user!, profile.Password!, cancellation);
+                if (resultSetNewPassword.IsSuccess == false)
+                {
+                    //todo
+                }
+            }
+            var resultUpdate = await _userService.UpdateUserAsync(user!, cancellation);
+            return resultUpdate;
         }
     }
 }

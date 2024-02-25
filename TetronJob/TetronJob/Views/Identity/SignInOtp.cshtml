@@ -1,0 +1,113 @@
+﻿
+@{
+    ViewData["Title"] = "ورود با رمز یکبار مصرف";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="lh-1-85 breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">خانه</a>
+            </li>
+
+            <li class="breadcrumb-item active text-pink">ورود به حساب با رمز یکبار مصرف  </li>
+        </ol>
+    </nav>
+
+    <div class="col-lg-4 col-xl-4 offset-lg-4 offset-xl-4 col-12">
+        <div class="authentication-wrapper authentication-basic container-p-y">
+            <div class="authentication-inner py-4">
+                <!-- SignInOTP -->
+                <div class="card" id="otpForm1">
+                    <div class="card-body">
+
+                        <h4 class="mb-3 secondary-font">به تترون جاب خوش آمدید!</h4>
+                        <p class="mb-4">لطفا وارد حساب خود شده و ماجراجویی را شروع کنید</p>
+
+                        <form  class="mb-3 fv-plugins-bootstrap5 fv-plugins-framework" >
+                            <div class="mb-3 fv-plugins-icon-container">
+                                <label class="form-label">کدملی </label>
+                                <input type="text" class="form-control text-start" id="username" placeholder="کدملی خود را وارد کنید" autofocus="" dir="ltr">
+                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                            </div>
+                           
+                            <div class="mb-3">
+                                <a onclick="SendOtp()"  class="btn btn-pink text-white d-grid w-100">ارسال رمز یکبار مصرف</a>
+                            </div>
+                            <input type="hidden">
+                        </form>
+
+                        <p class="text-center">
+                            <span>کاربر جدید هستید؟</span>
+                            <a asp-controller="Identity" asp-action="SignUp">
+                                <span>یک حساب بسازید</span>
+                            </a>
+                        </p>
+
+                        <div class="divider my-4">
+                            <div class="divider-text">
+                                <a class="text-center" asp-controller="Identity" asp-action="SignIn">
+                                    <span>ورود با رمز عبور</span>
+                                </a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <!-- /Register -->
+                
+                <!-- SignInOTP -->
+                <div class="card hide-form" id="otpForm2">
+                    <div class="card-body">
+
+                        <h4 class="mb-3 secondary-font">به تترون جاب خوش آمدید!</h4>
+                        <p class="mb-4">لطفا وارد حساب خود شده و ماجراجویی را شروع کنید</p>
+
+                        <form   class="mb-3 fv-plugins-bootstrap5 fv-plugins-framework " >
+                            <div class="mb-3 fv-plugins-icon-container">
+                                <label class="form-label">رمز یکبار مصرف</label>
+                                <input type="text" class="form-control text-start" id="otpCode" placeholder="رمز یکبار مصرف را وارد کنید" autofocus="" dir="ltr">
+                                <span class="text-danger" id="timerBox">00:<span id="timer"></span></span>
+                                <span class="text-primary">
+                                    <a class="text-secondary" id="deactive-link" style="cursor: pointer;">
+                                        ارسال مجدد رمز
+                                    </a>
+                                    
+                                    <a onclick="AgainOtp()" class="text-primary hide-form" id="again-link" style="cursor: pointer;">
+                                        ارسال مجدد رمز
+                                    </a>
+                                </span>
+                            </div>
+                           
+                            <div class="mb-3">
+                                <a onclick="SignInOtp()" class="btn btn-pink text-white d-grid w-100">ورود</a>
+                            </div>
+                         
+                        </form>
+
+                        <p class="text-center">
+                            <span> کد ملی اشتباه است؟ </span>
+                            <a onclick="BackFormOne()" style="cursor: pointer;">
+                                <span class="text-primary">اصلاح کد ملی</span>
+                            </a>
+                        </p>
+
+                   
+
+
+                    </div>
+                </div>
+                <!-- /Register -->
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Script
+    {
+    <script src="~/js/register.js"></script>
+}

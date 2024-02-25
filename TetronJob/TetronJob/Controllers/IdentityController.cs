@@ -98,6 +98,35 @@ namespace TetronJob.Controllers
             return Ok(StatusCode(200));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> SendOtp([FromBody] SendOtp model)
+        {
+            var result=  await _mediator.Send(model);
+            return Json(result);
+        }
+        public IActionResult SignInOtp()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SignInOtp([FromBody] SignInOtp model)
+        {
+            var result = await _mediator.Send(model);
+            return Json(result);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

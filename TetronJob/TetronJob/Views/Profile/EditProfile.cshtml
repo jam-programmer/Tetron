@@ -1,0 +1,115 @@
+﻿@model Framework.CQRS.Command.Admin.User.EditProfile
+@{
+    ViewData["Title"] = "ویرایش حساب کاربری";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Style
+    {
+    <link rel="stylesheet" href="~/assets/vendor/css/pages/page-profile.css">
+}
+@section Script
+    {
+    <script src="~/assets/js/pages-profile.js"></script>
+}
+<div class="row">
+
+
+    <nav aria-label="breadcrumb">
+        <ol class="lh-1-85 breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">خانه</a>
+            </li>
+
+            <li class="breadcrumb-item active text-pink">ویرایش جساب کاربری </li>
+        </ol>
+    </nav>
+
+    @await  Component.InvokeAsync("UserPanelComponent",@ViewBag.User)
+
+
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-pills flex-column flex-sm-row mb-4">
+            <li class="nav-item mx-1">
+                <a asp-controller="Profile" asp-action="Dashboard" class="nav-link btn-pink text-white my-1 my-md-0">
+                    <i class="bx bx-user me-1"></i> آگهی های من
+                </a>
+            </li>
+            <li class="nav-item mx-1">
+                <a asp-controller="Profile" asp-action="EditProfile" class="nav-link btn-pink text-white my-1 my-md-0">
+                    <i class="bx bx-user me-1"></i> ویرایش حساب کاربری
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+<div class="row g-4 mb-5">
+    <div class="col-md-6 col-xl-8 col-lg-8 col-sm-12 offset-xl-2   offset-lg-2 offset-md-3  ">
+        <div class="card mb-4">
+            <h5 class="card-header heading-color">ویرایش حساب کاربری</h5>
+            <div class="card-body demo-vertical-spacing demo-only-element">
+                <form asp-controller="Profile" asp-action="EditProfile" method="POST" enctype="multipart/form-data">
+                    <div class="col-md-3 col-12 mb-4">
+
+                        <div class="avatar avatar-xl">
+                            @if (Model.Avatar != "default.jpg")
+                            {
+                                <img id="imagePath_1" src="~/UsersImage/@Model.Avatar" alt="آواتار" class="rounded-circle">
+
+                            }
+                            else
+                            {
+                                <img id="imagePath_1" src="~/assets/img/avatars/1.png" alt="آواتار" class="rounded-circle">
+
+                            }
+                        </div>
+                        <label class="form-label mt-4"> انتخاب تصویر </label>
+                        <input type="file" asp-for="AvatarFile" onchange="ChangeImage(this,1)"
+                               id="image_1"
+                               class="form-control" />
+
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label class="form-label" for="username1">نام و نام خانوادگی</label>
+                            <input type="text" asp-for="FullName" id="fullname" class="form-control text-start" placeholder="نام و نام خانوادگی" dir="ltr">
+                        </div>
+
+
+                        <div class="col-sm-6">
+                            <label class="form-label" for="username1"> شماره موبایل </label>
+                            <input type="tel" asp-for="PhoneNumber" id="phonenumber" class="form-control text-start" placeholder="09**********" dir="ltr">
+                        </div>
+
+                        <input type="hidden" asp-for="Id"/>
+
+                        <div class="col-sm-6">
+                            <label class="form-label" for="email1">ایمیل</label>
+                            <input type="text" asp-for="Email" id="email1" class="form-control text-start" placeholder="john.doe@email.com" aria-label="john.doe@email.com" dir="ltr">
+                        </div>
+
+
+                        <div class="col-sm-6 form-password-toggle">
+                            <label class="form-label" for="password60">رمز عبور</label>
+                            <div class="input-group input-group-merge">
+                                <input asp-for="Password" type="password" id="password" class="form-control text-start" placeholder="············" dir="ltr" aria-describedby="password6">
+                                <span class="input-group-text cursor-pointer" id="password6"><i class="bx bx-hide"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-sm btn-pink text-white">ثبت</button>
+                                 </div>
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

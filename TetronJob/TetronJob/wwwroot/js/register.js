@@ -40,6 +40,10 @@
             .then(data => {
                 if (data.isSuccess) {
 
+                    document.getElementById("boxStep1").classList.remove("active");
+                    document.getElementById("boxStep2").classList.add("active");
+
+
                     var user = document.getElementById("UserId");
                     user.value = data.data;
 
@@ -96,6 +100,9 @@ async function StepTwo() {
      
             if (response.ok) {
                 const data = await response.json();
+
+                document.getElementById("boxStep2").classList.remove("active");
+                document.getElementById("boxStep3").classList.add("active");
 
                 var nextBody = document.getElementById("BodyStep3");
                 var prevBody = document.getElementById("BodyStep2");
@@ -211,3 +218,133 @@ const status = {
 
 
 
+
+async function SendOtp() {
+    var nationalCode = document.getElementById("username");
+    if (!nationalCode.value) {
+        CustomAlert("ورودی نامعتبر","کد ملی را وارد کنید","Warning");
+        return;
+    }
+    var formOne = document.getElementById("otpForm1");
+    var formTwo = document.getElementById("otpForm2");
+
+    var model = { NationalCode: nationalCode.value}
+    await fetch('/Identity/SendOtp', {
+        body: JSON.stringify(model),
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.isSuccess) {
+
+                formOne.classList.add("hide-form");
+             
+                var count = 59;
+                var againLink = document.getElementById("again-link");
+                var deactiveLink = document.getElementById("deactive-link");
+                var interval =
+                    setInterval(function () {
+                        document.getElementById("timer").innerHTML = count;
+                        count--;
+                        if (count === 0) {
+                            clearInterval(interval);
+                            document.getElementById("timer").innerHTML = "00";
+                            deactiveLink.classList.add("hide-form");
+                            againLink.classList.remove("hide-form");
+                        }
+                    }, 1000);
+                formTwo.classList.remove("hide-form");
+
+                //window.location.href = "/Profile/Dashboard";
+            } else {
+                CustomAlert("ورود ناموفق", data.message, "Error");
+            }
+
+        })
+        .catch(error => {
+            console.log('error', 'خطا: ' + error);
+        });
+}
+function BackFormOne() {
+    var formOne = document.getElementById("otpForm1");
+    var formTwo = document.getElementById("otpForm2");
+    formOne.classList.remove("hide-form");
+    formTwo.classList.add("hide-form");
+}
+
+async function AgainOtp() {
+    var againLink = document.getElementById("again-link");
+    var deactiveLink = document.getElementById("deactive-link");
+    var nationalCode = document.getElementById("username");
+    if (!nationalCode.value) {
+        CustomAlert("ورودی نامعتبر", "کد ملی را وارد کنید", "Warning");
+        return;
+    }
+    deactiveLink.classList.remove("hide-form");
+    againLink.classList.add("hide-form");
+    var model = { NationalCode: nationalCode.value }
+    await fetch('/Identity/SendOtp', {
+            body: JSON.stringify(model),
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.isSuccess) {
+
+               
+
+                var count = 59;
+               
+                var interval =
+                    setInterval(function () {
+                        document.getElementById("timer").innerHTML = count;
+                        count--;
+                        if (count === 0) {
+                            clearInterval(interval);
+                            document.getElementById("timer").innerHTML = "00";
+                            deactiveLink.classList.add("hide-form");
+                            againLink.classList.remove("hide-form");
+                        }
+                    }, 1000);
+               
+
+                //window.location.href = "/Profile/Dashboard";
+            } else {
+                CustomAlert("ورود ناموفق", data.message, "Error");
+            }
+
+        })
+        .catch(error => {
+            console.log('error', 'خطا: ' + error);
+        });
+}
+
+ async function SignInOtp() {
+     var otp = document.getElementById("otpCode");
+     if (!otp.value) {
+         CustomAlert("ورودی نامعتبر", "کد یکبار مصرف را وارد کنید", "Warning");
+         return;
+     }
+     var nationalCode = document.getElementById("username");
+
+     var model = { NationalCode: nationalCode.value, OtpCode: otp.value }
+     await fetch('/Identity/SignInOtp', {
+             body: JSON.stringify(model),
+             method: 'POST',
+             headers: { 'Content-Type': 'application/json' }
+         })
+         .then(response => response.json())
+         .then(data => {
+             if (data.isSuccess) {
+                 window.location.href = "/Profile/Dashboard";
+             } else {
+                 CustomAlert("ورود ناموفق", data.message, "Error");
+             }
+
+         })
+         .catch(error => {
+             console.log('error', 'خطا: ' + error);
+         });
+ }
